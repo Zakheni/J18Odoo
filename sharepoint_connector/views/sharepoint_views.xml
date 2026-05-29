@@ -129,25 +129,25 @@
     <record id="action_sharepoint_config" model="ir.actions.act_window">
         <field name="name">SharePoint Configuration</field>
         <field name="res_model">sharepoint.config</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_sharepoint_site" model="ir.actions.act_window">
         <field name="name">SharePoint Sites</field>
         <field name="res_model">sharepoint.site</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_sharepoint_document_library" model="ir.actions.act_window">
         <field name="name">Document Libraries</field>
         <field name="res_model">sharepoint.document.library</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_sharepoint_list" model="ir.actions.act_window">
         <field name="name">SharePoint Lists</field>
         <field name="res_model">sharepoint.list</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem id="menu_sharepoint_root" name="SharePoint" sequence="100"/>
