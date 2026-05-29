@@ -17,10 +17,11 @@
         'security/ir.model.access.csv',
         'data/company_setup.xml',
         'data/company_data.xml',
-        'views/settings.xml',
         'wizards/tax_table_autofetch_views.xml',
+        'views/settings.xml',
     ],
     'installable': True,
     'application': False,
     'auto_install': False,
+    'post_init_hook': 'post_init_hook',
 }
