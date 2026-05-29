@@ -8,6 +8,7 @@
     'website': 'https://www.zakhenict.co.za',
     'depends': [
         'base',
+        'account',
         'l10n_za_hr_payroll',
         'sharepoint_connector',
         'dms',
@@ -15,6 +16,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/company_setup.xml',
+        'data/company_data.xml',
         'views/settings.xml',
         'wizards/tax_table_autofetch_views.xml',
     ],

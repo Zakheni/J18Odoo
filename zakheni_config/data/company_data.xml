@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Salary Journal -->
+    <record id="salary_journal" model="account.journal">
+        <field name="name">Salary Journal</field>
+        <field name="code">SAL</field>
+        <field name="type">general</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

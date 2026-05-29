@@ -24,6 +24,16 @@ class ResCompany(models.Model):
                 zar = self.env.ref("base.ZAR", raise_if_not_found=False)
                 if zar:
                     company.currency_id = zar.id
+            if not company.l10n_za_paye_number:
+                company.l10n_za_paye_number = "7205614930"
+            if not company.l10n_za_uif_number:
+                company.l10n_za_uif_number = "7205614930"
+            if not company.l10n_za_sdl_number:
+                company.l10n_za_sdl_number = "S7205614930"
+            if not company.l10n_za_sars_registration_number:
+                company.l10n_za_sars_registration_number = "7205614930"
+            if not company.l10n_za_site_number:
+                company.l10n_za_site_number = "7205614930"
 
     def action_autofetch_tax_tables(self):
         for company in self.filtered("tax_table_autofetch_enabled"):
