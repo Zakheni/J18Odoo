@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SALARY RULES -->
+    <!-- Pension Fund and Provident Fund contribution registers -->
+    <record id="l10n_za_pension_register" model="hr.contribution.register">
+        <field name="name">Pension Fund</field>
+        <field name="partner_id" ref="base.main_partner"/>
+        <field name="note">Employee pension fund contributions.</field>
+    </record>
+    <record id="l10n_za_provident_register" model="hr.contribution.register">
+        <field name="name">Provident Fund</field>
+        <field name="partner_id" ref="base.main_partner"/>
+        <field name="note">Employee provident fund contributions.</field>
+    </record>
+    <record id="l10n_za_sars_register" model="hr.contribution.register">
+        <field name="name">SARS</field>
+        <field name="partner_id" ref="base.main_partner"/>
+        <field name="note">South African Revenue Service.</field>
+    </record>
+
+    <!-- 1. BASIC SALARY -->
+    <record id="l10n_za_rule_basic" model="hr.salary.rule">
+        <field name="name">Basic Salary</field>
+        <field name="code">BASIC</field>
+        <field name="category_id" ref="l10n_za_salcat_basic"/>
+        <field name="sequence">1</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.wage</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 2. TRAVEL ALLOWANCE -->
+    <record id="l10n_za_rule_travel" model="hr.salary.rule">
+        <field name="name">Travel Allowance</field>
+        <field name="code">TRAVEL</field>
+        <field name="category_id" ref="l10n_za_salcat_allowances"/>
+        <field name="sequence">5</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.l10n_za_travel_allowance or 0.0</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 3. HOUSING ALLOWANCE -->
+    <record id="l10n_za_rule_housing" model="hr.salary.rule">
+        <field name="name">Housing Allowance</field>
+        <field name="code">HOUSING</field>
+        <field name="category_id" ref="l10n_za_salcat_allowances"/>
+        <field name="sequence">10</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.l10n_za_housing_allowance or 0.0</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 4. CAR ALLOWANCE -->
+    <record id="l10n_za_rule_car" model="hr.salary.rule">
+        <field name="name">Car Allowance</field>
+        <field name="code">CAR</field>
+        <field name="category_id" ref="l10n_za_salcat_allowances"/>
+        <field name="sequence">15</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.l10n_za_car_allowance or 0.0</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 5. OTHER ALLOWANCE -->
+    <record id="l10n_za_rule_other" model="hr.salary.rule">
+        <field name="name">Other Allowance</field>
+        <field name="code">OTHER_ALLOW</field>
+        <field name="category_id" ref="l10n_za_salcat_allowances"/>
+        <field name="sequence">20</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.l10n_za_other_allowance or 0.0</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 6. GROSS INCOME (display only - accumulates via category hierarchy) -->
+    <record id="l10n_za_rule_gross" model="hr.salary.rule">
+        <field name="name">Gross Income</field>
+        <field name="code">GROSS</field>
+        <field name="category_id" ref="l10n_za_salcat_gross"/>
+        <field name="sequence">25</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.BASIC + categories.ALLOWANCES</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 7. PENSION FUND (Employee) -->
+    <record id="l10n_za_rule_pension_ee" model="hr.salary.rule">
+        <field name="name">Pension Fund (Employee)</field>
+        <field name="code">PENSION_EE</field>
+        <field name="category_id" ref="l10n_za_salcat_pension_ee"/>
+        <field name="sequence">30</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0.0
+if contract.l10n_za_pension_fund_id and contract.l10n_za_pension_employee_rate:
+    result = contract.wage * contract.l10n_za_pension_employee_rate / 100.0
+        </field>
+        <field name="register_id" ref="l10n_za_pension_register"/>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 8. PROVIDENT FUND (Employee) -->
+    <record id="l10n_za_rule_provident_ee" model="hr.salary.rule">
+        <field name="name">Provident Fund (Employee)</field>
+        <field name="code">PROVIDENT_EE</field>
+        <field name="category_id" ref="l10n_za_salcat_pension_ee"/>
+        <field name="sequence">35</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0.0
+if contract.l10n_za_provident_fund_id and contract.l10n_za_provident_employee_rate:
+    result = contract.wage * contract.l10n_za_provident_employee_rate / 100.0
+        </field>
+        <field name="register_id" ref="l10n_za_provident_register"/>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 9. PAYE (Income Tax) -->
+    <record id="l10n_za_rule_paye" model="hr.salary.rule">
+        <field name="name">PAYE (Income Tax)</field>
+        <field name="code">PAYE</field>
+        <field name="category_id" ref="l10n_za_salcat_tax"/>
+        <field name="sequence">40</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories.GROSS - categories.PENSION_EE
+if taxable &lt;= 0.0:
+    result = 0.0
+else:
+    rebate = contract.l10n_za_tax_rebate or 'primary'
+    dependents = (employee.l10n_za_medical_aid_dependents or 0) + 1
+    result = tools.l10n_za_compute_paye(taxable, rebate, dependents)
+        </field>
+        <field name="register_id" ref="l10n_za_sars_register"/>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 10. UIF (Employee) -->
+    <record id="l10n_za_rule_uif_ee" model="hr.salary.rule">
+        <field name="name">UIF (Employee)</field>
+        <field name="code">UIF_EE</field>
+        <field name="category_id" ref="l10n_za_salcat_uif"/>
+        <field name="sequence">45</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_za_uif_applies</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+uif_ceiling = tools.l10n_za_get_parameter('l10n_za_uif_ceiling')
+uif_rate = tools.l10n_za_get_parameter('l10n_za_uif_rate')
+result = min(categories.GROSS, uif_ceiling) * uif_rate / 100.0
+        </field>
+        <field name="register_id" ref="l10n_za_sars_register"/>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 11. MEDICAL AID -->
+    <record id="l10n_za_rule_medical" model="hr.salary.rule">
+        <field name="name">Medical Aid</field>
+        <field name="code">MEDICAL</field>
+        <field name="category_id" ref="l10n_za_salcat_medical"/>
+        <field name="sequence">50</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.l10n_za_medical_aid_employee_contrib or 0.0</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 12. TOTAL DEDUCTIONS (display only) -->
+    <record id="l10n_za_rule_deductions" model="hr.salary.rule">
+        <field name="name">Total Deductions</field>
+        <field name="code">DEDUCTIONS</field>
+        <field name="category_id" ref="l10n_za_salcat_deductions"/>
+        <field name="sequence">55</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = categories.PENSION_EE + categories.TAX + categories.UIF + categories.MEDICAL
+        </field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- 13. NET PAY -->
+    <record id="l10n_za_rule_net" model="hr.salary.rule">
+        <field name="name">Net Pay</field>
+        <field name="code">NET</field>
+        <field name="category_id" ref="l10n_za_salcat_net"/>
+        <field name="sequence">60</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.GROSS - categories.DEDUCTIONS</field>
+        <field name="appears_on_payslip" eval="True"/>
+
+    </record>
+
+    <!-- EMPLOYER COST RULES -->
+    <!-- 14. UIF (Employer) -->
+    <record id="l10n_za_rule_uif_er" model="hr.salary.rule">
+        <field name="name">UIF (Employer)</field>
+        <field name="code">UIF_ER</field>
+        <field name="category_id" ref="l10n_za_salcat_employer_cost"/>
+        <field name="sequence">70</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_za_uif_applies</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+uif_ceiling = tools.l10n_za_get_parameter('l10n_za_uif_ceiling')
+uif_rate = tools.l10n_za_get_parameter('l10n_za_uif_rate')
+result = min(categories.GROSS, uif_ceiling) * uif_rate / 100.0
+        </field>
+        <field name="register_id" ref="l10n_za_sars_register"/>
+        <field name="appears_on_payslip" eval="False"/>
+
+    </record>
+
+    <!-- 15. SDL (Employer) -->
+    <record id="l10n_za_rule_sdl_er" model="hr.salary.rule">
+        <field name="name">SDL (Employer)</field>
+        <field name="code">SDL_ER</field>
+        <field name="category_id" ref="l10n_za_salcat_employer_cost"/>
+        <field name="sequence">75</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_za_sdl_applies</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+sdl_ceiling = tools.l10n_za_get_parameter('l10n_za_sdl_ceiling')
+sdl_rate = tools.l10n_za_get_parameter('l10n_za_sdl_rate')
+result = min(categories.GROSS * sdl_rate / 100.0, sdl_ceiling)
+        </field>
+        <field name="register_id" ref="l10n_za_sars_register"/>
+        <field name="appears_on_payslip" eval="False"/>
+
+    </record>
+
+    <!-- 16. PENSION (Employer) -->
+    <record id="l10n_za_rule_pension_er" model="hr.salary.rule">
+        <field name="name">Pension Fund (Employer)</field>
+        <field name="code">PENSION_ER</field>
+        <field name="category_id" ref="l10n_za_salcat_employer_cost"/>
+        <field name="sequence">80</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0.0
+if contract.l10n_za_pension_fund_id and contract.l10n_za_pension_employer_rate:
+    result = contract.wage * contract.l10n_za_pension_employer_rate / 100.0
+        </field>
+        <field name="register_id" ref="l10n_za_pension_register"/>
+        <field name="appears_on_payslip" eval="False"/>
+
+    </record>
+
+    <!-- 17. PROVIDENT (Employer) -->
+    <record id="l10n_za_rule_provident_er" model="hr.salary.rule">
+        <field name="name">Provident Fund (Employer)</field>
+        <field name="code">PROVIDENT_ER</field>
+        <field name="category_id" ref="l10n_za_salcat_employer_cost"/>
+        <field name="sequence">85</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0.0
+if contract.l10n_za_provident_fund_id and contract.l10n_za_provident_employer_rate:
+    result = contract.wage * contract.l10n_za_provident_employer_rate / 100.0
+        </field>
+        <field name="register_id" ref="l10n_za_provident_register"/>
+        <field name="appears_on_payslip" eval="False"/>
+
+    </record>
+
+    <!-- Link all rules to the standard payroll structure -->
+    <record id="l10n_za_payroll_structure" model="hr.payroll.structure">
+        <field name="rule_ids" eval="[
+            (4, ref('l10n_za_rule_basic')),
+            (4, ref('l10n_za_rule_travel')),
+            (4, ref('l10n_za_rule_housing')),
+            (4, ref('l10n_za_rule_car')),
+            (4, ref('l10n_za_rule_other')),
+            (4, ref('l10n_za_rule_gross')),
+            (4, ref('l10n_za_rule_pension_ee')),
+            (4, ref('l10n_za_rule_provident_ee')),
+            (4, ref('l10n_za_rule_paye')),
+            (4, ref('l10n_za_rule_uif_ee')),
+            (4, ref('l10n_za_rule_medical')),
+            (4, ref('l10n_za_rule_deductions')),
+            (4, ref('l10n_za_rule_net')),
+            (4, ref('l10n_za_rule_uif_er')),
+            (4, ref('l10n_za_rule_sdl_er')),
+            (4, ref('l10n_za_rule_pension_er')),
+            (4, ref('l10n_za_rule_provident_er')),
+        ]"/>
+    </record>
+</odoo>

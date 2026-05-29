@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_rule_parameter_user,hr.rule.parameter user,model_hr_rule_parameter,payroll.group_payroll_user,1,0,0,0
+access_hr_rule_parameter_manager,hr.rule.parameter manager,model_hr_rule_parameter,payroll.group_payroll_manager,1,1,1,1
+access_hr_rule_parameter_bracket_user,hr.rule.parameter.bracket user,model_hr_rule_parameter_bracket,payroll.group_payroll_user,1,0,0,0
+access_hr_rule_parameter_bracket_manager,hr.rule.parameter.bracket manager,model_hr_rule_parameter_bracket,payroll.group_payroll_manager,1,1,1,1
+access_l10n_za_emp201_wizard_user,l10n_za.emp201.wizard user,model_l10n_za_emp201_wizard,payroll.group_payroll_user,1,1,1,1
+access_l10n_za_emp201_wizard_manager,l10n_za.emp201.wizard manager,model_l10n_za_emp201_wizard,payroll.group_payroll_manager,1,1,1,1
+access_l10n_za_irp5_wizard_user,l10n_za.irp5.wizard user,model_l10n_za_irp5_wizard,payroll.group_payroll_user,1,1,1,1
+access_l10n_za_irp5_wizard_manager,l10n_za.irp5.wizard manager,model_l10n_za_irp5_wizard,payroll.group_payroll_manager,1,1,1,1
+access_l10n_za_emp501_wizard_user,l10n_za.emp501.wizard user,model_l10n_za_emp501_wizard,payroll.group_payroll_user,1,1,1,1
+access_l10n_za_emp501_wizard_manager,l10n_za.emp501.wizard manager,model_l10n_za_emp501_wizard,payroll.group_payroll_manager,1,1,1,1
+access_l10n_za_tax_table_import_wizard_user,l10n_za.tax.table.import.wizard user,model_l10n_za_tax_table_import_wizard,payroll.group_payroll_user,1,1,1,1
+access_l10n_za_tax_table_import_wizard_manager,l10n_za.tax.table.import.wizard manager,model_l10n_za_tax_table_import_wizard,payroll.group_payroll_manager,1,1,1,1

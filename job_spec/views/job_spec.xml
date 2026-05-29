@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="job_spec_tree_view" model="ir.ui.view">
+            <field name="name">Job Spec Tree</field>
+            <field name="model">job.spec</field>
+            <field name="arch" type="xml">
+                <list string="Job Spec">
+                    <field name="name" string="Name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="job_spec_form_view" model="ir.ui.view">
+            <field name="name">Job Spec form</field>
+            <field name="model">job.spec</field>
+            <field name="arch" type="xml">
+                <form string="Jobs - Spec Form" class="o_job_spec_form">
+                    <sheet>
+                        <div class="oe_title pe-0">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1 class="d-flex justify-content-between align-items-center">
+                                <field name="name" string="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="note"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user" options="{'post_refresh': 'recipients'}"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_job_spec" model="ir.actions.act_window">
+            <field name="name">Job Spec</field>
+            <field name="res_model">job.spec</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_parent_job_spec" name="Job Spec"
+            parent="hr_recruitment.menu_hr_recruitment_root" sequence="4"/>
+
+        <menuitem id="menu_job_spec" name="Job Spec"
+                  action="action_job_spec"
+                  parent="job_spec.menu_parent_job_spec" sequence="1"/>
+    </data>
+
+</odoo>

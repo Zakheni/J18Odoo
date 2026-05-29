@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="import_zakheni_resume_form" model="ir.ui.view">
+            <field name="name">Import Zakheni Resume form</field>
+            <field name="model">import.zakheni.resume</field>
+            <field name="arch" type="xml">
+                <form string="Import Zakheni Resumes Form">
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary" string="Upload Resumes"/>
+                        <field name="file_type" readonly="1"/>
+                    </group>
+                    <footer>
+<!--                        <button name="import_zakheni_resume" string="Import" type="object" class="btn-primary"/>-->
+                        <button name="import_dox_resume" string="Import" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_import_zakheni_resume_form">
+            <field name="name">Import Zakheni Resumes</field>
+            <field name="res_model">import.zakheni.resume</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_import_zakheni_resume_wizard" name="Import Zakheni Resumes" parent="job_spec.menu_parent_job_spec" action="action_import_zakheni_resume_form"/>
+    </data>
+</odoo>

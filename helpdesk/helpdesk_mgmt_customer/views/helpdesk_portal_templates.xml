@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend portal ticket page to show customer info -->
+    <template id="portal_helpdesk_customer_ticket"
+              name="Helpdesk Customer Ticket Info"
+              inherit_id="helpdesk_mgmt.portal_helpdesk_ticket_page"
+              priority="20">
+        <xpath expr="//div[@name='ticket_close_buttons']" position="before">
+            <div class="col-12" t-if="ticket.customer_id">
+                <h6><small class="text-muted">Customer Account</small></h6>
+                <span class="badge rounded-pill text-bg-secondary"
+                      t-esc="ticket.customer_id.name" />
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Live chat widget placeholder on portal -->
+    <template id="portal_helpdesk_livechat"
+              name="Helpdesk Live Chat Button"
+              inherit_id="helpdesk_mgmt.portal_helpdesk_ticket_page"
+              priority="10">
+        <xpath expr="//div[@id='helpdesk_ticket_content']" position="before">
+            <div class="col-12 mb-3" t-if="ticket.customer_id and not ticket.closed">
+                <div class="alert alert-info d-flex align-items-center gap-2"
+                     role="alert">
+                    <i class="fa fa-comments" />
+                    <span>Need help? Chat with our support team.</span>
+                    <button class="btn btn-sm btn-primary ms-auto"
+                            onclick="document.querySelector('.o_livechat_button')?.click()">
+                        Start Chat
+                    </button>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Extend create ticket form with customer pre-selection -->
+    <template id="portal_create_ticket_customer"
+              name="Create Ticket Customer"
+              inherit_id="helpdesk_mgmt.portal_create_ticket"
+              priority="20">
+        <xpath expr="//select[@name='team']" position="before">
+            <div class="form-group mb-3" t-if="customers">
+                <label class="col-md-3 col-sm-4 control-label"
+                       for="customer">Customer Account</label>
+                <div class="col-md-7 col-sm-8">
+                    <select class="form-control" id="customer" name="customer">
+                        <option value="" />
+                        <t t-foreach="customers" t-as="cust">
+                            <option t-attf-value="#{cust.id}">
+                                <t t-esc="cust.name" />
+                            </option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

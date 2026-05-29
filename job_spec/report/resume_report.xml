@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="custom_internal_layout">
+            <div class="header">
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-2 offset-2 text-center">
+                    </div>
+                    <!--div class="col-2 offset-3 text-end">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><span class="page"/></li>
+                            <li class="list-inline-item">/</li>
+                            <li class="list-inline-item"><span class="topage"/></li>
+                        </ul>
+                    </div-->
+                </div>
+            </div>
+            <!-- New Footer Section for Page Numbering -->
+            <div class="footer">
+                <div class="row">
+                    <div class="col-12 text-end">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><span class="page"/></li>
+                            <li class="list-inline-item">/</li>
+                            <li class="list-inline-item"><span class="topage"/></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+<!-- Khutso Mabatamela -->
+            <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-out="0"/>
+            </div>
+        </template>
+
+
+        <template id="resume_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="job_spec.custom_internal_layout">
+                        <div class="page">
+                            <div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <img src="job_spec/static/description/company.png" class="illustration_border" height="500px" width="500px"/>
+                                        <br/><br/><br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <div>
+                                            Zakheni ICT (Pty) Ltd.
+                                        </div>
+                                        <div>
+                                            Reg.2008/000855/07
+                                        </div><br/>
+                                        <div>Suite 306B, 3rd Floor Lougardia Building</div>
+                                        <div>1262 Embankment Rd</div>
+                                        <div>Centurion</div>
+                                        <div>0046</div>
+                                        <br/>
+                                        <div>Postal Address</div>
+                                        <div>P O Box 41714</div>
+                                        <div>Eersterus</div>
+                                        <div>0022</div><br/>
+                                        <div>Tel: (012) 643 0047</div>
+                                        <div>Fax: 086 656 6814</div>
+                                        <div>Email: info@zakhenict.co.za</div><br/><br/><br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3>CURRICULUM VITAE</h3><br/>
+                                        <h3>Of</h3>
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3><span t-esc="o.first_name"></span> <span t-esc="o.surname"/></h3><br/>
+                                    </div>
+                                    <br/><br/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3><span t-esc="o.applicant_id.job_id.name"></span></h3>
+                                    </div><br/><br/><br/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br/><br/>
+                                        <table class="table table-bordered mb64">
+                                            <div style="background-color:#D3D3D3" class="text-center"><h3>Personal Particulars</h3></div><br/>
+                                            <tr>
+                                                <td style="background-color:#D3D3D3" width="25%" class="text-right">
+                                                    Surname
+                                                </td>
+                                                <td><span t-esc="o.surname"/> </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color:#D3D3D3" width="25%" class="text-right">
+                                                    First Name
+                                                </td>
+                                                <td><span t-esc="o.first_name"/> </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color:#D3D3D3" width="25%" class="text-right">
+                                                    Position
+                                                </td>
+                                                <td><span t-esc="o.position"/> </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color:#D3D3D3" width="25%" class="text-right">
+                                                    ID No. / Passport
+                                                </td>
+                                                <td><span t-esc="o.id_passport"/> </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color:#D3D3D3" width="25%" class="text-right">
+                                                    Languages
+                                                </td>
+                                                <td><span t-esc="o.languages"/> </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            <!-- testing summary -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br/><br/>
+                                        <table class="table table-bordered mb64">
+                                            <div style="background-color:#D3D3D3" class="text-center"><h3>Executive Summary</h3></div><br/>
+                                            <tr>
+                                                <td style="background-color:#D3D3D3" width="25%" class="text-right">
+                                                    Executive Summary
+                                                </td>
+                                                <td><span t-esc="o.executive_summary"/> </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br/><br/>
+                                        <table class="table table-bordered mb64">
+                                            <div style="background-color:#D3D3D3" class="text-center"><h3>Qualifications</h3></div><br/>
+                                            <thead>
+                                                <tr>
+                                                    <th style="background-color:#D3D3D3" name="th_qualification" class="text-center"><span>Qualification</span></th>
+                                                    <th style="background-color:#D3D3D3" name="th_institution" class="text-center"><span>Institution</span></th>
+                                                    <th style="background-color:#D3D3D3" name="th_tear" class="text-center"><span>Year</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="o.qualification_ids" t-as="qualification">
+                                                    <td class="text-left"><span t-esc="qualification.qualification"/></td>
+                                                    <td class="text-left"><span t-esc="qualification.institute"/></td>
+                                                    <td class="text-left"><span t-esc="qualification.year"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-12">-->
+<!--                                        <br/><br/>-->
+<!--                                        <table class="table table-bordered mb64">-->
+<!--                                            <div style="background-color:#D3D3D3" class="text-left"><h3>Summary of Skills</h3></div><br/>-->
+<!--                                            <div style="background-color:#D3D3D3" class="text-left"><h4 style="background-color:#D3D3D3">Skills</h4></div>-->
+<!--                                            <div class="justify-content-start">-->
+<!--                                                <span t-esc="o.skills_summary"/>-->
+<!--                                            </div>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-12">-->
+<!--                                        <br/><br/>-->
+<!--                                        <table class="table table-bordered mb64">-->
+<!--                                            <div style="background-color:#D3D3D3" class="text-left"><h3>Additional Comments</h3></div><br/>-->
+<!--                                            <div class="justify-content-start">-->
+<!--                                                <span t-esc="o.additional_comments"/>-->
+<!--                                            </div>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br/><br/>
+                                        <table class="table table-bordered mb64">
+                                            <div style="background-color:#D3D3D3" class="text-center"><h3>Courses</h3></div><br/>
+                                            <thead>
+                                                <tr>
+                                                    <th style="background-color:#D3D3D3" width="60%" name="th_course_name" class="text-center"><span>Course Name</span></th>
+                                                    <th style="background-color:#D3D3D3" width="40%" name="th_course_institution" class="text-center"><span>Institution</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="o.course_ids" t-as="course">
+                                                    <td class="text-left" width="60%"><span t-esc="course.course"/></td>
+                                                    <td class="text-left" width="40%"><span t-esc="course.course_institute"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <p style="page-break-before:always;"> </p>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br/><br/>
+                                        <table class="table table-bordered mb64">
+                                            <div style="background-color:#D3D3D3" class="text-center"><h3>Employment History</h3></div><br/>
+                                            <t t-foreach="o.employment_history_ids" t-as="employment_history">
+                                                <tr>
+                                                    <td class="text-left" style="background-color:#D3D3D3" width="30%">Company Name</td>
+                                                    <td class="text-left" width="70%"><span t-esc="employment_history.emp_company_name"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="background-color:#D3D3D3" width="30%">Dates Employed</td>
+                                                    <td class="text-left" width="70%"><span t-esc="employment_history.emp_date_employed"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="background-color:#D3D3D3" width="30%">Position</td>
+                                                    <td class="text-left" width="70%"><span t-esc="employment_history.emp_position"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" width="100%" colspan="2">
+                                                        <div>
+                                                            Duties: <span t-esc="employment_history.emp_duties"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br/><br/>
+                                        <table class="table table-bordered mb64">
+                                            <div style="background-color:#D3D3D3" class="text-left"><h3>Skills Matrix</h3></div><br/>
+                                            <thead>
+                                                <tr>
+                                                    <th style="background-color:#D3D3D3" width="50%" name="th_course_name" class="text-center"><span>Primary Skills</span></th>
+                                                    <th style="background-color:#D3D3D3" width="15%" name="th_course_institution" class="text-center"><span>Experience (# yr.mth)</span></th>
+                                                    <th style="background-color:#D3D3D3" width="35%" name="th_course_institution" class="text-center"><span>Level 1=Beginner, 2 = Advanced,  3 = Expert)</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="o.skill_ids" t-as="skill">
+                                                    <td class="text-left" width="50%"><span t-esc="skill.skill"/></td>
+                                                    <td class="text-left" width="15%"><span t-esc="skill.skill_experience"/></td>
+                                                    <td class="text-left" width="35%"><span t-esc="skill.skill_level"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-12">-->
+<!--                                        <br/><br/>-->
+<!--                                        <table class="table table-bordered mb64">-->
+<!--                                            <div style="background-color:#D3D3D3" class="text-left"><h3>References</h3></div><br/>-->
+<!--                                            <thead>-->
+<!--                                                <tr>-->
+<!--                                                    <th style="background-color:#D3D3D3" width="50%" name="th_course_name" class="text-center"><span>Name of Company</span></th>-->
+<!--                                                    <th style="background-color:#D3D3D3" width="25%" name="th_course_institution" class="text-center"><span>Contact Person</span></th>-->
+<!--                                                    <th style="background-color:#D3D3D3" width="25%" name="th_course_institution" class="text-center"><span>Contact details</span></th>-->
+<!--                                                </tr>-->
+<!--                                            </thead>-->
+<!--                                            <tbody>-->
+<!--                                                <tr t-foreach="o.reference_ids" t-as="reference">-->
+<!--                                                    <td class="text-left" width="50%"><span t-esc="reference.ref_company"/></td>-->
+<!--                                                    <td class="text-left" width="25%"><span t-esc="reference.ref_person"/></td>-->
+<!--                                                    <td class="text-left" width="25%"><span t-esc="reference.ref_person_contact_details"/></td>-->
+<!--                                                </tr>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="resume_paperformat_us" model="report.paperformat">
+            <field name="name">Resume Paper Formate</field>
+            <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">30</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="resume_report_print" model="ir.actions.report">
+            <field name="name">Resume</field>
+            <field name="model">hr.applicant.resume</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">job_spec.resume_report</field>
+            <field name="report_file">job_spec.resume_report</field>
+            <field name="binding_model_id" ref="job_spec.model_hr_applicant_resume"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="job_spec.resume_paperformat_us"/>
+        </record>
+
+    </data>
+</odoo>

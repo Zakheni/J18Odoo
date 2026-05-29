@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_irp5">
+        <t t-call="web.html_container">
+            <t t-foreach="irp5_data or []" t-as="data">
+                <t t-call="web.external_layout">
+                    <div class="page" t-foreach="data['employees']" t-as="emp_data">
+                        <div class="text-center mb-4">
+                            <h2><t t-esc="data['certificate_type']"/></h2>
+                            <h4>South African Revenue Service</h4>
+                            <p><strong>Tax Year:</strong> <t t-esc="data['tax_year']"/></p>
+                        </div>
+
+                        <table class="table table-sm table-bordered mb-4">
+                            <tr>
+                                <td><strong>Employer Name</strong></td>
+                                <td><t t-esc="data['company'].name"/></td>
+                                <td><strong>PAYE Ref</strong></td>
+                                <td><t t-esc="data['company'].l10n_za_paye_number or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>SARS Reg Number</strong></td>
+                                <td colspan="3"><t t-esc="data['company'].l10n_za_sars_registration_number or ''"/></td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm table-bordered mb-4">
+                            <tr>
+                                <td><strong>Employee</strong></td>
+                                <td><t t-esc="emp_data['employee'].name"/></td>
+                                <td><strong>SA ID Number</strong></td>
+                                <td><t t-esc="emp_data['employee'].l10n_za_id_number or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tax Reference</strong></td>
+                                <td><t t-esc="emp_data['employee'].l10n_za_tax_number or ''"/></td>
+                                <td><strong>Period</strong></td>
+                                <td><t t-esc="data['date_from']"/> to <t t-esc="data['date_to']"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payslips</strong></td>
+                                <td colspan="3"><t t-esc="emp_data['payslip_count']"/></td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                    <th class="text-right">Amount (ZAR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3601</td>
+                                    <td>Gross Income</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['gross']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3602</td>
+                                    <td>Basic Salary</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['basic']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3603</td>
+                                    <td>Allowances</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['allowances']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4001</td>
+                                    <td>Pension Fund (Employee)</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['pension_ee'] + emp_data['provident_ee']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4101</td>
+                                    <td>Medical Aid Contributions</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['medical']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4401</td>
+                                    <td>UIF (Employee)</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['uif_ee']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-weight-bold">
+                                    <td>4402</td>
+                                    <td>PAYE / Employees Tax</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['paye']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr class="font-weight-bold">
+                                    <td></td>
+                                    <td>Net Pay</td>
+                                    <td class="text-right">
+                                        <t t-esc="emp_data['net']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <p class="mt-4"><em>This certificate was generated electronically on <t t-esc="data['date_to']"/>.</em></p>
+                        <p class="text-right mt-4">
+                            <strong>Employer Signature</strong>: _________________________
+                        </p>
+                        <div class="mt-4" t-if="data.size &gt; 1 and !_last">
+                            <p class="text-center" style="page-break-before: always;">&#160;</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

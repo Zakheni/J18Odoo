@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_za_demo_employee" model="hr.employee">
+        <field name="name">John Zakheni</field>
+        <field name="l10n_za_id_number">9001010001001</field>
+        <field name="l10n_za_tax_number">1234567890</field>
+    </record>
+    <record id="l10n_za_demo_contract" model="hr.contract">
+        <field name="name">ZA Demo Contract</field>
+        <field name="employee_id" ref="l10n_za_demo_employee"/>
+        <field name="wage">25000.0</field>
+        <field name="struct_id" ref="l10n_za_payroll_structure"/>
+        <field name="l10n_za_tax_rebate">primary</field>
+        <field name="l10n_za_travel_allowance">2000.0</field>
+        <field name="l10n_za_medical_aid_employee_contrib">1500.0</field>
+        <field name="l10n_za_medical_aid_dependents">2</field>
+        <field name="l10n_za_pension_employee_rate">7.5</field>
+        <field name="l10n_za_pension_employer_rate">7.5</field>
+    </record>
+</odoo>

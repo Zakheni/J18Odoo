@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_za_hr_payslip_view_form" model="ir.ui.view">
+        <field name="name">hr.payslip.l10n_za.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="payroll.hr_payslip_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='computation']" position="before">
+                <page name="l10n_za" string="South Africa">
+                    <group string="SARS Totals">
+                        <field name="l10n_za_gross_amount" widget="monetary"/>
+                        <field name="l10n_za_paye_amount" widget="monetary"/>
+                        <field name="l10n_za_uif_amount" widget="monetary"/>
+                        <field name="l10n_za_sdl_amount" widget="monetary"/>
+                        <field name="l10n_za_net_amount" widget="monetary"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

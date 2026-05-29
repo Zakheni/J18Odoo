@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!-- Default channels expanded for customer context -->
+        <record id="helpdesk_ticket_channel_customer_email" model="helpdesk.ticket.channel">
+            <field name="name">Customer Email</field>
+            <field name="company_id" />
+        </record>
+        <record id="helpdesk_ticket_channel_customer_portal" model="helpdesk.ticket.channel">
+            <field name="name">Customer Portal</field>
+            <field name="company_id" />
+        </record>
+        <record id="helpdesk_ticket_channel_customer_livechat" model="helpdesk.ticket.channel">
+            <field name="name">Live Chat</field>
+            <field name="company_id" />
+        </record>
+    </data>
+</odoo>

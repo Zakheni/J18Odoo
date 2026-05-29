@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_za_emp201_wizard" model="ir.ui.view">
+        <field name="name">l10n_za.emp201.wizard.form</field>
+        <field name="model">l10n_za.emp201.wizard</field>
+        <field name="arch" type="xml">
+            <form string="SARS EMP201 Monthly Return">
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="tax_year"/>
+                    <field name="month"/>
+                    <field name="date_from" invisible="1"/>
+                    <field name="date_to" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_print_emp201" string="Generate EMP201" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_za_emp201" model="ir.actions.act_window">
+        <field name="name">EMP201 Monthly Return</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">l10n_za.emp201.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_report_l10n_za_emp201" model="ir.actions.report">
+        <field name="name">EMP201 Monthly Return</field>
+        <field name="model">l10n_za.emp201.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_za_hr_payroll.report_emp201</field>
+        <field name="report_file">l10n_za_hr_payroll.report_emp201</field>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

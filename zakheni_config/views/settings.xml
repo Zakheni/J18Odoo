@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="zakheni_config_settings" model="ir.ui.view">
+        <field name="name">zakheni.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Zakheni ICT" string="Zakheni ICT" name="zakheni_config">
+                    <div>
+                        <block title="SARS Tax Table Autofetch">
+                            <setting>
+                                <field name="tax_table_autofetch_url"/>
+                            </setting>
+                            <setting>
+                                <field name="tax_table_autofetch_enabled"/>
+                            </setting>
+                            <setting>
+                                <button name="%(zakheni_config.action_autofetch_tax_tables)d"
+                                        string="Run Autofetch Now"
+                                        type="action"
+                                        class="btn-link"/>
+                            </setting>
+                        </block>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

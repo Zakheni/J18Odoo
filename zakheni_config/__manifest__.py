@@ -1,0 +1,24 @@
+{
+    'name': 'Zakheni ICT Configuration',
+    'summary': 'Company setup, SARS tax tables, Azure AD config, and DMS storage templates.',
+    'version': '18.0.1.0.0',
+    'category': 'Tools',
+    'license': 'LGPL-3',
+    'author': 'Zakheni ICT (Pty) Ltd',
+    'website': 'https://www.zakhenict.co.za',
+    'depends': [
+        'base',
+        'l10n_za_hr_payroll',
+        'sharepoint_connector',
+        'dms',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/company_setup.xml',
+        'views/settings.xml',
+        'wizards/tax_table_autofetch_views.xml',
+    ],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

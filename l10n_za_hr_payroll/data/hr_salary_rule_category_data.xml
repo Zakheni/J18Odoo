@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_za_salcat_basic" model="hr.salary.rule.category">
+        <field name="code">BASIC</field>
+        <field name="name">Basic Salary</field>
+    </record>
+    <record id="l10n_za_salcat_allowances" model="hr.salary.rule.category">
+        <field name="code">ALLOWANCES</field>
+        <field name="name">Allowances</field>
+    </record>
+    <record id="l10n_za_salcat_gross" model="hr.salary.rule.category">
+        <field name="code">GROSS</field>
+        <field name="name">Gross Income</field>
+    </record>
+    <record id="l10n_za_salcat_pension_ee" model="hr.salary.rule.category">
+        <field name="code">PENSION_EE</field>
+        <field name="name">Pension / Provident (Employee)</field>
+    </record>
+    <record id="l10n_za_salcat_tax" model="hr.salary.rule.category">
+        <field name="code">TAX</field>
+        <field name="name">Tax</field>
+    </record>
+    <record id="l10n_za_salcat_uif" model="hr.salary.rule.category">
+        <field name="code">UIF</field>
+        <field name="name">UIF</field>
+    </record>
+    <record id="l10n_za_salcat_medical" model="hr.salary.rule.category">
+        <field name="code">MEDICAL</field>
+        <field name="name">Medical Aid</field>
+    </record>
+    <record id="l10n_za_salcat_other_ded" model="hr.salary.rule.category">
+        <field name="code">OTHER_DED</field>
+        <field name="name">Other Deductions</field>
+    </record>
+    <record id="l10n_za_salcat_deductions" model="hr.salary.rule.category">
+        <field name="code">DEDUCTIONS</field>
+        <field name="name">Total Deductions</field>
+    </record>
+    <record id="l10n_za_salcat_employer_cost" model="hr.salary.rule.category">
+        <field name="code">EMPLOYER_COST</field>
+        <field name="name">Employer Cost</field>
+    </record>
+    <record id="l10n_za_salcat_net" model="hr.salary.rule.category">
+        <field name="code">NET</field>
+        <field name="name">Net Pay</field>
+    </record>
+</odoo>

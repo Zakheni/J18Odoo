@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="job_application_form_inherit" name="Job Application Form"
+              inherit_id="website_hr_recruitment.apply">
+        <xpath expr="//div[hasclass('s_website_form_rows')]/div[4]" position="after">
+            <div class="col-12 mb-0 py-2 s_website_form_field"
+                 data-type="number" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px"
+                           for="how_many_years_of_experience">
+                        <span class="s_website_form_label_content">How Many years of experience</span>
+                    </label>
+                    <div class="col-sm">
+                        <input id="how_many_years_of_experience" type="number"
+                               class="form-control s_website_form_input" max="10" min="1"
+                               name="how_many_years_of_experience" required=""
+                               data-fill-with="how_many_years_of_experience"/>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="col-12 mb-0 py-2 s_website_form_field"
+                 data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="location">
+                    </label>
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="location">
+                        <span class="s_website_form_label_content">Location</span>
+                    </label>
+                    <div class="col-sm">
+                        <input id="location" type="text"
+                               class="form-control s_website_form_input"
+                               name="location"
+                               data-fill-with="location"/>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="mode_of_work">
+                        <span class="s_website_form_label_content">Mode of Work</span>
+                    </label>
+                    <div class="col-sm">
+                        <select id="mode_of_work" class="form-control s_website_form_input" name="mode_of_work"
+                                required="">
+                            <option value="ST">Onsite</option>
+                            <option value="OB">Remote</option>
+                            <option value="both">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="criminal_record">
+                        <span class="s_website_form_label_content">Crimininal Record</span>
+                    </label>
+                    <div class="col-sm">
+                        <select id="criminal_record" class="form-control s_website_form_input" name="criminal_record"
+                                required="">
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="crime_info_div">
+                <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="crime_info">
+                            <span class="s_website_form_label_content">Criminal Record Details</span>
+                        </label>
+                        <div class="col-sm">
+                            <input type="text" id="crime_info" class="form-control s_website_form_input"
+                                   name="crime_info"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="citizenship">
+                        <span class="s_website_form_label_content">Nationality</span>
+                    </label>
+                    <div class="col-sm">
+                        <select id="citizenship" class="form-control s_website_form_input" name="citizenship">
+                            <option value="SA">South African</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="id_number_field" style="display: none;">
+                <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="id_number">
+                            <span class="s_website_form_label_content">ID Number (SA)</span>
+                        </label>
+                        <div class="col-sm">
+                            <input type="text" id="id_number" class="form-control s_website_form_input" name="id_no"
+                                   maxlength="13"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="passport_field">
+                <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="passport">
+                            <span class="s_website_form_label_content">Passport (Non-SA)</span>
+                        </label>
+                        <div class="col-sm">
+                            <input type="text" id="passport" class="form-control s_website_form_input" name="passport"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="disability">
+                        <span class="s_website_form_label_content">Disability</span>
+                    </label>
+                    <div class="col-sm">
+                        <select id="disability" class="form-control s_website_form_input" name="disability">
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="disability_details_field">
+                <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px"
+                               for="disability_details">
+                            <span class="s_website_form_label_content">Disability Details</span>
+                        </label>
+                        <div class="col-sm">
+                            <input type="text" id="disability_details" class="form-control s_website_form_input"
+                                   name="disability_type"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="gender">
+                        <span class="s_website_form_label_content">Gender</span>
+                    </label>
+                    <div class="col-sm">
+                        <select id="gender" class="form-control s_website_form_input" name="gender" required="">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="current_rate">
+                        <span class="s_website_form_label_content">Current Rate</span>
+                    </label>
+                    <div class="col-sm">
+                        <input type="text" id="current_rate" class="form-control s_website_form_input"
+                               name="salary_proposed" placeholder="15000" required=""/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="expected_rate">
+                        <span class="s_website_form_label_content">Expected Rate</span>
+                    </label>
+                    <div class="col-sm">
+                        <input type="text" id="expected_rate" class="form-control s_website_form_input"
+                               name="salary_expected" placeholder="20000" required=""/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="char" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="notice_period">
+                        <span class="s_website_form_label_content">Notice Period</span>
+                    </label>
+                    <div class="col-sm">
+                        <input type="text" id="notice_period" class="form-control s_website_form_input"
+                               name="notice_period" placeholder="15 days" required=""/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-0 py-2 s_website_form_field" data-type="binary" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="documents">
+                        <span class="s_website_form_label_content">Documents</span>
+                    </label>
+                    <div class="col-sm">
+                        <input type="file" id="documents" name="files[]" multiple="multiple" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="is_create_resume_div" style="display: none;">
+                <div class="col-12 mb-0 py-2 s_website_form_field" data-type="boolean" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px"
+                               for="is_create_resume_from_web">
+                            <span class="s_website_form_label_content">Is Create Resume</span>
+                        </label>
+                        <div class="col-sm">
+                            <input type="checkbox" id="is_create_resume" name="is_create_resume_from_web"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </xpath>
+
+        <xpath expr="//div[hasclass('s_website_form_submit')]/div[1]" position="inside">
+            <div style="width: 200px" class="s_website_form_label"/>
+            <a href="/create/resume" role="button" class="btn btn-primary mx-auto d-block btn-lg s_website_create_resume">Create
+                Resume
+            </a>
+            <span id=""></span>
+        </xpath>
+
+        <xpath expr="//a[hasclass('s_website_form_send')]" position="replace">
+        </xpath>
+
+    </template>
+
+    <template id="job_application_create_resume_form" name="Create Resume Form"
+              inherit_id="website_hr_recruitment.thankyou_ir_ui_view">
+        <xpath expr="//div[hasclass('container')]" position="replace">
+            <t t-if="request.session.get('form_builder_model_model', '') == 'hr.applicant'">
+                <t t-set="applicant_id" t-value="request.website._website_form_last_record()"/>
+                <t t-if="applicant_id.sudo().zakheni_resume_id">
+                    <t t-set="pre_resume" t-value="applicant_id.sudo().zakheni_resume_id"></t>
+                </t>
+                <t t-else="">
+                    <t t-set="pre_resume" t-value="request.env['hr.applicant.resume'].sudo().search([('email', '=', applicant_id.sudo().email_from)], order='id desc', limit=1)" />
+                </t>
+                <t t-set="job" t-value="request.website._website_form_last_record().sudo().job_id"/>
+                <t t-set="responsible" t-value="job and job.user_id.website_published and job.user_id "/>
+                <t t-if="applicant_id.is_create_resume_from_web">
+                    <div id="wrap" class="container">
+                        <h2 class="mb-4">
+                            Create Resume ..
+                        </h2>
+                        <div class="container form-container" id="resume_container">
+                            <form id="hr_resume_form" action="/website/resume/create" method="post"
+                                  enctype="multipart/form-data" class="o_mark_required row"
+                                  data-mark="*" data-model_name="hr.applicant">
+                                <h3 class="text-center heading_3">Personal Particulars</h3>
+                                <div class="row" style="display:none;">
+                                    <div class="col form-group" style="">
+                                        <div class="row">
+                                            <label class="col-md-3">Applicant ID</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="applicant_id"
+                                                       name="applicant_id" t-att-value="applicant_id.id"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <div class="row">
+                                            <label class="col-md-3">Surname</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="surname" id="Sname"
+                                                       placeholder="Enter Surname" t-att-value="pre_resume.surname"/>
+                                                <small id="fname_alert"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col form-group">
+                                        <div class="row">
+                                            <label class="col-md-3">ID No./ Passport</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="id_passport"
+                                                       id="nationality_id" placeholder="ID No./ Passport"
+                                                       t-att-value="pre_resume.id_passport"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <div class="row">
+                                            <label class="col-md-3">First Name</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="first_name" id="name"
+                                                       placeholder="Enter First Name" t-att-value="pre_resume.first_name"/>
+                                                <small id="fname_alert"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col form-group">
+                                        <div class="row">
+                                            <label class="col-md-3">Languages</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="languages"
+                                                       id="languages" t-att-value="pre_resume.languages"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="text-center heading_3">Qualifications</h3>
+                                <div class="table-responsive">
+                                    <table id="qualTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Qualification</th>
+                                                <th>Institution</th>
+                                                <th>Year</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="qualTableBody">
+                                            <t t-if="pre_resume and len(pre_resume.qualification_ids) > 0">
+                                                <t t-set="count" t-value="0"/>
+                                                <t t-foreach="pre_resume.qualification_ids" t-as="qualification">
+                                                    <tr t-att-id="str('row')+''+ str(count)">
+                                                        <td>
+                                                            <input t-att-name="str('qualification')+''+str(count)" type='text'
+                                                                   class='form-control' t-att-value="qualification.qualification"/>
+                                                        </td>
+                                                        <td>
+                                                            <input t-att-name="str('institute')+''+str(count)" type='text'
+                                                                   class='form-control input-md' t-att-value="qualification.institute"/>
+                                                        </td>
+                                                        <td>
+                                                            <input t-att-name="str('year')+''+str(count)"  type='text'
+                                                                   class='form-control input-md' t-att-value="qualification.year"/>
+                                                        </td>
+                                                        <td>
+                                                            <button type='button' class="btn addBtn" id="addLine">
+                                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                            </button>
+                                                            <button type='button' class="btn deleteBtn" id="deleteLine">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="count" t-value="int(count)+1"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <tr id="row0">
+                                                    <td>
+                                                        <input name='qualification0' type='text'
+                                                               class='form-control'/>
+                                                    </td>
+                                                    <td>
+                                                        <input name='institute0' type='text'
+                                                               class='form-control input-md'/>
+                                                    </td>
+                                                    <td>
+                                                        <input name='year0'  type='text'
+                                                               class='form-control input-md'/>
+                                                    </td>
+                                                    <td>
+                                                        <button type='button' class="btn addBtn" id="addLine">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button type='button' class="btn deleteBtn" id="deleteLine">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--                                <h3 class="text-center heading_3">Summary of Skills</h3>-->
+                                <!--                                <div class="container skills_summary">-->
+                                <!--                                    <div class="expandable-textarea">-->
+                                <!--                                        <textarea placeholder="eg. Communication Skill" rows="5"-->
+                                <!--                                                  name="skills_summary"></textarea>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                <h3 class="text-center heading_3">Additional Comments</h3>-->
+                                <!--                                <div class="container additional_comments">-->
+                                <!--                                    <div class="expandable-textarea">-->
+                                <!--                                        <textarea placeholder="Your Comments.." rows="2"-->
+                                <!--                                                  name="additional_comments"></textarea>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+
+                                <h3 class="text-center heading_3">Courses</h3>
+                                <div class="table-responsive">
+                                    <table id="coursesTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Course Name</th>
+                                                <th>Institution</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="coursesTableBody">
+                                            <t t-if="pre_resume and len(pre_resume.course_ids) > 0">
+                                                <t t-set="count" t-value="0"/>
+                                                <t t-foreach="pre_resume.course_ids" t-as="course">
+                                                    <tr t-att-id="str('row')+''+ str(count)">
+                                                        <td>
+                                                            <input t-att-name="str('course')+''+str(count)" type='text'
+                                                                   class='form-control' t-att-value="course.course"/>
+                                                        </td>
+                                                        <td>
+                                                            <input t-att-name="str('course_institute')+''+str(count)" type='text'
+                                                                   class='form-control input-md' t-att-value="course.course_institute"/>
+                                                        </td>
+                                                        <td>
+                                                            <button type='button' class="btn addBtn" id="addCourseLine">
+                                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                            </button>
+                                                            <button type='button' class="btn deleteBtn" id="deleteCourseLine">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="count" t-value="int(count)+1"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <tr id="row0">
+                                                    <td>
+                                                        <input name='course0'  type='text' class='form-control'/>
+                                                    </td>
+                                                    <td>
+                                                        <input name='course_institute0' type='text'
+                                                               class='form-control input-md'/>
+                                                    </td>
+                                                    <td>
+                                                        <button type='button' class="btn addBtn" id="addCourseLine">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button type='button' class="btn deleteBtn" id="deleteCourseLine">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h3 class="text-center heading_3">Employment History</h3>
+                                <div class="table-responsive">
+                                    <div id="table-scroll" class="table-scroll">
+                                        <div class="table-wrap employment_div">
+                                            <table class="main-table employment_table">
+                                                <tbody id="employmentTableBody">
+                                                    <t t-if="pre_resume and len(pre_resume.employment_history_ids) > 0">
+                                                        <t t-set="count" t-value="0"/>
+                                                        <t t-foreach="pre_resume.employment_history_ids" t-as="history">
+                                                            <tr t-att-id="str('row')+''+ str(count)">
+                                                                <th scope="col" class="fixed-side">Company Name</th>
+                                                                <td colspan="8"><input t-att-name="str('emp_company_name')+''+str(count)" type='text'
+                                                                                       class='form-control' t-att-value="history.emp_company_name"/></td>
+                                                                <td rowspan="4">
+                                                                    <button type='button' class="btn addBtn" id="addEmpHistoryLine">
+                                                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <button type='button' class="btn deleteBtn" id="deleteEmpHistoryLine">
+                                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="fixed-side">Dates Employed</th>
+                                                                <td colspan="8"><input t-att-name="str('emp_date_employed')+''+str(count)" type='text'
+                                                                                       class='form-control' t-att-value="history.emp_date_employed"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="fixed-side">Position</th>
+                                                                <td colspan="8"><input t-att-name="str('emp_position')+''+str(count)" type='text'
+                                                                                       class='form-control' t-att-value="history.emp_position"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="8">
+                                                                    <textarea style="width:100%;" placeholder="Duties:" rows="2"
+                                                                              t-att-name="str('emp_duties')+''+str(count)"
+                                                                              t-esc="history.emp_duties"/>
+                                                                </td>
+                                                            </tr>
+                                                            <t t-set="count" t-value="int(count)+1"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <tr id="row0">
+                                                            <th scope="col" class="fixed-side">Company Name</th>
+                                                            <td colspan="8"><input name='emp_company_name0' type='text'
+                                                                                   class='form-control'/></td>
+                                                            <td rowspan="4">
+                                                                <button type='button' class="btn addBtn" id="addEmpHistoryLine">
+                                                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                                </button>
+                                                                <button type='button' class="btn deleteBtn" id="deleteEmpHistoryLine">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="fixed-side">Dates Employed</th>
+                                                            <td colspan="8"><input name='emp_date_employed0' type='text'
+                                                                                   class='form-control'/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="fixed-side">Position</th>
+                                                            <td colspan="8"><input name='emp_position0' type='text'
+                                                                                   class='form-control'/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="8">
+                                                                <textarea style="width:100%;" placeholder="Duties:" rows="2" name="emp_duties0"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-center heading_3">Skills Matrix</h3>
+                                <div class="table-responsive">
+                                    <table id="skillsTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Primary Skills</th>
+                                                <th>Experience (yr.mth)</th>
+                                                <th>Level (1 = Beginner, 2 = Advanced, 3 = Expert)</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="skillsTableBody">
+                                            <t t-if="pre_resume and len(pre_resume.skill_ids) > 0">
+                                                <t t-set="count" t-value="0"/>
+                                                <t t-foreach="pre_resume.skill_ids" t-as="skill">
+                                                    <tr t-att-id="str('row')+''+ str(count)">
+                                                        <td>
+                                                            <input t-att-name="str('skill')+''+str(count)" placeholder='Odoo Developer' type='text'
+                                                                   class='form-control' t-att-value="skill.skill"/>
+                                                        </td>
+                                                        <td>
+                                                            <input t-att-name="str('skill_experience')+''+str(count)" placeholder='4.5' type='text'
+                                                                   class='form-control input-md' t-att-value="skill.skill_experience"/>
+                                                        </td>
+                                                        <td>
+                                                            <select t-att-name="str('skill_level')+''+str(count)"
+                                                                    t-att-value="skill.skill_level"
+                                                                    class="form-control s_website_form_input">
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <button type='button' class="btn addBtn" id="addSkillLine">
+                                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                            </button>
+                                                            <button type='button' class="btn deleteBtn" id="deleteSkillLine">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="count" t-value="int(count)+1"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <tr id="row0">
+                                                    <td>
+                                                        <input name='skill0' placeholder='Odoo Developer' type='text'
+                                                               class='form-control'/>
+                                                    </td>
+                                                    <td>
+                                                        <input name='skill_experience0' placeholder='4.5' type='text'
+                                                               class='form-control input-md'/>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control s_website_form_input"
+                                                                name="skill_level0">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <button type='button' class="btn addBtn" id="addSkillLine">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button type='button' class="btn deleteBtn" id="deleteSkillLine">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!--                                <h3 class="text-center heading_3">References</h3>-->
+                                <!--                                <div class="table-responsive">-->
+                                <!--                                    <table id="refTable" class="table table-bordered">-->
+                                <!--                                        <thead>-->
+                                <!--                                            <tr>-->
+                                <!--                                                <th>Name of Company</th>-->
+                                <!--                                                <th>Contact Person</th>-->
+                                <!--                                                <th>Contact details</th>-->
+                                <!--                                                <th></th>-->
+                                <!--                                            </tr>-->
+                                <!--                                        </thead>-->
+                                <!--                                        <tbody id="refTableBody">-->
+                                <!--                                            <tr id="row0">-->
+                                <!--                                                <td>-->
+                                <!--                                                    <input name='ref_company0' type='text' class='form-control'/>-->
+                                <!--                                                </td>-->
+                                <!--                                                <td>-->
+                                <!--                                                    <input name='ref_person0' type='text'-->
+                                <!--                                                           class='form-control input-md'/>-->
+                                <!--                                                </td>-->
+                                <!--                                                <td>-->
+                                <!--                                                    <input name='ref_person_contact_details0' type='text'-->
+                                <!--                                                           class='form-control input-md'/>-->
+                                <!--                                                </td>-->
+                                <!--                                                <td>-->
+                                <!--                                                    <button type='button' class="btn addBtn" id="addRefLine">-->
+                                <!--                                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>-->
+                                <!--                                                    </button>-->
+                                <!--                                                    <button type='button' class="btn deleteBtn" id="deleteRefLine">-->
+                                <!--                                                        <i class="fa fa-trash" aria-hidden="true"></i>-->
+                                <!--                                                    </button>-->
+                                <!--                                                </td>-->
+                                <!--                                            </tr>-->
+                                <!--                                        </tbody>-->
+                                <!--                                    </table>-->
+                                <!--                                </div>-->
+
+                                <button type="submit" class="btn btn-primary mx-auto d-block"
+                                        style="width:10%;"
+                                >Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="row pt40">
+                        <div class="col-lg-12">
+                            <h1 class="text-center">Congratulations!</h1>
+                            <p class="text-center">
+                                Your application has been posted successfully.
+                            </p>
+                        </div>
+                        <t t-if="request.session.get('form_builder_model_model', '') == 'hr.applicant'">
+                            <t t-set="job" t-value="request.website._website_form_last_record().sudo().job_id"/>
+                            <t t-set="responsible" t-value="job and job.user_id.website_published and job.user_id "/>
+                        </t>
+                        <t t-if="responsible">
+                            <div class="col-lg-12">
+                                <h3 class="mb32 text-center">Your application has been sent to:</h3>
+                            </div>
+                            <div class="col-lg-1 offset-lg-4">
+                                <p t-field="responsible.avatar_128"
+                                   t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'rounded-circle d-block mx-auto o_image_64_cover'}"/>
+                            </div>
+                            <div class="col-lg-5 o_responsible_data">
+                                <h4 class="mt0" t-field="responsible.name"/>
+                                <p t-field="responsible.function"/>
+                                <t t-if='responsible.email'>
+                                    <i class="fa fa-envelope" role="img" aria-label="Email" title="Email"></i>
+                                    <a t-attf-href="mailto:#{responsible.email}" t-esc="responsible.email"/>
+                                </t>
+                                <t t-if='responsible.phone'>
+                                    <br/>
+                                    <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"></i>
+                                    <span t-field="responsible.phone"/>
+                                </t>
+                            </div>
+                            <div class="col-lg-12 mt32 mb32 text-center">
+                                <span>
+                                    We usually reply between one and three days.
+                                    <br/>
+                                    Feel free to contact him/her if you have further questions.
+                                </span>
+                            </div>
+                        </t>
+                    </div>
+                    <div class="row" id="o_recruitment_thank_cta">
+                        <div class="col-lg-12 text-center mb32">
+                            In the meantime,
+                            <h3 class="mt8 mb32">Look around on our website:</h3>
+                            <a role="button" href="/" class="btn btn-primary btn-lg">Continue To Our Website</a>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <t t-else="">
+                <div class="container">
+                    <div class="row pt40">
+                        <div class="col-lg-12">
+                            <h1 class="text-center">Congratulations!</h1>
+                            <p class="text-center">
+                                Your application has been posted successfully.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" id="o_recruitment_thank_cta">
+                        <div class="col-lg-12 text-center mb32">
+                            In the meantime,
+                            <h3 class="mt8 mb32">Look around on our website:</h3>
+                            <a role="button" href="/" class="btn btn-primary btn-lg">Continue To Our Website</a>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

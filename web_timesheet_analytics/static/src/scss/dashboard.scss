@@ -1,0 +1,28 @@
+.o_wta_dashboard {
+    .card {
+        border-radius: 0.6rem;
+    }
+
+    .wta-kpi {
+        border-left: 4px solid #0d6efd;
+    }
+
+    .wta-kpi-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #6b7280;
+        letter-spacing: 0.04em;
+    }
+
+    .wta-kpi-value {
+        font-size: 1.7rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    #wta_project_chart,
+    #wta_org_chart,
+    #wta_time_chart {
+        width: 100%;
+    }
+}

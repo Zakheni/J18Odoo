@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="md_view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">md.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']//group[@name='active_group']//field[@name='user_id']" position="attributes">
+                <attribute name="domain">[]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="timesheet_view_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.timesheet.tree.inherit</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.timesheet_view_tree_user" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="before">
+                <field name="ts_company_id"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="expenditure_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_edit_form_inherit" model="ir.ui.view">
+        <field name="name">edit_project.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="ts_company_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

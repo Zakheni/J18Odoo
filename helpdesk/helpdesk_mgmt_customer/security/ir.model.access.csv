@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_customer_manager,helpdesk.customer.manager,model_helpdesk_customer,helpdesk_mgmt.group_helpdesk_manager,1,1,1,1
+access_helpdesk_customer_user,helpdesk.customer.user,model_helpdesk_customer,helpdesk_mgmt.group_helpdesk_user,1,1,0,0
+access_helpdesk_customer_portal,helpdesk.customer.portal,model_helpdesk_customer,base.group_portal,1,0,0,0

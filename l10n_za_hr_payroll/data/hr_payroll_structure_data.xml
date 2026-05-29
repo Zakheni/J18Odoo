@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_za_payroll_structure" model="hr.payroll.structure">
+        <field name="name">South Africa Standard Payroll Structure</field>
+        <field name="code">STANDARD</field>
+        <field name="note">Standard monthly payroll structure for South Africa.</field>
+    </record>
+
+    <record id="l10n_za_payroll_structure_bonus" model="hr.payroll.structure">
+        <field name="name">South Africa Bonus/Commission Structure</field>
+        <field name="code">BONUS</field>
+        <field name="parent_id" ref="l10n_za_payroll_structure"/>
+        <field name="note">Structure for bonus and commission payments.</field>
+    </record>
+</odoo>

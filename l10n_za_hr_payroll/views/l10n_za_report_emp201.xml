@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_emp201">
+        <t t-call="web.html_container">
+            <t t-foreach="emp201_data or []" t-as="data">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center mb-4">
+                            <h2>EMP201 - Monthly Payroll Tax Return</h2>
+                            <h4>South African Revenue Service</h4>
+                            <p><strong>Period:</strong> <t t-esc="data['period']"/></p>
+                        </div>
+
+                        <table class="table table-sm table-bordered mb-4">
+                            <tr>
+                                <td><strong>Employer Name</strong></td>
+                                <td><t t-esc="data['company'].name"/></td>
+                                <td><strong>PAYE Ref</strong></td>
+                                <td><t t-esc="data['company'].l10n_za_paye_number or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UIF Ref</strong></td>
+                                <td><t t-esc="data['company'].l10n_za_uif_number or ''"/></td>
+                                <td><strong>SDL Ref</strong></td>
+                                <td><t t-esc="data['company'].l10n_za_sdl_number or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Period From</strong></td>
+                                <td><t t-esc="data['date_from']"/></td>
+                                <td><strong>Period To</strong></td>
+                                <td><t t-esc="data['date_to']"/></td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>ID Number</th>
+                                    <th>Tax Ref</th>
+                                    <th class="text-right">Gross</th>
+                                    <th class="text-right">PAYE</th>
+                                    <th class="text-right">UIF (EE)</th>
+                                    <th class="text-right">UIF (ER)</th>
+                                    <th class="text-right">SDL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="data['lines']" t-as="line">
+                                    <td><t t-esc="line['employee']"/></td>
+                                    <td><t t-esc="line['id_number']"/></td>
+                                    <td><t t-esc="line['tax_number']"/></td>
+                                    <td class="text-right">
+                                        <t t-esc="line['gross']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="line['paye']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="line['uif_ee']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="line['uif_er']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="line['sdl_er']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-weight-bold">
+                                    <td colspan="3">TOTALS</td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_gross']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_paye']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_uif_ee']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_uif_er']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_sdl_er']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div class="mt-4">
+                            <h5>Summary</h5>
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <td>Total PAYE to be declared:</td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_paye']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total UIF (Employee + Employer):</td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_uif']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total SDL (Employer):</td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_sdl_er']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr class="font-weight-bold">
+                                    <td>Total Due to SARS:</td>
+                                    <td class="text-right">
+                                        <t t-esc="data['totals']['total_paye'] + data['totals']['total_uif'] + data['totals']['total_sdl_er']" t-options='{"widget": "monetary", "display_currency": data["company"].currency_id}'/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <p class="mt-4"><em>This is a system-generated EMP201 return for the period <t t-esc="data['period']"/>.</em></p>
+                        <p class="text-right mt-4">
+                            <strong>Authorized Signature</strong>: _________________________
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="zakheni_tax_table_autofetch_setup_form" model="ir.ui.view">
+        <field name="name">zakheni.tax_table_autofetch_setup.form</field>
+        <field name="model">zakheni.tax_table_autofetch_setup</field>
+        <field name="arch" type="xml">
+            <form string="SARS Tax Table Autofetch">
+                <group>
+                    <field name="url" widget="url"/>
+                    <field name="company_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_fetch_now" string="Fetch Now" type="object" class="btn-primary"/>
+                    <button name="action_setup_cron" string="Fetch Now &amp; Schedule Monthly" type="object" class="btn-secondary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_autofetch_tax_tables" model="ir.actions.act_window">
+        <field name="name">Autofetch SARS Tax Tables</field>
+        <field name="res_model">zakheni.tax_table_autofetch_setup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

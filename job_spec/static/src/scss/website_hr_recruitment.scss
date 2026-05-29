@@ -1,0 +1,152 @@
+.form-container
+{
+    margin-top:40px;
+    margin-bottom: 40px;
+}
+label
+{
+    font-size:17px;
+    font-style:italic;
+}
+
+h1
+{
+    margin-bottom:40px;
+    font-style:italic;
+}
+.s_website_create_resume{
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    }
+button
+{
+    margin-top:30px;
+}
+.heading_3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #35979c;
+    color: white;
+ }
+ .table-bordered {
+  border-width: 1px 1px 1px 0px;
+  border-style: solid solid solid none;
+  border-color: #DDD #DDD #DDD -moz-use-text-color;
+  border-collapse: collapse;
+  border-radius: 4px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.table-bordered th,
+.table-bordered td {
+  min-width: 150px;
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #DDD;
+}
+
+.table-bordered th {
+  background-color: #006A72;
+  color: #ffffff;
+}
+
+td.delete_row {
+  text-align: center;
+}
+
+.delete_row:hover {
+  color: red;
+  cursor:pointer;
+}
+.skills_summary {
+  width: 100%;
+  padding: 10px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: black;
+}
+
+.expandable-textarea {
+  display: grid;
+}
+
+.expandable-textarea textarea,
+.expandable-textarea::after {
+  grid-area: 1 / 1 / 2 / 2;
+
+  /* Custom styling goes here */
+  font: inherit;
+  font-size: 14px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #c0c0c0;
+}
+
+.expandable-textarea textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.expandable-textarea::after {
+  content: attr(data-replicated-value) " ";
+  white-space: pre-wrap;
+  visibility: hidden;
+}
+.table-scroll {
+	position:relative;
+	width:100%;
+	margin:auto;
+	overflow:hidden;
+	border:1px solid #000;
+}
+.table-wrap {
+	width:100%;
+}
+
+.table-scroll table {
+	width:100%;
+	margin:auto;
+	border-collapse:separate;
+	border-spacing:0;
+}
+.table-scroll th, .table-scroll td {
+	padding:5px 10px;
+	border:1px solid #000;
+	background:#fff;
+	white-space:nowrap;
+	vertical-align:top;
+}
+.table-scroll thead, .table-scroll tfoot {
+	background:#f9f9f9;
+}
+.clone {
+	position:absolute;
+	top:0;
+	left:0;
+	pointer-events:none;
+}
+.clone th, .clone td {
+	visibility:hidden
+}
+.clone td, .clone th {
+	border-color:transparent
+}
+tbody th {
+	visibility:visible;
+	width: 50px;
+}
+.clone .fixed-side {
+	border:1px solid #000;
+	background:#eee;
+	visibility:visible;
+}
+.clone thead, .clone tfoot{background:transparent;}
+
+.addBtn, .deleteBtn{
+    margin-top: -1px;
+}

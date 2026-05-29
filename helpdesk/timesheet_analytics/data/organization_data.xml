@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="hr_organization_no_categorized" model="hr.organization">
+            <field name="name">No Categorized</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

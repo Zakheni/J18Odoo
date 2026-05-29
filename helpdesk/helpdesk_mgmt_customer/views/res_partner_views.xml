@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_partner_form_helpdesk_customer" model="ir.ui.view">
+        <field name="name">res.partner.form.helpdesk.customer</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="helpdesk" string="Helpdesk"
+                      groups="helpdesk_mgmt.group_helpdesk_user">
+                    <group>
+                        <field name="is_helpdesk_customer" />
+                        <field name="helpdesk_customer_id" invisible="1" />
+                        <button
+                            name="action_setup_helpdesk_customer"
+                            type="object"
+                            string="Configure Helpdesk Support"
+                            class="btn-primary"
+                            invisible="not is_helpdesk_customer" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

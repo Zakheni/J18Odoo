@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sharepoint_config,sharepoint.config,model_sharepoint_config,base.group_system,1,1,1,1
+access_sharepoint_site,sharepoint.site,model_sharepoint_site,base.group_system,1,1,1,1
+access_sharepoint_document_library,sharepoint.document.library,model_sharepoint_document_library,base.group_system,1,1,1,1
+access_sharepoint_document_sync,sharepoint.document.sync,model_sharepoint_document_sync,base.group_system,1,1,1,1
+access_sharepoint_list,sharepoint.list,model_sharepoint_list,base.group_system,1,1,1,1

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_helpdesk_customer_search" model="ir.ui.view">
+        <field name="name">helpdesk.customer.search</field>
+        <field name="model">helpdesk.customer</field>
+        <field name="arch" type="xml">
+            <search string="Helpdesk Customers">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="team_id" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <filter string="Archived" name="inactive"
+                        domain="[('active','=',False)]" />
+                <group expand="0" string="Group By">
+                    <filter string="Team" name="group_team"
+                            context="{'group_by': 'team_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_customer_form" model="ir.ui.view">
+        <field name="name">helpdesk.customer.form</field>
+        <field name="model">helpdesk.customer</field>
+        <field name="arch" type="xml">
+            <form string="Helpdesk Customer">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_tickets"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-life-ring">
+                            <field name="open_ticket_count" widget="statinfo"
+                                   string="Open Tickets" />
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="bg-danger" invisible="active" />
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Customer" />
+                        <h1>
+                            <field name="name" placeholder="Customer name..." />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1" />
+                            <field name="partner_id"
+                                   options="{'no_create': True}"
+                                   domain="[('is_company','=',True)]" />
+                            <field name="team_id" options="{'no_create': True}" />
+                            <field name="company_id"
+                                   groups="base.group_multi_company" />
+                        </group>
+                        <group name="email_setup" string="Support Email">
+                            <div class="alert alert-info mb-0" role="alert">
+                                Set a dedicated email alias for this customer.
+                                Emails received at this address will automatically
+                                create tickets assigned to this customer.
+                            </div>
+                            <label for="alias_name" string="Email Alias" />
+                            <div class="oe_inline" name="alias_def">
+                                <field name="alias_id"
+                                       class="oe_read_only oe_inline"
+                                       string="Email Alias" />
+                                <div class="oe_inline" name="edit_alias"
+                                     style="display: inline;">
+                                    <div class="oe_edit_only" dir="ltr">
+                                        <field name="alias_name"
+                                               placeholder="support"
+                                               class="oe_inline" />@
+                                        <field name="alias_domain_id"
+                                               class="oe_inline"
+                                               placeholder="e.g. mycompany.com"
+                                               options="{'no_create': True, 'no_open': True}" />
+                                    </div>
+                                    <button icon="oi-arrow-right"
+                                            type="action"
+                                            name="%(base_setup.action_general_configuration)d"
+                                            string="Choose or configure a custom domain"
+                                            class="p-0 btn-link"
+                                            invisible="alias_domain_id" />
+                                </div>
+                            </div>
+                            <field name="alias_contact" class="oe_inline"
+                                   string="Accept Emails From" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_customer_tree" model="ir.ui.view">
+        <field name="name">helpdesk.customer.list</field>
+        <field name="model">helpdesk.customer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="partner_id" widget="many2one_avatar" />
+                <field name="team_id" />
+                <field name="open_ticket_count" string="Open" />
+                <field name="ticket_count" string="Total" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_helpdesk_customer" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">helpdesk.customer</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p>Manage helpdesk customers. Each customer can have
+            a dedicated email alias and support team.</p>
+        </field>
+    </record>
+
+    <record id="action_open_customer_tickets" model="ir.actions.act_window">
+        <field name="name">Customer Tickets</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('customer_id', '=', active_id)]</field>
+        <field name="context">{'default_customer_id': active_id}</field>
+    </record>
+
+    <menuitem id="menu_helpdesk_customers"
+              name="Customers"
+              parent="helpdesk_mgmt.helpdesk_ticket_main_menu"
+              action="action_helpdesk_customer"
+              sequence="5"
+              groups="helpdesk_mgmt.group_helpdesk_manager" />
+</odoo>

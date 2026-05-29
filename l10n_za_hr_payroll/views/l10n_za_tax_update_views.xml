@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_l10n_za_tax_table_import" model="ir.actions.act_window">
+        <field name="name">Import Tax Tables</field>
+        <field name="res_model">l10n_za.tax.table.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="l10n_za_tax_table_import_wizard_form" model="ir.ui.view">
+        <field name="name">l10n_za.tax.table.import.wizard.form</field>
+        <field name="model">l10n_za.tax.table.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import SARS Tax Tables">
+                <group>
+                    <field name="state" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" invisible="1"/>
+                    <field name="effective_date" invisible="1"/>
+                    <field name="source" widget="radio" invisible="state == 'preview'"/>
+                    <field name="json_text" placeholder="Paste JSON here..." invisible="state != 'choose' or source != 'json_text'" colspan="2"/>
+                    <field name="json_url" placeholder="https://..." invisible="state != 'choose' or source != 'json_url'" colspan="2"/>
+                    <field name="preview_data" invisible="state != 'preview'" colspan="2" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_preview" string="Preview" type="object" class="btn-primary" invisible="state != 'choose'"/>
+                    <button name="action_import" string="Import Tables" type="object" class="btn-primary" invisible="state != 'preview'"/>
+                    <button special="cancel" string="Close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

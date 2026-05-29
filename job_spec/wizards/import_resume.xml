@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="import_resume_form" model="ir.ui.view">
+            <field name="name">Import Resume form</field>
+            <field name="model">import.resume</field>
+            <field name="arch" type="xml">
+                <form string="Import Resumes Form">
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary" string="Upload Resumes"/>
+                    </group>
+                    <footer>
+                        <button name="import_resume" string="Import" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_import_resume_form">
+            <field name="name">Import Resumes</field>
+            <field name="res_model">import.resume</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_import_resume_wizard" name="Import Resumes" parent="job_spec.menu_parent_job_spec" action="action_import_resume_form"/>
+    </data>
+</odoo>

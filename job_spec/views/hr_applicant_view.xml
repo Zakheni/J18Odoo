@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.applicant.view.form.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_phone']" position="before">
+                    <field name="candidate_screening_stage" invisible="1"/>
+                    <field name="consultant_interview_stage" invisible="1"/>
+<!--                    <field name="related_applicant_id" context="{'search_related_applicant': 1}"/>-->
+                    <field name="nationality_id"/>
+                    <field name="citizenship" invisible="1"/>
+                    <field name="id_no" invisible="citizenship != 'SA'"/>
+                    <field name="date_of_birth"/>
+                    <field name="passport" invisible="citizenship == 'SA'"/>
+                    <field name="gender"/>
+                    <field name="disability"/>
+                    <field name="disability_type" invisible="disability == 'N'"/>
+                    <field name="criminal_record"/>
+                    <field name="crime_info" invisible="criminal_record == 'N'"/>
+                    <field name="mode_of_work"/>
+                    <field name="how_many_years_of_experience"/>
+                    <field name="notice_period"/>
+                </xpath>
+                <xpath expr="//field[@name='linkedin_profile']" position="replace"/>
+                <xpath expr="//field[@name='type_id']" position="replace"/>
+                <xpath expr="//field[@name='categ_ids']" position="after">
+                    <field name="location"/>
+                    <field name="partner_phone"/>
+                    <field name="linkedin_profile"/>
+                    <field name="type_id"/>
+                    <field name="resume_copy"/>
+                </xpath>
+                <xpath expr="//form/sheet/group" position="inside">
+                    <group string="Appointment for face-to-face interview">
+                        <field name="f2f_interview_date" string="Date"/>
+                        <field name="f2f_interview_time" string="Time"/>
+                        <field name="f2f_interview_place" string="Place"/>
+                    </group>
+                </xpath>
+                <xpath expr="//form/sheet/group" position="attributes">
+                    <attribute name="invisible">not candidate_screening_stage</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/div[hasclass('oe_title')]" position="attributes">
+                    <attribute name="invisible">not candidate_screening_stage</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook" position="before">
+                    <group invisible="not consultant_interview_stage">
+                        <field name="tell_me_about_your_self"/>
+                        <field name="when_can_you_start"/>
+                        <field name="what_are_your_salary_expectations"/>
+                        <field name="why_are_you_in_the_job_market_at_the_moment"/>
+                        <field name="how_do_you_feel_about_counter_offer"/>
+                        <field name="what_are_possibilities_of_counter_offer"/>
+                        <field name="what_are_your_proudest_professional_achievements"/>
+                        <field name="what_is_your_idea_work_environment"/>
+                        <field name="are_you_interviewing_with_other_companies"/>
+                        <field name="when_would_you_be_available_to_start_a_new_role"/>
+                    </group>
+                    <group invisible="not reference_check_1_stage" string="Reference Check 1">
+                        <field name="reference_check_1_stage" invisible="1"/>
+                        <field name="ref_1_reference_check_for"/>
+                        <field name="ref_1_referee_name"/>
+                        <field name="ref_1_company"/>
+                        <field name="ref_1_contact_number"/>
+                        <field name="ref_1_company_worked_with"/>
+                        <field name="ref_1_position_held"/>
+                        <field name="ref_1_duration_worked"/>
+                        <field name="ref_1_placement_position"/>
+                        <field name="ref_1_skills_for_role"/>
+                        <field name="ref_1_greatest_strengths"/>
+                        <field name="ref_1_area_of_development"/>
+                        <field name="ref_1_communication_skill"/>
+                        <field name="ref_1_work_preference"/>
+                        <field name="ref_1_relationship_with_coworkers"/>
+                        <field name="ref_1_biggest_accomplishment"/>
+                        <field name="ref_1_rating"/>
+                        <field name="ref_1_reason_for_leaving"/>
+                        <field name="ref_1_rehire"/>
+                        <field name="ref_1_additional_comments"/>
+                    </group>
+                    <group invisible="not reference_check_2_stage" string="Reference Check 2">
+                        <field name="reference_check_2_stage" invisible="1"/>
+                        <field name="ref_2_reference_check_for"/>
+                        <field name="ref_2_referee_name"/>
+                        <field name="ref_2_company"/>
+                        <field name="ref_2_contact_number"/>
+                        <field name="ref_2_company_worked_with"/>
+                        <field name="ref_2_position_held"/>
+                        <field name="ref_2_duration_worked"/>
+                        <field name="ref_2_placement_position"/>
+                        <field name="ref_2_skills_for_role"/>
+                        <field name="ref_2_greatest_strengths"/>
+                        <field name="ref_2_area_of_development"/>
+                        <field name="ref_2_communication_skill"/>
+                        <field name="ref_2_work_preference"/>
+                        <field name="ref_2_relationship_with_coworkers"/>
+                        <field name="ref_2_biggest_accomplishment"/>
+                        <field name="ref_2_rating"/>
+                        <field name="ref_2_reason_for_leaving"/>
+                        <field name="ref_2_rehire"/>
+                        <field name="ref_2_additional_comments"/>
+                    </group>
+                    <group invisible="not reference_check_3_stage" string="Reference Check 3">
+                        <field name="reference_check_3_stage" invisible="1"/>
+                        <field name="ref_3_reference_check_for"/>
+                        <field name="ref_3_referee_name"/>
+                        <field name="ref_3_company"/>
+                        <field name="ref_3_contact_number"/>
+                        <field name="ref_3_company_worked_with"/>
+                        <field name="ref_3_position_held"/>
+                        <field name="ref_3_duration_worked"/>
+                        <field name="ref_3_placement_position"/>
+                        <field name="ref_3_skills_for_role"/>
+                        <field name="ref_3_greatest_strengths"/>
+                        <field name="ref_3_area_of_development"/>
+                        <field name="ref_3_communication_skill"/>
+                        <field name="ref_3_work_preference"/>
+                        <field name="ref_3_relationship_with_coworkers"/>
+                        <field name="ref_3_biggest_accomplishment"/>
+                        <field name="ref_3_rating"/>
+                        <field name="ref_3_reason_for_leaving"/>
+                        <field name="ref_3_rehire"/>
+                        <field name="ref_3_additional_comments"/>
+                    </group>
+                    <group invisible="not first_client_interview_stage" string="1st Client Interview">
+                        <field name="first_client_interview_stage" invisible="1"/>
+                        <group string="Candidate">
+                            <field name="candidate"/>
+                            <field name="debrief_time"/>
+                            <field name="debrief_date"/>
+                            <field name="is_calendar_booked"/>
+                            <field name="candidate_interview_experience"/>
+                            <field name="candidate_feelings_about_role"/>
+                            <field name="candidate_questions_asked"/>
+                            <field name="candidate_own_questions"/>
+                        </group>
+                        <group string="Client">
+                            <field name="client_interview_experience"/>
+                            <field name="client_candidate_ability"/>
+                            <field name="client_candidate_strengths_weaknesses"/>
+                            <field name="is_client_more_details_needed"/>
+                            <field name="client_information_needed" invisible="is_client_more_details_needed != 'yes'"/>
+                            <field name="client_next_steps"/>
+                            <field name="client_offering_interview"/>
+                        </group>
+                    </group>
+
+                    <group invisible="not offer_stage" string="Offer/onboarding stage">
+                        <field name="offer_stage" invisible="1"/>
+                        <field name="salary_benefit_offer_in_line"/>
+                        <field name="clarified_counter_offer"/>
+                        <field name="did_candidate_accepted_offer"/>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook/page" position="after">
+                    <page string="Experience &amp; Background" name="exp_and_background"
+                          invisible="not consultant_interview_stage">
+                        <group>
+                            <field name="knowledge_areas"/>
+                            <field name="strengths"/>
+                            <field name="best_work_environment"/>
+                            <field name="how_do_you_work_under_pressure"/>
+                            <field name="leadership_style"/>
+                            <field name="leadership_example"/>
+                            <field name="typical_day"/>
+                            <field name="career_accomplishments"/>
+                            <field name="conflict_handling_with_colleague"/>
+                            <field name="sample_work"/>
+                            <field name="motivation"/>
+                            <field name="next_job_expectations"/>
+                            <field name="other_expectations_with_new_job"/>
+                            <field name="others"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook/page" position="attributes">
+                    <attribute name="invisible">not candidate_screening_stage</attribute>
+                </xpath>
+                <!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page string="Candidate Screening">-->
+<!--                        <group>-->
+<!--                            <field name="tell_me_about_your_self"/>-->
+<!--                            <field name="when_can_you_start"/>-->
+<!--                            <field name="why_are_you_in_the_job_market_at_the_moment"/>-->
+<!--                            <field name="how_do_you_feel_about_counter_offer"/>-->
+<!--                            <field name="what_are_your_proudest_professional_achievements"/>-->
+<!--                            <field name="are_you_interviewing_with_other_companies"/>-->
+<!--                            <field name="when_would_you_be_available_to_start_a_new_role"/>-->
+<!--                            -->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page string="Reference Check 1">-->
+<!--                        <group>-->
+<!--                            <field name="reference_Name_and_surname_1"/>-->
+<!--                            <field name="company_name_1"/>-->
+<!--                            <field name="contact_number_1"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page string="Reference Check 2">-->
+<!--                        <group>-->
+<!--                            <field name="reference_Name_and_surname_2"/>-->
+<!--                            <field name="company_name_2"/>-->
+<!--                            <field name="contact_number_2"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page string="Reference Check 3">-->
+<!--                        <group>-->
+<!--                            <field name="reference_Name_and_surname_3"/>-->
+<!--                            <field name="company_name_3"/>-->
+<!--                            <field name="contact_number_3"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page string="Client Interview">-->
+<!--                        <group>-->
+<!--                            <field name="how_do_you_think_the_interview_went"/>-->
+<!--                            <field name="what_type_of_questions_did_the_hiring_manager_ask_you"/>-->
+<!--                            <field name="what_questions_did_you_ask_at_the_end"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page string="Offer Stage">-->
+<!--                        <group>-->
+<!--                            <field name="did_you_clarify_counter_offer_with_the_candidate"/>-->
+<!--                            <field name="did_the_candidate_accept_the_offer"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+    </data>
+</odoo>

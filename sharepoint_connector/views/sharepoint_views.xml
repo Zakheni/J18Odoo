@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sharepoint_config_form" model="ir.ui.view">
+        <field name="name">sharepoint.config.form</field>
+        <field name="model">sharepoint.config</field>
+        <field name="arch" type="xml">
+            <form string="SharePoint Configuration">
+                <header>
+                    <button name="action_test_connection" type="object" string="Test Connection" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Azure AD Settings">
+                            <field name="name"/>
+                            <field name="tenant_id"/>
+                            <field name="client_id"/>
+                            <field name="client_secret" password="True"/>
+                        </group>
+                        <group string="Site Defaults">
+                            <field name="default_site_url"/>
+                            <field name="use_certificate"/>
+                            <field name="certificate_path" invisible="not use_certificate" required="use_certificate"/>
+                            <field name="certificate_password" password="True" invisible="not use_certificate"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sharepoint_config_tree" model="ir.ui.view">
+        <field name="name">sharepoint.config.tree</field>
+        <field name="model">sharepoint.config</field>
+        <field name="arch" type="xml">
+            <list string="SharePoint Configurations">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="client_id"/>
+                <field name="default_site_url"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sharepoint_site_form" model="ir.ui.view">
+        <field name="name">sharepoint.site.form</field>
+        <field name="model">sharepoint.site</field>
+        <field name="arch" type="xml">
+            <form string="SharePoint Site">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="site_url"/>
+                        <field name="config_id"/>
+                        <field name="active"/>
+                    </group>
+                    <group string="Stats">
+                        <field name="document_library_count"/>
+                        <field name="list_count"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sharepoint_site_tree" model="ir.ui.view">
+        <field name="name">sharepoint.site.tree</field>
+        <field name="model">sharepoint.site</field>
+        <field name="arch" type="xml">
+            <list string="SharePoint Sites">
+                <field name="name"/>
+                <field name="site_url"/>
+                <field name="config_id"/>
+                <field name="document_library_count"/>
+                <field name="list_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sharepoint_document_library_form" model="ir.ui.view">
+        <field name="name">sharepoint.document.library.form</field>
+        <field name="model">sharepoint.document.library</field>
+        <field name="arch" type="xml">
+            <form string="Document Library">
+                <header>
+                    <button name="action_sync_now" type="object" string="Sync Now" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="site_id"/>
+                        <field name="library_name"/>
+                        <field name="folder_path"/>
+                        <field name="odoo_model"/>
+                        <field name="sync_direction"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sharepoint_list_form" model="ir.ui.view">
+        <field name="name">sharepoint.list.form</field>
+        <field name="model">sharepoint.list</field>
+        <field name="arch" type="xml">
+            <form string="SharePoint List">
+                <header>
+                    <button name="action_sync_now" type="object" string="Sync Now" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="site_id"/>
+                        <field name="list_name"/>
+                        <field name="odoo_model"/>
+                        <field name="field_mapping" widget="ace" options="{'mode': 'json'}"/>
+                        <field name="external_id_field"/>
+                        <field name="last_sync_date"/>
+                        <field name="sync_direction"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sharepoint_config" model="ir.actions.act_window">
+        <field name="name">SharePoint Configuration</field>
+        <field name="res_model">sharepoint.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_sharepoint_site" model="ir.actions.act_window">
+        <field name="name">SharePoint Sites</field>
+        <field name="res_model">sharepoint.site</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_sharepoint_document_library" model="ir.actions.act_window">
+        <field name="name">Document Libraries</field>
+        <field name="res_model">sharepoint.document.library</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_sharepoint_list" model="ir.actions.act_window">
+        <field name="name">SharePoint Lists</field>
+        <field name="res_model">sharepoint.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sharepoint_root" name="SharePoint" sequence="100"/>
+    <menuitem id="menu_sharepoint_config" name="Configuration" parent="menu_sharepoint_root" action="action_sharepoint_config" sequence="10"/>
+    <menuitem id="menu_sharepoint_sites" name="Sites" parent="menu_sharepoint_root" action="action_sharepoint_site" sequence="20"/>
+    <menuitem id="menu_sharepoint_libraries" name="Document Libraries" parent="menu_sharepoint_root" action="action_sharepoint_document_library" sequence="30"/>
+    <menuitem id="menu_sharepoint_lists" name="Lists" parent="menu_sharepoint_root" action="action_sharepoint_list" sequence="40"/>
+</odoo>

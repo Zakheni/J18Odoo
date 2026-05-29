@@ -1,0 +1,37 @@
+.wt-top-scrollbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 12px;
+    margin-bottom: 0.4rem;
+    border: 1px solid #d9dee3;
+    border-radius: 0.35rem;
+    background-color: #f7f9fb;
+    scrollbar-color: #97a5b3 #e9eef2;
+    scrollbar-width: thin;
+}
+
+.wt-top-scrollbar-inner {
+    height: 1px;
+}
+
+.wt-top-scrollbar::-webkit-scrollbar {
+    height: 10px;
+}
+
+.wt-top-scrollbar::-webkit-scrollbar-track {
+    background: #e9eef2;
+    border-radius: 6px;
+}
+
+.wt-top-scrollbar::-webkit-scrollbar-thumb {
+    background: #97a5b3;
+    border-radius: 6px;
+}
+
+.o_portal_my_doc_table .tmk_timesheet_table td,
+.o_portal_my_doc_table .tmk_timesheet_table th {
+    vertical-align: middle;
+}

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_l10n_za_payslip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- Header -->
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong t-field="o.company_id.name"/>
+                                <p t-if="o.company_id.partner_id" t-field="o.company_id.partner_id"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <p>Period <t t-esc="str(o.date_from.month)"/> - <t t-esc="str(o.date_to.month)"/></p>
+                                <p t-field="o.date_to"/>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <strong>Employee Code:</strong><br/>
+                                <span t-field="o.employee_id"/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>Employee Name:</strong><br/>
+                                <span t-field="o.employee_id.name"/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>ID Number:</strong><br/>
+                                <span t-field="o.employee_id.l10n_za_id_number or o.employee_id.identification_id"/>
+                            </div>
+                            <div class="col-xs-3 text-right">
+                                <strong>Designation:</strong><br/>
+                                <span t-field="o.employee_id.job_id"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <strong>Cost Centre:</strong><br/>
+                                <span t-esc="o.contract_id.department_id.name or ''"/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>Rate:</strong><br/>
+                                <span t-esc="'%.2f' % (o.contract_id.wage / 173.33 if o.contract_id and o.contract_id.wage else 0)" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>Normal Hrs:</strong><br/>
+                                <span t-esc="'%.2f' % (173.33 if o.contract_id else 0)"/>
+                            </div>
+                            <div class="col-xs-3 text-right">
+                                <strong>Pay Date:</strong><br/>
+                                <span t-field="o.date_to"/>
+                            </div>
+                        </div>
+                        <hr/>
+
+                        <!-- INCOME -->
+                        <h4>INCOME</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th class="text-right">Normal Hrs</th>
+                                    <th class="text-right">Rate</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t
+                                    t-set="income_lines"
+                                    t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip and l.category_id.code == 'BASIC' and l.amount != 0)"
+                                />
+                                <tr t-foreach="income_lines" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+                                    <td class="text-right">173.33</td>
+                                    <td class="text-right">
+                                        <span t-esc="'%.2f' % (line.total / 173.33 if line.total else 0)" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="line.total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <t
+                                    t-set="allowance_lines"
+                                    t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip and l.category_id.code == 'ALLOWANCES' and abs(l.total) > 0.001)"
+                                />
+                                <tr t-foreach="allowance_lines" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+                                    <td class="text-right"/>
+                                    <td class="text-right"/>
+                                    <td class="text-right">
+                                        <span t-esc="line.total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-weight-bold">
+                                    <td colspan="3">GROSS EARNINGS</td>
+                                    <td class="text-right">
+                                        <span t-esc="o.get_salary_line_total('GROSS')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- COMPANY CONTRIBUTIONS -->
+                        <h4>BENEFITS / COMPANY CONTRIBUTIONS</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t
+                                    t-set="employer_lines"
+                                    t-value="o.l10n_za_get_company_contributions()"
+                                />
+                                <tr t-if="not employer_lines">
+                                    <td colspan="2"><em>No employer contributions this period</em></td>
+                                </tr>
+                                <tr t-foreach="employer_lines" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="abs(line.total)" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- DEDUCTIONS -->
+                        <h4>DEDUCTIONS</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t
+                                    t-set="deduction_lines"
+                                    t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip and l.category_id.code in ('PENSION_EE', 'PROVIDENT_EE', 'TAX', 'UIF', 'MEDICAL', 'OTHER_DED') and abs(l.total) > 0.001)"
+                                />
+                                <tr t-foreach="deduction_lines" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="abs(line.total)" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-weight-bold">
+                                    <td>TOTAL DEDUCTIONS</td>
+                                    <td class="text-right">
+                                        <span t-esc="o.get_salary_line_total('DEDUCTIONS')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- FOOTER -->
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p><strong>LEAVE DAYS DUE:</strong> <t t-esc="'%.2f' % o.l10n_za_get_leave_days()"/></p>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <h3>NETT PAY:
+                                    <span t-esc="o.get_salary_line_total('NET')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                </h3>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row small">
+                            <div class="col-xs-3">
+                                <strong>3699 Gross Remuneration</strong><br/>
+                                <t t-esc="o.l10n_za_get_ytd('GROSS')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>4103 Total Employee's Tax</strong><br/>
+                                <t t-esc="o.l10n_za_get_ytd('PAYE')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>4005 Medical Aid Current</strong><br/>
+                                <t t-esc="o.l10n_za_get_ytd('MEDICAL')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>4001 Pension Fund</strong><br/>
+                                <t t-esc="o.l10n_za_get_ytd('PENSION_EE') + o.l10n_za_get_ytd('PROVIDENT_EE')" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_l10n_za_payslip" model="ir.actions.report">
+        <field name="name">South African Payslip</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_za_hr_payroll.report_l10n_za_payslip</field>
+        <field name="print_report_name">'SA_Payslip_%(object.employee_id.name)s_%(object.date_to)s'</field>
+        <field name="binding_model_id" ref="payroll.model_hr_payslip"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

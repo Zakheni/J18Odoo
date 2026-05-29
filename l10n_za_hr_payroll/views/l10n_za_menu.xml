@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_l10n_za_sars" name="SARS Reports"
+              parent="payroll.payroll_menu_root" sequence="50"/>
+
+    <menuitem id="menu_l10n_za_emp201" name="EMP201 Monthly Return"
+              parent="menu_l10n_za_sars"
+              action="action_l10n_za_emp201" sequence="10"/>
+
+    <menuitem id="menu_l10n_za_irp5" name="IRP5/IT3(a) Certificate"
+              parent="menu_l10n_za_sars"
+              action="action_l10n_za_irp5" sequence="20"/>
+
+    <menuitem id="menu_l10n_za_emp501" name="EMP501 Bi-Annual Reconciliation"
+              parent="menu_l10n_za_sars"
+              action="action_l10n_za_emp501" sequence="30"/>
+
+    <menuitem id="menu_l10n_za_tax_config" name="Tax Tables"
+              parent="payroll.payroll_menu_root" sequence="60"/>
+
+    <menuitem id="menu_l10n_za_tax_import" name="Import Tax Tables (JSON)"
+              parent="menu_l10n_za_tax_config"
+              action="action_l10n_za_tax_table_import" sequence="10"/>
+</odoo>

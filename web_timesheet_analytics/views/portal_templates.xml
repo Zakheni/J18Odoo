@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_layout_timesheet_analytics" inherit_id="portal.portal_breadcrumbs" priority="38">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'timesheet_analytics'" class="breadcrumb-item active">
+                <t>Timesheet Analytics</t>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_timesheet_analytics" inherit_id="portal.portal_my_home" priority="50">
+        <xpath expr="//div[@id='portal_service_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Timesheet Analytics</t>
+                <t t-set="url" t-value="'/my/timesheet-analytics'"/>
+                <t t-set="text">Open your employee timesheet analytics dashboard</t>
+                <t t-set="icon" t-value="'/hr_timesheet/static/img/timesheet.svg'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_timesheets_button_analytics" inherit_id="hr_timesheet.portal_my_timesheets" priority="60">
+        <xpath expr="//t[@t-call='portal.portal_searchbar']" position="after">
+            <div class="mb-3">
+                <a href="/my/timesheet-analytics" class="btn btn-outline-primary">
+                    Timesheet Analytics Dashboard
+                </a>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="portal_timesheet_analytics_page" name="Portal Timesheet Analytics">
+        <t t-call="portal.portal_layout">
+            <div class="container my-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <div>
+                        <h3 class="mb-1">Timesheet Analytics</h3>
+                        <p class="text-muted mb-0">Dashboard scoped to your linked employee</p>
+                    </div>
+                    <a href="/my/timesheets" class="btn btn-outline-secondary">Back to Timesheets</a>
+                </div>
+
+                <div class="alert alert-warning wta-no-employee" t-if="not has_linked_employee">
+                    Your portal user is not linked to an employee. Please contact your administrator.
+                </div>
+
+                <t t-if="has_linked_employee">
+                    <owl-component name="web_timesheet_analytics.portal_timesheet_dashboard"/>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

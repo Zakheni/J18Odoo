@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend ticket form -->
+    <record id="ticket_view_customer_form" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.customer.form</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form" />
+        <field name="arch" type="xml">
+            <field name="team_id" position="after">
+                <field name="customer_id"
+                       groups="helpdesk_mgmt.group_helpdesk_user"
+                       options="{'no_create': True}" />
+            </field>
+            <!-- Show customer info in sidebar -->
+            <xpath expr="//page[@name='other_info']//group" position="inside">
+                <field name="customer_id" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend ticket tree -->
+    <record id="ticket_view_customer_tree" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.customer.list</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_tree" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="customer_id" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Extend ticket search -->
+    <record id="ticket_view_customer_search" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.customer.search</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.helpdesk_ticket_view_search" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="customer_id" />
+            </field>
+            <filter name="group_partner" position="after">
+                <filter string="Customer Account" name="group_customer"
+                        context="{'group_by': 'customer_id'}" />
+            </filter>
+        </field>
+    </record>
+
+    <!-- Dashboard action for customer-specific tickets -->
+    <record id="action_helpdesk_ticket_customer_dashboard" model="ir.actions.act_window">
+        <field name="name">Customer Tickets</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">
+            {'default_customer_id': active_id}
+        </field>
+        <field name="domain">[('customer_id', '=', active_id)]</field>
+    </record>
+</odoo>

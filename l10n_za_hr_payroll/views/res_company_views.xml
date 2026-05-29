@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_za_res_company_view_form" model="ir.ui.view">
+        <field name="name">res.company.l10n_za.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="l10n_za_payroll" string="SA Payroll">
+                    <group name="l10n_za_sars" string="SARS Registration">
+                        <field name="l10n_za_sars_registration_number"/>
+                        <field name="l10n_za_paye_number"/>
+                        <field name="l10n_za_uif_number"/>
+                        <field name="l10n_za_sdl_number"/>
+                        <field name="l10n_za_site_number"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_job_spec,access_job_spec,model_job_spec,base.group_user,1,1,1,1
+access_hr_applicant_resume,access_hr_applicant_resume,model_hr_applicant_resume,base.group_user,1,1,1,1
+
+access_applicant_qualification,access_applicant_qualification,model_applicant_qualification,base.group_user,1,1,1,1
+access_applicant_course,access_applicant_course,model_applicant_course,base.group_user,1,1,1,1
+
+access_applicant_employment_history,access_applicant_employment_history,model_applicant_employment_history,base.group_user,1,1,1,1
+access_applicant_skill,access_applicant_skill,model_applicant_skill,base.group_user,1,1,1,1
+access_applicant_reference,access_applicant_reference,model_applicant_reference,base.group_user,1,1,1,1
+
+access_import_resume,access_import_resume,model_import_resume,base.group_user,1,1,1,1
+access_import_zakheni_resume,access_import_zakheni_resume,model_import_zakheni_resume,base.group_user,1,1,1,1

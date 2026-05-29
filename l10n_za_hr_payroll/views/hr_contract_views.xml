@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_za_hr_contract_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.l10n_za.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='information']" position="inside">
+                <group name="l10n_za_payroll" string="South African Payroll Settings">
+                    <field name="l10n_za_tax_rebate"/>
+                    <field name="l10n_za_uif_applies"/>
+                    <field name="l10n_za_sdl_applies"/>
+                    <field name="l10n_za_travel_allowance"/>
+                    <field name="l10n_za_car_allowance"/>
+                    <field name="l10n_za_housing_allowance"/>
+                    <field name="l10n_za_other_allowance"/>
+                </group>
+                <group name="l10n_za_pension" string="Pension / Provident Fund">
+                    <field name="l10n_za_pension_fund_id"/>
+                    <field name="l10n_za_pension_employee_rate"/>
+                    <field name="l10n_za_pension_employer_rate"/>
+                    <field name="l10n_za_provident_fund_id"/>
+                    <field name="l10n_za_provident_employee_rate"/>
+                    <field name="l10n_za_provident_employer_rate"/>
+                </group>
+                <group name="l10n_za_medical" string="Medical Aid">
+                    <field name="l10n_za_medical_aid_employee_contrib"/>
+                    <field name="l10n_za_medical_aid_dependents"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
