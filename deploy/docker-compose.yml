@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    shm_size: 1gb
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-odoo18}
+      POSTGRES_USER: ${POSTGRES_USER:-odoo18}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-odoo18pwd}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-odoo18} -d ${POSTGRES_DB:-odoo18}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  odoo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${ODOO_PORT:-8069}:8069"
+    volumes:
+      - ../account-financial-tools:/mnt/extra-addons/account-financial-tools
+      - ../account-invoicing:/mnt/extra-addons/account-invoicing
+      - ../account-payment:/mnt/extra-addons/account-payment
+      - ../account-reconcile:/mnt/extra-addons/account-reconcile
+      - ../bank-payment:/mnt/extra-addons/bank-payment
+      - ../bank-statement-import:/mnt/extra-addons/bank-statement-import
+      - ../contract:/mnt/extra-addons/contract
+      - ../dms:/mnt/extra-addons/dms
+      - ../field-service:/mnt/extra-addons/field-service
+      - ../helpdesk:/mnt/extra-addons/helpdesk
+      - ../knowledge:/mnt/extra-addons/knowledge
+      - ../l10n_za_hr_payroll:/mnt/extra-addons/l10n_za_hr_payroll
+      - ../manufacture:/mnt/extra-addons/manufacture
+      - ../payroll:/mnt/extra-addons/payroll
+      - ../sale-workflow:/mnt/extra-addons/sale-workflow
+      - ../sharepoint_connector:/mnt/extra-addons/sharepoint_connector
+      - ../stock-logistics-barcode:/mnt/extra-addons/stock-logistics-barcode
+      - ../web_timesheet:/mnt/extra-addons/web_timesheet
+      - ../zakheni_accounting:/mnt/extra-addons/zakheni_accounting
+      - ../zakheni_config:/mnt/extra-addons/zakheni_config
+      - ../zakheni_helpdesk:/mnt/extra-addons/zakheni_helpdesk
+      - ../zakheni_partner_enrich:/mnt/extra-addons/zakheni_partner_enrich
+      - odoo-data:/var/lib/odoo
+      - ./odoo.conf:/etc/odoo/odoo.conf
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  odoo-data:
