@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_dunning_letter" model="ir.actions.report">
+        <field name="name">Dunning Letter</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zakheni_accounting.dunning_letter</field>
+        <field name="print_report_name">'Dunning Letter - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="dunning_letter_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Dunning Notice</h2>
+                        <p><strong>Date:</strong> <t t-esc="company.display_name"/></p>
+                        <hr/>
+                        <p>Dear <t t-esc="doc.partner_id.name"/>,</p>
+                        <p>This is a follow-up regarding invoice <strong><t t-esc="doc.name or ''"/></strong>
+                        dated <t t-esc="doc.invoice_date or ''"/>
+                        for <t t-esc="doc.amount_total or 0.0"/> <t t-esc="doc.currency_id.name or ''"/>.</p>
+                        <p>The payment due date was <t t-esc="doc.invoice_date_due or ''"/>
+                        and the amount of <strong><t t-esc="doc.amount_residual or 0.0"/></strong>
+                        remains unpaid.</p>
+                        <p>Please arrange payment at your earliest convenience.</p>
+                        <br/>
+                        <p>Thank you,</p>
+                        <p><t t-esc="company.name or ''"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

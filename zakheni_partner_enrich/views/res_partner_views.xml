@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_enrich" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.enrich</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_enrich_from_web"
+                        string="Enrich from Web"
+                        type="object"
+                        class="btn-secondary"
+                        confirm="Search the web for company data and update this partner? Existing fields will not be overwritten."
+                        invisible="not is_company"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

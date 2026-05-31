@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_accounting" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.accounting</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Accounting" name="accounting">
+                    <group name="accounting_financial">
+                        <group string="Credit Limit">
+                            <field name="credit_limit" widget="monetary"/>
+                            <field name="credit_used" widget="monetary"/>
+                            <field name="credit_available" widget="monetary"/>
+                            <field name="credit_exceeded"/>
+                        </group>
+                        <group string="Follow-up">
+                            <field name="followup_plan_id"/>
+                            <field name="followup_responsible_id"/>
+                            <field name="last_followup_date"/>
+                            <field name="next_followup_date"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

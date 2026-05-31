@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="zakheni_account_consolidation_action" model="ir.actions.act_window">
+        <field name="name">Consolidations</field>
+        <field name="res_model">zakheni.account.consolidation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="zakheni_account_consolidation_tree" model="ir.ui.view">
+        <field name="name">zakheni.account.consolidation.tree</field>
+        <field name="model">zakheni.account.consolidation</field>
+        <field name="arch" type="xml">
+            <list string="Account Consolidations">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="target_company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="zakheni_account_consolidation_form" model="ir.ui.view">
+        <field name="name">zakheni.account.consolidation.form</field>
+        <field name="model">zakheni.account.consolidation</field>
+        <field name="arch" type="xml">
+            <form string="Account Consolidation">
+                <header>
+                    <button name="action_compute" string="Compute Consolidation" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="target_company_id"/>
+                        <field name="company_ids" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page string="Consolidation Lines">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="source_company_id"/>
+                                    <field name="source_account_id"/>
+                                    <field name="target_account_id"/>
+                                    <field name="balance" widget="monetary"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

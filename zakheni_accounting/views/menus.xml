@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_zakheni_accounting_root"
+              name="Enterprise Accounting"
+              parent="account.menu_finance"
+              sequence="50"/>
+
+    <menuitem id="menu_zakheni_accounting_dashboard"
+              name="Dashboard"
+              parent="menu_zakheni_accounting_root"
+              action="zakheni_account_dashboard_action"
+              sequence="10"/>
+
+    <menuitem id="menu_zakheni_cash_forecast"
+              name="Cash Flow Forecast"
+              parent="menu_zakheni_accounting_root"
+              action="zakheni_cash_forecast_action"
+              sequence="20"/>
+
+    <menuitem id="menu_zakheni_followup_plan"
+              name="Follow-up Plans"
+              parent="menu_zakheni_accounting_root"
+              action="zakheni_followup_plan_action"
+              sequence="30"/>
+
+    <menuitem id="menu_zakheni_consolidation"
+              name="Consolidations"
+              parent="menu_zakheni_accounting_root"
+              action="zakheni_account_consolidation_action"
+              sequence="40"/>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_followup_auto" model="ir.cron">
+        <field name="name">Zakheni: Automatic Customer Follow-up</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_auto_followup()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_cash_forecast" model="ir.cron">
+        <field name="name">Zakheni: Generate Cash Flow Forecast</field>
+        <field name="model_id" ref="model_zakheni_cash_forecast"/>
+        <field name="state">code</field>
+        <field name="code">model.generate_forecast()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_helpdesk_team" model="ir.ui.view">
+        <field name="name">res.partner.helpdesk.team</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="helpdesk_mgmt_customer.view_partner_form_helpdesk_customer"/>
+        <field name="arch" type="xml">
+            <field name="is_helpdesk_customer" position="after">
+                <field name="helpdesk_team_id"
+                       options="{'no_create': True}"
+                       context="{'default_company_id': company_id}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

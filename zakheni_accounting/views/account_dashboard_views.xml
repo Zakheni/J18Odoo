@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="zakheni_account_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Accounting Dashboard</field>
+        <field name="res_model">zakheni.account.dashboard</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Accounting Dashboard</p>
+            <p>Get a complete overview of your accounting status at a glance.</p>
+        </field>
+    </record>
+
+    <record id="zakheni_account_dashboard_form" model="ir.ui.view">
+        <field name="name">zakheni.account.dashboard.form</field>
+        <field name="model">zakheni.account.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Accounting Dashboard">
+                <sheet>
+                    <group>
+                        <group string="Bank Accounts">
+                            <field name="bank_count"/>
+                            <field name="bank_balance" widget="monetary"/>
+                            <field name="pending_statements"/>
+                        </group>
+                        <group string="Invoices">
+                            <field name="draft_invoices_count"/>
+                            <field name="overdue_invoices_count"/>
+                            <field name="overdue_amount" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Receivables &amp; Payables">
+                            <field name="receivables_total" widget="monetary"/>
+                            <field name="payables_total" widget="monetary"/>
+                        </group>
+                        <group string="Cash Flow">
+                            <field name="cash_flow_forecast" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group string="Quick Actions">
+                        <button name="%(account.action_bank_statement_tree)d" string="Bank Statements" type="action" class="btn-primary"/>
+                        <button name="%(account.action_move_journal_line)d" string="Journal Items" type="action" class="btn-secondary"/>
+                        <button name="%(account.action_move_out_invoice)d" string="Customer Invoices" type="action" class="btn-secondary"/>
+                        <button name="%(account.action_move_in_invoice)d" string="Vendor Bills" type="action" class="btn-secondary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
