@@ -46,7 +46,7 @@ Write-Step "Checking prerequisites..."
 if (-not (Test-Command git)) {
     Write-Host "Installing Git..." -ForegroundColor Yellow
     $gitInstaller = "$env:TEMP\git-installer.exe"
-    Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-64-bit.exe" -OutFile $gitInstaller
+    Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-64-bit.exe" -OutFile $gitInstaller -UseBasicParsing
     Start-Process $gitInstaller -ArgumentList "/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS=`"gitlfs`"" -Wait
     $env:Path += ";$env:ProgramFiles\Git\bin"
     [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$env:ProgramFiles\Git\bin", "User")
@@ -55,7 +55,7 @@ if (-not (Test-Command git)) {
 if (-not (Test-Command python)) {
     Write-Host "Installing Python 3.12..." -ForegroundColor Yellow
     $pyInstaller = "$env:TEMP\python-installer.exe"
-    Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe" -OutFile $pyInstaller
+    Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe" -OutFile $pyInstaller -UseBasicParsing
     Start-Process $pyInstaller -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1 Include_test=0" -Wait
     refreshenv
 }
@@ -63,7 +63,7 @@ if (-not (Test-Command python)) {
 if (-not (Test-Command psql)) {
     Write-Host "Installing PostgreSQL 17..." -ForegroundColor Yellow
     $pgInstaller = "$env:TEMP\postgresql-installer.exe"
-    Invoke-WebRequest -Uri "https://get.enterprisedb.com/postgresql/postgresql-17.2-1-windows-x64.exe" -OutFile $pgInstaller
+    Invoke-WebRequest -Uri "https://get.enterprisedb.com/postgresql/postgresql-17.2-1-windows-x64.exe" -OutFile $pgInstaller -UseBasicParsing
     Start-Process $pgInstaller -ArgumentList @(
         "--mode unattended"
         "--prefix `"$env:ProgramFiles\PostgreSQL\17`""
@@ -223,14 +223,28 @@ Write-Host "  Config written to $confPath" -ForegroundColor Green
 # 9. Ensure PostgreSQL user and database
 # ==============================================================
 Write-Step "Configuring PostgreSQL..."
-$psql = "psql -U postgres"
+# Find PostgreSQL bin directory
+$pgDirs = @(
+    "$env:ProgramFiles\PostgreSQL\17\bin",
+    "$env:ProgramFiles\PostgreSQL\16\bin",
+    "${env:ProgramFiles(x86)}\PostgreSQL\17\bin",
+    "${env:ProgramFiles(x86)}\PostgreSQL\16\bin"
+)
+$pgBin = $null
+foreach ($d in $pgDirs) {
+    if (Test-Path (Join-Path $d "psql.exe")) { $pgBin = $d; break }
+}
+if (-not $pgBin) { $pgBin = "$env:ProgramFiles\PostgreSQL\17\bin" }
+$oldPath = $env:Path
+$env:Path = "$pgBin;$env:Path"
 try {
-    & cmd /c "echo CREATE USER $DbUser WITH PASSWORD '$DbPassword' CREATEDB; | $psql 2>nul"
-    & cmd /c "echo CREATE DATABASE $DbName OWNER $DbUser; | $psql 2>nul"
-    & cmd /c "echo ALTER USER $DbUser WITH SUPERUSER; | $psql 2>nul"
+    psql -U postgres -c "CREATE USER $DbUser WITH PASSWORD '$DbPassword' CREATEDB;" 2>$null | Out-Null
+    psql -U postgres -c "CREATE DATABASE $DbName OWNER $DbUser;" 2>$null | Out-Null
+    psql -U postgres -c "ALTER USER $DbUser WITH SUPERUSER;" 2>$null | Out-Null
 } catch {
     Write-Host "  PostgreSQL user/db may already exist (error is safe to ignore)." -ForegroundColor Yellow
 }
+$env:Path = $oldPath
 
 # ==============================================================
 # 10. Initialize database with all modules
@@ -246,9 +260,8 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Step "Installing Zakheni custom modules..."
-& $python $odooBin -c $confPath -d $DbName `
-    -i zakheni_config,zakheni_helpdesk,zakheni_partner_enrich,zakheni_accounting `
-    --without-demo=all --stop-after-init 2>&1 | Out-File -FilePath $initLog -Append
+$modules = "zakheni_config,zakheni_helpdesk,zakheni_partner_enrich,zakheni_accounting"
+& $python $odooBin -c $confPath -d $DbName -i $modules --without-demo=all --stop-after-init 2>&1 | Out-File -FilePath $initLog -Append
 if ($LASTEXITCODE -ne 0) {
     Write-Host "  Module install failed. Check $initLog" -ForegroundColor Red
     exit 1
@@ -264,7 +277,12 @@ $nssmPath = Join-Path $OdooDir "nssm.exe"
 if (-not (Test-Path $nssmPath)) {
     $nssmUrl = "https://nssm.cc/release/nssm-2.24.zip"
     $nssmZip = "$env:TEMP\nssm.zip"
-    Invoke-WebRequest -Uri $nssmUrl -OutFile $nssmZip
+    try {
+        Invoke-WebRequest -Uri $nssmUrl -OutFile $nssmZip -UseBasicParsing
+    } catch {
+        Write-Host "  nssm.cc failed, trying backup mirror..." -ForegroundColor Yellow
+        Invoke-WebRequest -Uri "https://github.com/nicedoc/nssm/releases/download/v2.24/nssm-2.24.zip" -OutFile $nssmZip -UseBasicParsing
+    }
     Expand-Archive -Path $nssmZip -DestinationPath "$env:TEMP\nssm" -Force
     Copy-Item "$env:TEMP\nssm\nssm-2.24\win64\nssm.exe" $nssmPath
     Remove-Item "$env:TEMP\nssm" -Recurse -Force
@@ -276,10 +294,11 @@ if (-not (Test-Path $nssmPath)) {
 & $nssmPath remove Odoo18 confirm 2>$null | Out-Null
 
 # Create service
-& $nssmPath install Odoo18 $python ($odooBin + " -c `"$confPath`"")
+$odooArgs = "-c", $confPath
+& $nssmPath install Odoo18 $python $odooBin $odooArgs
 & $nssmPath set Odoo18 AppDirectory $serverDir
-& $nssmPath set Odoo18 DisplayName "Odoo 18 — Zakheni ICT"
-& $nssmPath set Odoo18 Description "Odoo 18 ERP with Zakheni ICT custom modules (Accounting, Helpdesk, Partner Enrich, SARS Payroll)"
+& $nssmPath set Odoo18 DisplayName "Odoo 18 - Zakheni ICT"
+& $nssmPath set Odoo18 Description "Odoo 18 ERP with Zakheni custom modules (Accounting, Helpdesk, Enrich)"
 & $nssmPath set Odoo18 Start SERVICE_AUTO_START
 & $nssmPath set Odoo18 AppStdout (Join-Path $OdooDir "odoo.log")
 & $nssmPath set Odoo18 AppStderr (Join-Path $OdooDir "odoo-error.log")
