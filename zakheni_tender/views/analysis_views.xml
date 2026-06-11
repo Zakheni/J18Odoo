@@ -1,0 +1,74 @@
+<odoo>
+    <record id="tender_analysis_pivot" model="ir.ui.view">
+        <field name="name">tender.analysis.pivot</field>
+        <field name="model">tender.analysis</field>
+        <field name="arch" type="xml">
+            <pivot string="Tender Analysis" disable_linking="1">
+                <field name="user_id" type="row"/>
+                <field name="stage_id" type="col"/>
+                <field name="tender_value" type="measure"/>
+                <field name="quoted_amount" type="measure"/>
+                <field name="probability" type="measure"/>
+                <field name="duration_days" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="tender_analysis_graph" model="ir.ui.view">
+        <field name="name">tender.analysis.graph</field>
+        <field name="model">tender.analysis</field>
+        <field name="arch" type="xml">
+            <graph string="Tender Value by Responsible">
+                <field name="user_id" type="row"/>
+                <field name="tender_value" type="measure"/>
+                <field name="quoted_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="tender_analysis_graph_stage" model="ir.ui.view">
+        <field name="name">tender.analysis.graph.stage</field>
+        <field name="model">tender.analysis</field>
+        <field name="arch" type="xml">
+            <graph string="Tenders by Stage" type="bar">
+                <field name="stage_id" type="row"/>
+                <field name="tender_value" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="tender_analysis_graph_result" model="ir.ui.view">
+        <field name="name">tender.analysis.graph.result</field>
+        <field name="model">tender.analysis</field>
+        <field name="arch" type="xml">
+            <graph string="Results by Value" type="pie">
+                <field name="result" type="row"/>
+                <field name="quoted_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="tender_analysis_search" model="ir.ui.view">
+        <field name="name">tender.analysis.search</field>
+        <field name="model">tender.analysis</field>
+        <field name="arch" type="xml">
+            <search string="Search Tender Analysis">
+                <field name="user_id"/>
+                <field name="stage_id"/>
+                <field name="issuer_id"/>
+                <filter name="won" string="Won" domain="[('is_won','=',True)]"/>
+                <filter name="lost" string="Lost" domain="[('is_lost','=',True)]"/>
+                <filter name="group_user" string="Responsible" context="{'group_by':'user_id'}"/>
+                <filter name="group_stage" string="Stage" context="{'group_by':'stage_id'}"/>
+                <filter name="group_date" string="Date" context="{'group_by':'date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="tender_analysis_action" model="ir.actions.act_window">
+        <field name="name">Tender Analysis</field>
+        <field name="res_model">tender.analysis</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="search_view_id" ref="tender_analysis_search"/>
+    </record>
+</odoo>

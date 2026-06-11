@@ -1,0 +1,180 @@
+<odoo>
+    <template id="portal_my_tenders" name="My Tenders">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Tenders</t>
+            <t t-set="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/my">Home</a></li>
+                    <li class="breadcrumb-item active">Tenders</li>
+                </ol>
+            </t>
+
+            <div class="o_portal_tender_list">
+                <h2 class="mb-4">My Tenders</h2>
+
+                <t t-if="not tenders">
+                    <div class="alert alert-info">No tenders found.</div>
+                </t>
+                <t t-else="">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <form method="get" class="form-inline">
+                                <label class="me-2">Sort by:</label>
+                                <select name="sortby" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+                                    <t t-foreach="searchbar_sortings" t-as="ss_key">
+                                        <option t-att-value="ss_key" t-att-selected="sortby == ss_key">
+                                            <t t-esc="searchbar_sortings[ss_key]['label']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+
+                    <t t-foreach="tenders" t-as="tender">
+                        <div class="card mb-3 o_portal_tender_card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <h5 class="card-title mb-1">
+                                            <a t-attf-href="/my/tender/{{ tender.id }}">
+                                                <t t-esc="tender.display_name"/>
+                                            </a>
+                                        </h5>
+                                        <p class="text-muted mb-0">
+                                            <t t-if="tender.issuer_id">
+                                                <t t-esc="tender.issuer_id.display_name"/>
+                                            </t>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span t-if="tender.result == 'won'" class="badge bg-success fs-6">Won</span>
+                                        <span t-if="tender.result == 'lost'" class="badge bg-danger fs-6">Lost</span>
+                                        <span t-if="tender.result == 'withdrawn'" class="badge bg-warning fs-6">Withdrawn</span>
+                                        <span t-if="not tender.result" class="badge bg-primary fs-6">
+                                            <t t-esc="tender.stage_id.name or 'In Progress'"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-2 text-end">
+                                        <strong><t t-esc="tender.tender_value" t-options='{"widget": "monetary"}'/></strong>
+                                    </div>
+                                    <div class="col-md-2 text-end text-muted small">
+                                        <t t-if="tender.deadline_submission">
+                                            Due: <t t-esc="tender.deadline_submission" t-options='{"widget": "date"}'/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+                <t t-call="portal.portal_pager"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_tender_detail" name="Tender Detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Tender: <t t-esc="tender.display_name"/></t>
+            <t t-set="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/my">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/my/tenders">Tenders</a></li>
+                    <li class="breadcrumb-item active"><t t-esc="tender.display_name"/></li>
+                </ol>
+            </t>
+
+            <div class="o_portal_tender_detail">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h4 class="card-title"><t t-esc="tender.display_name"/></h4>
+                                <t t-if="tender.issuer_id">
+                                    <h6 class="text-muted"><t t-esc="tender.issuer_id.display_name"/></h6>
+                                </t>
+
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-6 mb-2">
+                                        <strong>Stage:</strong>
+                                        <span class="badge bg-primary ms-2"><t t-esc="tender.stage_id.name"/></span>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <strong>Value:</strong>
+                                        <span class="ms-2"><t t-esc="tender.tender_value" t-options='{"widget": "monetary"}'/></span>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <strong>Deadline:</strong>
+                                        <span class="ms-2"><t t-esc="tender.deadline_submission" t-options='{"widget": "date"}'/></span>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <strong>Probability:</strong>
+                                        <span class="ms-2"><t t-esc="tender.probability" t-options='{"widget": "percentage"}'/></span>
+                                    </div>
+                                </div>
+
+                                <t t-if="tender.description">
+                                    <hr/>
+                                    <h5>Scope of Work</h5>
+                                    <div><t t-esc="tender.description"/></div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Status</h5>
+                                <span t-if="tender.result == 'won'" class="badge bg-success fs-5 d-block py-2 text-center">Won</span>
+                                <span t-if="tender.result == 'lost'" class="badge bg-danger fs-5 d-block py-2 text-center">Lost</span>
+                                <span t-if="not tender.result" class="badge bg-primary fs-5 d-block py-2 text-center">
+                                    <t t-esc="tender.stage_id.name"/>
+                                </span>
+                                <t t-if="tender.probability">
+                                    <div class="mt-3">
+                                        <strong>Win Probability:</strong>
+                                        <div class="progress mt-1" style="height: 24px;">
+                                            <div class="progress-bar" t-attf-style="width: {{ tender.probability }}%">
+                                                <t t-esc="tender.probability"/>%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Upload Document</h5>
+                                <form method="post" t-attf-action="/my/tender/{{ tender.id }}/upload" enctype="multipart/form-data">
+                                    <input type="file" name="upload_file" class="form-control mb-2" required="1"/>
+                                    <button type="submit" class="btn btn-primary w-100">Upload</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <t t-if="tender.document_count">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Documents (<t t-esc="tender.document_count"/>)</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <t t-foreach="tender.document_ids" t-as="doc">
+                                            <li class="mb-1">
+                                                <a t-attf-href="/web/content/{{ doc.id }}?download=true" target="_blank">
+                                                    <t t-esc="doc.display_name or doc.name"/>
+                                                </a>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,119 @@
+<odoo>
+    <record id="tender_dashboard_form" model="ir.ui.view">
+        <field name="name">tender.dashboard.form</field>
+        <field name="model">tender.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Tender Dashboard">
+                <sheet>
+                    <div class="o_dashboard">
+                        <div class="o_dashboard_header">
+                            <h1>Tender Dashboard</h1>
+                            <p class="text-muted">Real-time overview of all tender activity</p>
+                        </div>
+
+                        <div class="row o_dashboard_kpi">
+                            <div class="col-lg-3 col-6">
+                                <div class="o_kpi_card bg-primary">
+                                    <div class="o_kpi_value">
+                                        <field name="total_tenders"/>
+                                    </div>
+                                    <div class="o_kpi_label">Total Tenders</div>
+                                    <div class="o_kpi_sub">All time</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="o_kpi_card bg-success">
+                                    <div class="o_kpi_value">
+                                        <field name="won_count"/>
+                                    </div>
+                                    <div class="o_kpi_label">Won</div>
+                                    <div class="o_kpi_sub">
+                                        <field name="won_value" widget="monetary"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="o_kpi_card bg-danger">
+                                    <div class="o_kpi_value">
+                                        <field name="lost_count"/>
+                                    </div>
+                                    <div class="o_kpi_label">Lost</div>
+                                    <div class="o_kpi_sub">
+                                        <field name="withdrawn_count"/> withdrawn
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="o_kpi_card bg-info">
+                                    <div class="o_kpi_value">
+                                        <field name="in_progress_count"/>
+                                    </div>
+                                    <div class="o_kpi_label">In Progress</div>
+                                    <div class="o_kpi_sub">
+                                        <field name="overdue_deadline_count"/> overdue
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-8">
+                                <div class="o_dashboard_panel">
+                                    <h5 class="o_dashboard_section_title">Pipeline by Stage</h5>
+                                    <div class="o_stage_pipeline mt-3">
+                                        <field name="stage_ids" context="{'create': False}">
+                                            <list>
+                                                <field name="name"/>
+                                                <field name="probability" widget="percentage"/>
+                                            </list>
+                                        </field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="o_dashboard_panel">
+                                    <h5 class="o_dashboard_section_title">Win Rate</h5>
+                                    <div class="o_win_rate_circle text-center mt-3">
+                                        <div class="display-1 font-weight-bold text-success">
+                                            <field name="win_rate" widget="percentage"/>
+                                        </div>
+                                        <p class="text-muted mt-2">of decided tenders</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-6">
+                                <div class="o_dashboard_panel">
+                                    <h5 class="o_dashboard_section_title">Average Tender Value</h5>
+                                    <div class="display-4 font-weight-bold mt-3">
+                                        <field name="avg_value" widget="monetary"/>
+                                    </div>
+                                    <p class="text-muted">across <field name="total_tenders"/> tenders</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="o_dashboard_panel">
+                                    <h5 class="o_dashboard_section_title">Total Pipeline Value</h5>
+                                    <div class="display-4 font-weight-bold mt-3 text-primary">
+                                        <field name="total_value" widget="monetary"/>
+                                    </div>
+                                    <p class="text-muted">estimated value across all stages</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">tender.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">main</field>
+    </record>
+</odoo>

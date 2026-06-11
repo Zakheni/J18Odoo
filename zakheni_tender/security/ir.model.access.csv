@@ -3,3 +3,7 @@ access_tender_stage_user,tender.stage.user,model_tender_stage,base.group_user,1,
 access_tender_stage_manager,tender.stage.manager,model_tender_stage,base.group_system,1,1,1,1
 access_tender_tender_user,tender.tender.user,model_tender_tender,base.group_user,1,1,1,0
 access_tender_tender_manager,tender.tender.manager,model_tender_tender,base.group_system,1,1,1,1
+access_tender_dashboard_user,tender.dashboard.user,model_tender_dashboard,base.group_user,1,0,0,0
+access_tender_dashboard_manager,tender.dashboard.manager,model_tender_dashboard,base.group_system,1,1,1,1
+access_tender_analysis_user,tender.analysis.user,model_tender_analysis,base.group_user,1,0,0,0
+access_tender_analysis_manager,tender.analysis.manager,model_tender_analysis,base.group_system,1,1,1,1

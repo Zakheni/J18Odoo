@@ -1,0 +1,61 @@
+.o_dashboard {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .o_dashboard_header {
+        margin-bottom: 32px;
+        h1 { font-size: 28px; font-weight: 700; margin: 0; }
+        p { margin: 4px 0 0; font-size: 14px; }
+    }
+
+    .o_kpi_card {
+        border-radius: 12px;
+        padding: 20px;
+        color: #fff;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: transform 0.15s, box-shadow 0.15s;
+        &:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+
+        .o_kpi_value { font-size: 36px; font-weight: 700; line-height: 1.1; }
+        .o_kpi_label { font-size: 14px; font-weight: 600; margin-top: 8px; opacity: 0.9; }
+        .o_kpi_sub { font-size: 12px; margin-top: 4px; opacity: 0.7; }
+    }
+
+    .o_dashboard_panel {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .o_dashboard_section_title {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        color: #333;
+    }
+
+    .o_win_rate_circle {
+        .display-1 { font-size: 56px; }
+    }
+
+    .o_stage_pipeline {
+        .o_list_view {
+            border: none;
+            thead { display: none; }
+            tbody tr {
+                td:first-child { font-weight: 600; }
+            }
+        }
+    }
+}
+
+.o_dashboard_footer {
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    padding: 12px 24px;
+}
