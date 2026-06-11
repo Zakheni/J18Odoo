@@ -61,16 +61,36 @@ class TenderPortal(CustomerPortal):
     @http.route(['/my/tender/<int:tender_id>'], type='http', auth='user', website=True)
     def portal_my_tender_detail(self, tender_id=None, **kw):
         tender = request.env['tender.tender'].browse(tender_id)
-        return request.render('zakheni_tender.portal_tender_detail', {'tender': tender})
+        return request.render('zakheni_tender.portal_tender_detail', {
+            'tender': tender,
+            'resources': request.env['tender.document.resource'].search([('tender_id', '=', tender.id)]),
+        })
 
     @http.route(['/my/tender/<int:tender_id>/upload'], type='http', auth='user', methods=['POST'], website=True)
     def portal_tender_upload(self, tender_id=None, **kw):
         tender = request.env['tender.tender'].browse(tender_id)
-        if request.httprequest.method == 'POST' and kw.get('upload_file'):
-            request.env['ir.attachment'].create({
-                'name': kw['upload_file'].filename,
-                'datas': kw['upload_file'].read(),
-                'res_model': 'tender.tender',
-                'res_id': tender.id,
-            })
+        if request.httprequest.method == 'POST':
+            resource_name = (kw.get('resource_name') or '').strip()
+            resource = False
+            if resource_name:
+                resource = request.env['tender.document.resource'].search([
+                    ('tender_id', '=', tender.id),
+                    ('name', '=', resource_name),
+                ], limit=1)
+                if not resource:
+                    resource = request.env['tender.document.resource'].create({
+                        'name': resource_name,
+                        'tender_id': tender.id,
+                    })
+            files = request.httprequest.files.getlist('upload_file')
+            for f in files:
+                if f.filename:
+                    vals = {
+                        'name': f.filename,
+                        'datas': f.read(),
+                        'tender_id': tender.id,
+                    }
+                    if resource:
+                        vals['resource_id'] = resource.id
+                    request.env['tender.document'].create(vals)
         return request.redirect('/my/tender/%s' % tender_id)

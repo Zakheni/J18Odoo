@@ -150,7 +150,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">Upload Document</h5>
                                 <form method="post" t-attf-action="/my/tender/{{ tender.id }}/upload" enctype="multipart/form-data">
-                                    <input type="file" name="upload_file" class="form-control mb-2" required="1"/>
+                                    <input type="file" name="upload_file" class="form-control mb-2" required="1" multiple="1"/>
+                                    <input type="text" name="resource_name" class="form-control mb-2"
+                                           placeholder="Resource name (e.g. Project Manager)"/>
                                     <button type="submit" class="btn btn-primary w-100">Upload</button>
                                 </form>
                             </div>
@@ -160,15 +162,36 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title">Documents (<t t-esc="tender.document_count"/>)</h5>
-                                    <ul class="list-unstyled mb-0">
-                                        <t t-foreach="tender.document_ids" t-as="doc">
-                                            <li class="mb-1">
-                                                <a t-attf-href="/web/content/{{ doc.id }}?download=true" target="_blank">
-                                                    <t t-esc="doc.display_name or doc.name"/>
-                                                </a>
-                                            </li>
+                                    <t t-foreach="resources" t-as="res">
+                                        <t t-set="res_docs" t-value="tender.document_ids.filtered(lambda d: d.resource_id.id == res.id)"/>
+                                        <t t-if="res_docs">
+                                            <strong class="d-block mt-2 mb-1">
+                                                <t t-esc="res.name"/>
+                                            </strong>
+                                            <ul class="list-unstyled mb-0 ms-3">
+                                                <t t-foreach="res_docs" t-as="doc">
+                                                    <li class="mb-1">
+                                                        <a t-attf-href="/web/content/tender.document/{{ doc.id }}/datas/{{ doc.name }}" target="_blank">
+                                                            <t t-esc="doc.name"/>
+                                                        </a>
+                                                    </li>
+                                                </t>
+                                            </ul>
                                         </t>
-                                    </ul>
+                                    </t>
+                                    <t t-set="unassigned_docs" t-value="tender.document_ids.filtered(lambda d: not d.resource_id)"/>
+                                    <t t-if="unassigned_docs">
+                                        <strong class="d-block mt-3 mb-1">Unassigned</strong>
+                                        <ul class="list-unstyled mb-0 ms-3">
+                                            <t t-foreach="unassigned_docs" t-as="doc">
+                                                <li class="mb-1">
+                                                    <a t-attf-href="/web/content/tender.document/{{ doc.id }}/datas/{{ doc.name }}" target="_blank">
+                                                        <t t-esc="doc.name"/>
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </t>
                                 </div>
                             </div>
                         </t>

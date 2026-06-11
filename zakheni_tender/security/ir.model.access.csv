@@ -7,3 +7,8 @@ access_tender_dashboard_user,tender.dashboard.user,model_tender_dashboard,base.g
 access_tender_dashboard_manager,tender.dashboard.manager,model_tender_dashboard,base.group_system,1,1,1,1
 access_tender_analysis_user,tender.analysis.user,model_tender_analysis,base.group_user,1,0,0,0
 access_tender_analysis_manager,tender.analysis.manager,model_tender_analysis,base.group_system,1,1,1,1
+access_tender_document_user,tender.document.user,model_tender_document,base.group_user,1,1,1,1
+access_tender_document_manager,tender.document.manager,model_tender_document,base.group_system,1,1,1,1
+access_tender_document_resource_user,tender.document.resource.user,model_tender_document_resource,base.group_user,1,1,1,1
+access_tender_document_resource_manager,tender.document.resource.manager,model_tender_document_resource,base.group_system,1,1,1,1
+

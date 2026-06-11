@@ -27,6 +27,7 @@ class Tender(models.Model):
     deadline_validity = fields.Date(string='Validity Period End')
     date_site_visit = fields.Datetime(string='Site Visit')
     date_briefing = fields.Datetime(string='Briefing Session')
+    preparation_deadline = fields.Date(string='Preparation Deadline')
     date_published = fields.Date(string='Publication Date')
     date_submitted = fields.Datetime(string='Date Submitted', tracking=True)
     date_award = fields.Date(string='Award Date', tracking=True)
@@ -59,9 +60,9 @@ class Tender(models.Model):
     user_id = fields.Many2one('res.users', string='Responsible', default=lambda self: self.env.user, tracking=True)
     team_ids = fields.Many2many('res.users', 'tender_team_rel', 'tender_id', 'user_id', string='Team Members')
 
-    # Documents — Odoo native attachments with a dedicated one2many for cleaner UX
-    document_ids = fields.One2many('ir.attachment', compute='_compute_document_ids', inverse='_inverse_document_ids', string='Documents')
+    document_ids = fields.One2many('tender.document', 'tender_id', string='Documents')
     document_count = fields.Integer(compute='_compute_document_count', string='Document Count')
+    resource_ids = fields.One2many('tender.document.resource', 'tender_id', string='Resources')
 
     # Company & Active
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
@@ -84,22 +85,10 @@ class Tender(models.Model):
             result.append((t.id, name))
         return result
 
-    def _compute_document_ids(self):
-        for t in self:
-            t.document_ids = self.env['ir.attachment'].search([
-                ('res_model', '=', 'tender.tender'),
-                ('res_id', '=', t.id),
-            ])
-
-    def _inverse_document_ids(self):
-        pass  # Documents are managed via the chatter or direct attachment creation
-
+    @api.depends('document_ids')
     def _compute_document_count(self):
         for t in self:
-            t.document_count = self.env['ir.attachment'].search_count([
-                ('res_model', '=', 'tender.tender'),
-                ('res_id', '=', t.id),
-            ])
+            t.document_count = len(t.document_ids)
 
     @api.model
     def _default_stage_id(self):
@@ -116,10 +105,10 @@ class Tender(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': _('Documents'),
-            'res_model': 'ir.attachment',
+            'res_model': 'tender.document',
             'view_mode': 'list,form',
-            'domain': [('res_model', '=', 'tender.tender'), ('res_id', '=', self.id)],
-            'context': {'default_res_model': 'tender.tender', 'default_res_id': self.id},
+            'domain': [('tender_id', '=', self.id)],
+            'context': {'default_tender_id': self.id},
         }
 
     def action_won(self):
