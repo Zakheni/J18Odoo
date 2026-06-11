@@ -1,0 +1,10 @@
+<odoo>
+    <menuitem id="menu_tender_root" name="Tenders" sequence="90" web_icon="zakheni_tender,static/description/icon.png"/>
+
+    <menuitem id="menu_tender_tenders" parent="menu_tender_root" name="Tenders" sequence="10"
+              action="tender_tender_action"/>
+
+    <menuitem id="menu_tender_config" parent="menu_tender_root" name="Configuration" sequence="90"/>
+    <menuitem id="menu_tender_stages" parent="menu_tender_config" name="Stages" sequence="10"
+              action="tender_stage_action"/>
+</odoo>

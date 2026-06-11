@@ -1,0 +1,46 @@
+<odoo>
+    <record id="tender_stage_tree" model="ir.ui.view">
+        <field name="name">tender.stage.tree</field>
+        <field name="model">tender.stage</field>
+        <field name="arch" type="xml">
+            <list string="Stages" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="probability"/>
+                <field name="fold"/>
+                <field name="is_won"/>
+                <field name="is_lost"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tender_stage_form" model="ir.ui.view">
+        <field name="name">tender.stage.form</field>
+        <field name="model">tender.stage</field>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="probability"/>
+                            <field name="fold"/>
+                            <field name="is_won"/>
+                            <field name="is_lost"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Describe what this stage means..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_stage_action" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">tender.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
