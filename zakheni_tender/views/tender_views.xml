@@ -93,6 +93,13 @@
                 <field name="name"/>
                 <field name="tender_number"/>
                 <field name="issuer_id"/>
+                <separator/>
+                <filter string="My Tenders" name="my_tenders"
+                        domain="[('user_id', '=', uid)]"
+                        help="Tenders assigned to me"/>
+                <filter string="Unassigned" name="unassigned"
+                        domain="[('user_id', '=', False)]"/>
+                <separator/>
                 <filter name="stage" string="Stage" context="{'group_by':'stage_id'}"/>
                 <filter name="user" string="Responsible" context="{'group_by':'user_id'}"/>
                 <filter name="result" string="Result" context="{'group_by':'result'}"/>
@@ -146,12 +153,26 @@
                                 <span class="o_stat_text">Documents</span>
                             </div>
                         </button>
+                        <button name="action_open_bid_no_bid" type="object"
+                                class="oe_stat_button" icon="fa-balance-scale">
+                            <div class="o_stat_info">
+                                <field name="bid_no_bid_score" widget="percentage" invisible="not bid_no_bid_score"/>
+                                <span class="o_stat_text">Bid/No-Bid</span>
+                            </div>
+                        </button>
+                        <button name="action_ai_analyze" type="object"
+                                class="oe_stat_button" icon="fa-robot">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">AI Analysis</span>
+                            </div>
+                        </button>
                     </div>
                     <group>
                         <group>
                             <field name="name"/>
                             <field name="tender_number"/>
                             <field name="issuer_id" context="{'create': True}"/>
+                            <field name="category_id"/>
                             <field name="user_id"/>
                             <field name="team_ids" widget="many2many_tags"/>
                         </group>
@@ -217,10 +238,23 @@
         </field>
     </record>
 
+    <record id="tender_tender_calendar" model="ir.ui.view">
+        <field name="name">tender.tender.calendar</field>
+        <field name="model">tender.tender</field>
+        <field name="arch" type="xml">
+            <calendar string="Tender Deadlines" date_start="deadline_submission" color="stage_id">
+                <field name="name"/>
+                <field name="issuer_id"/>
+                <field name="stage_id"/>
+            </calendar>
+        </field>
+    </record>
+
     <record id="tender_tender_action" model="ir.actions.act_window">
         <field name="name">Tenders</field>
         <field name="res_model">tender.tender</field>
-        <field name="view_mode">kanban,list,form,graph,pivot</field>
+        <field name="view_mode">kanban,list,form,graph,pivot,calendar</field>
+        <field name="context">{'search_default_my_tenders': 1, 'group_by': 'stage_id'}</field>
         <field name="search_view_id" ref="tender_tender_search"/>
     </record>
 </odoo>

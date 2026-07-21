@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_lead_form_inherit_zakheni" model="ir.ui.view">
+        <field name="name">crm.lead.form.enterprise</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="lead_grade_id" widget="badge" decoration-success="lead_grade_id == 1"
+                    decoration-warning="lead_grade_id == 2" decoration-info="lead_grade_id == 3"
+                    decoration-danger="lead_grade_id == 4"/>
+            </field>
+            <field name="expected_revenue" position="after">
+                <field name="total_score" widget="progressbar" decoration-success="total_score >= 50"/>
+                <field name="win_probability_adjusted" string="Adj. Probability (%)" widget="percentage"/>
+                <field name="forecast_amount" string="Forecast Amt" widget="monetary"/>
+                <field name="territory_id"/>
+                <field name="competitor_id"/>
+            </field>
+            <field name="partner_id" position="after">
+                <field name="sla_id" invisible="sla_id == False"/>
+                <field name="sla_deadline" invisible="sla_deadline == False"/>
+                <field name="sla_status" widget="badge"
+                    decoration-success="sla_status == 'on_track'"
+                    decoration-warning="sla_status == 'at_risk'"
+                    decoration-danger="sla_status == 'breached'"
+                    invisible="sla_status == False"/>
+            </field>
+            <xpath expr="//page[@name='internal_notes']" position="before">
+                <page name="scoring" string="Scoring &amp; Automation">
+                    <group>
+                        <group string="Lead Score">
+                            <field name="total_score"/>
+                            <field name="lead_grade_id"/>
+                            <field name="win_probability_adjusted" widget="percentage"/>
+                            <button name="action_recalculate_score" type="object"
+                                string="Recalculate Score" icon="fa-refresh"/>
+                        </group>
+                        <group string="SLA Tracking">
+                            <field name="sla_id"/>
+                            <field name="sla_deadline"/>
+                            <field name="sla_status" widget="badge"/>
+                        </group>
+                    </group>
+                    <group string="Score Breakdown">
+                        <field name="score_count" string="Score Entries"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_tree_inherit_zakheni" model="ir.ui.view">
+        <field name="name">crm.lead.tree.enterprise</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="expected_revenue" position="after">
+                <field name="total_score" optional="show"/>
+                <field name="lead_grade_id" optional="show"/>
+                <field name="territory_id" optional="show"/>
+                <field name="forecast_amount" widget="monetary" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_kanban_inherit_zakheni" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.enterprise</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_lead_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <div class="d-flex flex-wrap gap-1 mb-1">
+                    <t t-if="record.lead_grade_id.raw_value">
+                        <span class="badge rounded-pill"
+                            t-attf-class="badge rounded-pill bg-{{ record.lead_grade_id.color.raw_value }}">
+                            <t t-esc="record.lead_grade_id.code.raw_value"/>
+                        </span>
+                    </t>
+                    <t t-if="record.total_score.raw_value">
+                        <small class="text-muted ms-1">
+                            Score: <t t-esc="record.total_score.raw_value"/>
+                        </small>
+                    </t>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_search_inherit_zakheni" model="ir.ui.view">
+        <field name="name">crm.lead.search.enterprise</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="lead_grade_id"/>
+                <field name="territory_id"/>
+                <field name="competitor_id"/>
+                <separator/>
+                <filter name="filter_sla_breached" string="SLA Breached"
+                    domain="[('sla_status', '=', 'breached')]"/>
+                <filter name="filter_sla_on_track" string="SLA On Track"
+                    domain="[('sla_status', '=', 'on_track')]"/>
+                <separator/>
+                <filter name="filter_in_sequence" string="In Email Sequence"
+                    domain="[('is_in_sequence', '=', True)]"/>
+                <filter name="filter_high_score" string="High Score (50+)"
+                    domain="[('total_score', '>=', 50)]"/>
+            </field>
+            <group expand="0" string="Group By">
+                <filter name="group_by_grade" string="Grade" context="{'group_by': 'lead_grade_id'}"/>
+                <filter name="group_by_territory" string="Territory" context="{'group_by': 'territory_id'}"/>
+                <filter name="group_by_sla_status" string="SLA Status" context="{'group_by': 'sla_status'}"/>
+                <filter name="group_by_score" string="Score Range" context="{'group_by': 'total_score'}"/>
+            </group>
+        </field>
+    </record>
+</odoo>

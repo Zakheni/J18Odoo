@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_config_settings_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.zakheni</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Email Marketing Enterprise" string="Email Marketing Enterprise" name="zakheni_email_marketing">
+                    <block title="Marketing Configuration">
+                        <setting help="Default cost per email for ROI calculations">
+                            <field name="zakheni_marketing_default_cost_per_email"/>
+                        </setting>
+                    </block>
+                    <block title="Feature Toggles">
+                        <setting help="Automatically score leads based on email engagement">
+                            <field name="zakheni_marketing_enable_lead_scoring"/>
+                        </setting>
+                        <setting help="Enable marketing automation rules">
+                            <field name="zakheni_marketing_enable_automation"/>
+                        </setting>
+                        <setting help="Enable automated re-engagement campaigns for inactive contacts">
+                            <field name="zakheni_marketing_enable_reengagement"/>
+                        </setting>
+                        <setting help="Automatically sync dynamic segments on a schedule">
+                            <field name="zakheni_marketing_auto_sync_segments"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

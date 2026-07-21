@@ -1,0 +1,51 @@
+<odoo>
+    <record id="tender_ai_analysis_form" model="ir.ui.view">
+        <field name="name">tender.ai.analysis.form</field>
+        <field name="model">tender.ai.analysis</field>
+        <field name="arch" type="xml">
+            <form string="AI Document Analysis">
+                <header>
+                    <button name="action_analyze" type="object" string="Run Analysis" class="btn-primary"
+                            invisible="state not in ('pending', 'error')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="tender_id"/>
+                            <field name="document_id"/>
+                            <field name="provider"/>
+                        </group>
+                        <group>
+                            <field name="bid_recommendation" widget="badge" invisible="state != 'completed'"/>
+                            <field name="confidence_score" widget="percentage" invisible="state != 'completed'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Summary" invisible="state != 'completed'">
+                            <field name="summary" nolabel="1"/>
+                        </page>
+                        <page string="Requirements" invisible="state != 'completed'">
+                            <field name="requirements" nolabel="1"/>
+                        </page>
+                        <page string="Deadlines" invisible="state != 'completed'">
+                            <field name="deadlines" nolabel="1"/>
+                        </page>
+                        <page string="Compliance Items" invisible="state != 'completed'">
+                            <field name="compliance_items" nolabel="1"/>
+                        </page>
+                        <page string="Risk Factors" invisible="state != 'completed'">
+                            <field name="risk_factors" nolabel="1"/>
+                        </page>
+                        <page string="Raw Response" invisible="state != 'completed'">
+                            <field name="raw_response" nolabel="1"/>
+                        </page>
+                        <page string="Error" invisible="state != 'error'">
+                            <field name="error_message" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_audit_tree" model="ir.ui.view">
+        <field name="name">asset.audit.tree</field>
+        <field name="model">asset.audit</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'completed'" decoration-warning="state == 'in_progress'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="location_id"/>
+                <field name="auditor_id"/>
+                <field name="state"/>
+                <field name="total_count"/>
+                <field name="verified_count"/>
+                <field name="missing_count"/>
+                <field name="damage_count"/>
+                <field name="moved_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="asset_audit_form" model="ir.ui.view">
+        <field name="name">asset.audit.form</field>
+        <field name="model">asset.audit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_prepare_assets" type="object"
+                            string="Load Assets" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_start" type="object"
+                            string="Start Audit"
+                            invisible="state != 'draft'"/>
+                    <button name="action_complete" type="object"
+                            string="Complete Audit"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel Audit"
+                            invisible="state == 'completed'"/>
+                    <button name="action_reset" type="object"
+                            string="Reset to Draft"
+                            invisible="state != 'cancelled'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="location_id"/>
+                            <field name="include_sublocations" invisible="location_id == False"/>
+                        </group>
+                        <group>
+                            <field name="auditor_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="total_count" string="Total"/>
+                            <field name="verified_count" string="Verified"/>
+                            <field name="found_count" string="Found"/>
+                        </group>
+                        <group>
+                            <field name="missing_count" string="Missing" class="text-danger"/>
+                            <field name="damage_count" string="Damaged" class="text-warning"/>
+                            <field name="moved_count" string="Moved"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <list string="Audit Items" editable="bottom">
+                            <field name="asset_id" options="{'no_create': True}"/>
+                            <field name="asset_code"/>
+                            <field name="asset_name"/>
+                            <field name="asset_barcode"/>
+                            <field name="expected_location_id"/>
+                            <field name="scanned_location_id"/>
+                            <field name="new_location_id"
+                                   domain="['|', ('id', '=', expected_location_id), ('active', '=', True)]"/>
+                            <field name="expected_employee_id"/>
+                            <field name="scanned" string="Scan"/>
+                            <button name="action_scan_barcode" type="object"
+                                    string="Verify"
+                                    class="btn-sm btn-success"
+                                    icon="fa-check"/>
+                            <field name="verified" widget="boolean_fa"/>
+                            <field name="asset_found" widget="boolean_fa"/>
+                            <field name="condition"/>
+                            <field name="notes"/>
+                        </list>
+                    </field>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="asset_audit_search" model="ir.ui.view">
+        <field name="name">asset.audit.search</field>
+        <field name="model">asset.audit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="location_id"/>
+                <field name="auditor_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="in_progress" string="In Progress" domain="[('state','=','in_progress')]"/>
+                <filter name="completed" string="Completed" domain="[('state','=','completed')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="asset_audit_action" model="ir.actions.act_window">
+        <field name="name">Asset Audits</field>
+        <field name="res_model">asset.audit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="asset_audit_search"/>
+    </record>
+</odoo>

@@ -23,6 +23,12 @@
                     </group>
                 </page>
             </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_statement_wizard)d" type="action"
+                    string="Statement" icon="fa-file-pdf-o"
+                    context="{'default_partner_ids': [id]}"
+                    groups="account.group_account_user"/>
+            </xpath>
         </field>
     </record>
 

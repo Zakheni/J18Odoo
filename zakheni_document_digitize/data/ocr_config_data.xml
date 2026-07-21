@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ocr_config_tesseract" model="ir.config_parameter">
+        <field name="key">zakheni_digitize.ocr_engine</field>
+        <field name="value">tesseract</field>
+    </record>
+    <record id="ocr_config_tesseract_path" model="ir.config_parameter">
+        <field name="key">zakheni_digitize.tesseract_path</field>
+        <field name="value">C:\Program Files\Tesseract-OCR\tesseract.exe</field>
+    </record>
+    <record id="ocr_config_tesseract_lang" model="ir.config_parameter">
+        <field name="key">zakheni_digitize.tesseract_lang</field>
+        <field name="value">eng</field>
+    </record>
+</odoo>

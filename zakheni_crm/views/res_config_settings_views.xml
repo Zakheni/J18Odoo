@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_config_settings_crm_inherit_zakheni" model="ir.ui.view">
+        <field name="name">Res.config settings CRM enterprise inhertiance</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="crm.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='crm']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" id="zakheni_crm_scoring">
+                    <div class="o_setting_left_pane">
+                        <field name="crm_auto_score_leads"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="crm_auto_score_leads" string="Auto-Score Leads"/>
+                        <div class="text-muted">
+                            Automatically score leads based on configured scoring rules.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="zakheni_crm_territory">
+                    <div class="o_setting_left_pane">
+                        <field name="crm_auto_assign_territory"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="crm_auto_assign_territory" string="Auto-Assign Territory"/>
+                        <div class="text-muted">
+                            Automatically assign leads to territories based on location.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="zakheni_crm_sla">
+                    <div class="o_setting_left_pane">
+                        <field name="crm_enable_sla_tracking"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="crm_enable_sla_tracking" string="Enable SLA Tracking"/>
+                        <div class="text-muted">
+                            Track SLA deadlines on leads and opportunities.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="zakheni_crm_forecast">
+                    <div class="o_setting_left_pane">
+                        <field name="crm_default_forecast_model"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="crm_default_forecast_model" string="Default Forecast Model"/>
+                        <div class="text-muted">
+                            Default forecasting model for pipeline analysis.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

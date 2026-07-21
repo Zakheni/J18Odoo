@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="cron_score_all_leads" model="ir.cron">
+        <field name="name">CRM: Auto-Score All Leads</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_score_all_leads()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="priority">5</field>
+    </record>
+
+    <record id="cron_process_email_sequences" model="ir.cron">
+        <field name="name">CRM: Process Email Sequences</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">model.env['crm.email.sequence']._cron_process_sequences()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="priority">5</field>
+    </record>
+
+    <record id="cron_check_sla_breaches" model="ir.cron">
+        <field name="name">CRM: Check SLA Breaches</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_sla_breaches()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+        <field name="priority">5</field>
+    </record>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="asset_demo_laptop_01" model="asset.asset">
+            <field name="name">Dell Latitude 5540</field>
+            <field name="category_id" ref="asset_cat_it_laptop"/>
+            <field name="current_location_id" ref="asset_loc_head_office"/>
+            <field name="status">in_use</field>
+            <field name="purchase_date" eval="(datetime.now() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+            <field name="purchase_value">25000.0</field>
+            <field name="salvage_value">2500.0</field>
+            <field name="manufacturer">Dell</field>
+            <field name="serial_number">DL5540-ABC-001</field>
+        </record>
+        <record id="asset_demo_monitor_01" model="asset.asset">
+            <field name="name">Dell 27" Monitor</field>
+            <field name="category_id" ref="asset_cat_it_peripheral"/>
+            <field name="current_location_id" ref="asset_loc_head_office"/>
+            <field name="status">in_use</field>
+            <field name="purchase_date" eval="(datetime.now() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="purchase_value">5500.0</field>
+            <field name="salvage_value">550.0</field>
+            <field name="manufacturer">Dell</field>
+            <field name="serial_number">DL27-MON-002</field>
+        </record>
+        <record id="asset_demo_desk_01" model="asset.asset">
+            <field name="name">Standing Desk Executive</field>
+            <field name="category_id" ref="asset_cat_furniture"/>
+            <field name="current_location_id" ref="asset_loc_head_office"/>
+            <field name="status">in_use</field>
+            <field name="purchase_date" eval="(datetime.now() - relativedelta(years=1)).strftime('%Y-%m-%d')"/>
+            <field name="purchase_value">12000.0</field>
+            <field name="salvage_value">600.0</field>
+        </record>
+        <record id="asset_demo_vehicle_01" model="asset.asset">
+            <field name="name">Toyota Hilux 2024</field>
+            <field name="category_id" ref="asset_cat_vehicle"/>
+            <field name="current_location_id" ref="asset_loc_head_office"/>
+            <field name="status">in_use</field>
+            <field name="purchase_date" eval="(datetime.now() - relativedelta(years=1, months=3)).strftime('%Y-%m-%d')"/>
+            <field name="purchase_value">650000.0</field>
+            <field name="salvage_value">130000.0</field>
+            <field name="manufacturer">Toyota</field>
+            <field name="model">Hilux 2.8 GD-6</field>
+            <field name="serial_number">AHT-123-456-789</field>
+            <field name="license_plate">CF 123-456 GP</field>
+        </record>
+    </data>
+</odoo>

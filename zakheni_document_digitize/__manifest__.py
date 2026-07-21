@@ -1,0 +1,30 @@
+{
+    'name': 'Zakheni Document Digitization',
+    'summary': 'OCR and AI-powered document digitization for invoices, receipts, and business documents',
+    'version': '18.0.1.0.0',
+    'category': 'Productivity/Document',
+    'license': 'LGPL-3',
+    'author': 'Zakheni ICT (Pty) Ltd',
+    'website': 'https://www.zakhenict.co.za',
+    'depends': [
+        'base',
+        'mail',
+        'account',
+        'dms',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/ocr_config_data.xml',
+        'data/document_type_data.xml',
+        'views/zakheni_digitize_views.xml',
+        'views/res_config_settings_views.xml',
+        'data/menus.xml',
+        'wizards/digitize_upload_wizard_views.xml',
+    ],
+    'external_dependencies': {
+        'python': ['pytesseract', 'pdfminer', 'PIL'],
+    },
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

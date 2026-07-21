@@ -1,0 +1,70 @@
+<odoo>
+    <record id="tender_bid_no_bid_form" model="ir.ui.view">
+        <field name="name">tender.bid.no.bid.form</field>
+        <field name="model">tender.bid.no.bid</field>
+        <field name="arch" type="xml">
+            <form string="Bid/No-Bid Analysis">
+                <header>
+                    <button name="action_complete" type="object" string="Complete Analysis" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_draft" type="object" string="Reopen"
+                            invisible="state != 'completed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <group>
+                        <group>
+                            <field name="tender_id"/>
+                            <field name="user_id"/>
+                            <field name="date_analysis"/>
+                        </group>
+                        <group>
+                            <field name="total_score"/>
+                            <field name="score_percent" widget="percentage"/>
+                            <field name="recommendation" widget="badge"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Criteria">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="category"/>
+                                    <field name="name"/>
+                                    <field name="weight"/>
+                                    <field name="score"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_bid_no_bid_tree" model="ir.ui.view">
+        <field name="name">tender.bid.no.bid.tree</field>
+        <field name="model">tender.bid.no.bid</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="tender_id"/>
+                <field name="score_percent" widget="percentage"/>
+                <field name="recommendation"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="date_analysis"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tender_bid_no_bid_action" model="ir.actions.act_window">
+        <field name="name">Bid/No-Bid Analysis</field>
+        <field name="res_model">tender.bid.no.bid</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

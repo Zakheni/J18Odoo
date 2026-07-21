@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_asset_root" name="Assets"
+              sequence="85" web_icon="zakheni_asset_management,static/description/icon.png"/>
+
+    <menuitem id="menu_asset_dashboard" name="Dashboard"
+              parent="menu_asset_root" sequence="10"
+              action="asset_dashboard_action"/>
+
+    <menuitem id="menu_asset_assets" name="Assets"
+              parent="menu_asset_root" sequence="20"
+              action="asset_asset_action"/>
+
+    <menuitem id="menu_asset_maintenance" name="Maintenance"
+              parent="menu_asset_root" sequence="30"
+              action="asset_maintenance_action"/>
+
+    <menuitem id="menu_asset_assignments" name="Assignments"
+              parent="menu_asset_root" sequence="40"
+              action="asset_assignment_action"/>
+
+    <menuitem id="menu_asset_audits" name="Audits"
+              parent="menu_asset_root" sequence="50"
+              action="asset_audit_action"/>
+
+    <menuitem id="menu_asset_configuration" name="Configuration"
+              parent="menu_asset_root" sequence="100" groups="base.group_system"/>
+
+    <menuitem id="menu_asset_categories" name="Asset Categories"
+              parent="menu_asset_configuration" sequence="10"
+              action="asset_category_action"/>
+
+    <menuitem id="menu_asset_locations" name="Asset Locations"
+              parent="menu_asset_configuration" sequence="20"
+              action="asset_location_action"/>
+</odoo>

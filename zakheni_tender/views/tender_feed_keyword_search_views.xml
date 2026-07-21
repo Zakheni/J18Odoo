@@ -1,0 +1,26 @@
+<odoo>
+    <record id="tender_feed_keyword_search_form" model="ir.ui.view">
+        <field name="name">tender.feed.keyword.search.form</field>
+        <field name="model">tender.feed.keyword.search</field>
+        <field name="arch" type="xml">
+            <form string="Search eTenders by Keyword">
+                <group>
+                    <field name="keywords" placeholder="e.g. Construction, Solar, IT, Cisco"/>
+                    <field name="days_back"/>
+                </group>
+                <footer>
+                    <button name="action_fetch" type="object" string="Search &amp; Fetch"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_feed_keyword_search_action" model="ir.actions.act_window">
+        <field name="name">Search eTenders by Keyword</field>
+        <field name="res_model">tender.feed.keyword.search</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

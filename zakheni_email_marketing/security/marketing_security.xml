@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Marketing Manager Group -->
+        <record id="group_marketing_manager" model="res.groups">
+            <field name="name">Marketing Manager</field>
+            <field name="category_id" ref="base.module_category_marketing"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Full access to all marketing features</field>
+        </record>
+
+        <!-- Marketing User Group -->
+        <record id="group_marketing_user" model="res.groups">
+            <field name="name">Marketing User</field>
+            <field name="category_id" ref="base.module_category_marketing"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Can view and create campaigns, but cannot modify configuration</field>
+        </record>
+    </data>
+</odoo>

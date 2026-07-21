@@ -1,0 +1,66 @@
+<odoo>
+    <record id="tender_feed_match_tree" model="ir.ui.view">
+        <field name="name">tender.feed.match.tree</field>
+        <field name="model">tender.feed.match</field>
+        <field name="arch" type="xml">
+            <list string="Tender Matches" multi_edit="1">
+                <field name="feed_id"/>
+                <field name="partner_id"/>
+                <field name="similarity_score" widget="percentage"/>
+                <field name="state"/>
+                <field name="match_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tender_feed_match_form" model="ir.ui.view">
+        <field name="name">tender.feed.match.form</field>
+        <field name="model">tender.feed.match</field>
+        <field name="arch" type="xml">
+            <form string="Tender Match">
+                <header>
+                    <button name="action_interested" type="object" string="Interested"
+                            class="btn-success"
+                            invisible="state == 'interested'"/>
+                    <button name="action_not_interested" type="object" string="Not Interested"
+                            class="btn-secondary"
+                            invisible="state == 'not_interested'"/>
+                    <button name="action_reviewed" type="object" string="Mark Reviewed"
+                            class="btn-primary"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="feed_id"/>
+                            <field name="company_profile_id"/>
+                        </group>
+                        <group>
+                            <field name="similarity_score" widget="percentage"/>
+                            <field name="match_date"/>
+                        </group>
+                    </group>
+                    <field name="notes"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_feed_match_search" model="ir.ui.view">
+        <field name="name">tender.feed.match.search</field>
+        <field name="model">tender.feed.match</field>
+        <field name="arch" type="xml">
+            <search string="Search Matches">
+                <field name="feed_id"/>
+                <field name="partner_id"/>
+                <filter name="state" string="Status" context="{'group_by': 'state'}"/>
+                <separator/>
+                <filter name="high_match" string="High Match (&gt;50%)"
+                        domain="[('similarity_score', '&gt;', 0.5)]"/>
+                <filter name="medium_match" string="Medium Match (30-50%)"
+                        domain="[('similarity_score', '&gt;=', 0.3), ('similarity_score', '&lt;=', 0.5)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

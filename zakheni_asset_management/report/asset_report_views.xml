@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_asset_register" model="ir.actions.report">
+        <field name="name">Asset Register</field>
+        <field name="model">asset.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zakheni_asset_management.report_asset_register</field>
+        <field name="report_file">zakheni_asset_management.report_asset_register</field>
+        <field name="print_report_name">'Asset_Register_%s' % (datetime.now().strftime('%Y%m%d'))</field>
+        <field name="binding_model_id" ref="model_asset_asset"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_asset_register">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Asset Register</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Asset Number</th><td><span t-field="doc.code"/></td>
+                                <th>Status</th><td><span t-field="doc.status"/></td>
+                            </tr>
+                            <tr>
+                                <th>Name</th><td><span t-field="doc.name"/></td>
+                                <th>Category</th><td><span t-field="doc.category_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Location</th><td><span t-field="doc.current_location_id"/></td>
+                                <th>Assigned To</th><td><span t-field="doc.assigned_employee_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Purchase Date</th><td><span t-field="doc.purchase_date"/></td>
+                                <th>Purchase Value</th><td><span t-field="doc.purchase_value"/></td>
+                            </tr>
+                            <tr>
+                                <th>Book Value</th><td><span t-field="doc.book_value"/></td>
+                                <th>Depreciation</th><td><span t-field="doc.cumulative_depreciation"/></td>
+                            </tr>
+                            <tr>
+                                <th>Manufacturer</th><td><span t-field="doc.manufacturer"/></td>
+                                <th>Serial No.</th><td><span t-field="doc.serial_number"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.asset.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Asset Management" name="asset">
+                    <block title="Defaults" name="asset_defaults">
+                        <field name="asset_depreciation_default_method"/>
+                        <field name="asset_barcode_format"/>
+                        <field name="group_asset_manager"/>
+                        <field name="group_asset_user"/>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

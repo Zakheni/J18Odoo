@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="demo_marketing_segment" model="marketing.segment">
+            <field name="name">Demo: Newsletter Engaged</field>
+            <field name="description">Demo segment - contacts with high engagement</field>
+            <field name="condition_type">engagement</field>
+            <field name="min_engagement_score">20.0</field>
+            <field name="model_id" ref="mass_mailing.model_mailing_contact"/>
+            <field name="domain">[]</field>
+        </record>
+    </data>
+</odoo>

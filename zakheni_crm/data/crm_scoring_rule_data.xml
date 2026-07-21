@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="scoring_rule_country_za" model="crm.scoring.rule">
+        <field name="name">Local Country (ZA)</field>
+        <field name="sequence">10</field>
+        <field name="category">demographic</field>
+        <field name="score">15</field>
+        <field name="apply_on">country</field>
+        <field name="operator">=</field>
+        <field name="value">ZA</field>
+        <field name="description">Lead is in South Africa - local market priority.</field>
+    </record>
+
+    <record id="scoring_rule_has_mobile" model="crm.scoring.rule">
+        <field name="name">Has Mobile Phone</field>
+        <field name="sequence">20</field>
+        <field name="category">demographic</field>
+        <field name="score">10</field>
+        <field name="apply_on">has_mobile</field>
+        <field name="operator">=</field>
+        <field name="value">True</field>
+        <field name="description">Lead provided a mobile phone number.</field>
+    </record>
+
+    <record id="scoring_rule_has_website" model="crm.scoring.rule">
+        <field name="name">Has Website</field>
+        <field name="sequence">30</field>
+        <field name="category">firmographic</field>
+        <field name="score">10</field>
+        <field name="apply_on">has_website</field>
+        <field name="operator">=</field>
+        <field name="value">True</field>
+        <field name="description">Lead's company has a website - established business.</field>
+    </record>
+
+    <record id="scoring_rule_revenue_high" model="crm.scoring.rule">
+        <field name="name">High Expected Revenue (&gt; R500k)</field>
+        <field name="sequence">40</field>
+        <field name="category">firmographic</field>
+        <field name="score">25</field>
+        <field name="apply_on">revenue_range</field>
+        <field name="operator">&gt;=</field>
+        <field name="value">500000</field>
+        <field name="description">High-value opportunity.</field>
+    </record>
+
+    <record id="scoring_rule_revenue_medium" model="crm.scoring.rule">
+        <field name="name">Medium Expected Revenue (R100k-500k)</field>
+        <field name="sequence">50</field>
+        <field name="category">firmographic</field>
+        <field name="score">15</field>
+        <field name="apply_on">revenue_range</field>
+        <field name="operator">&gt;=</field>
+        <field name="value">100000</field>
+        <field name="description">Medium-value opportunity.</field>
+    </record>
+
+    <record id="scoring_rule_email_corp" model="crm.scoring.rule">
+        <field name="name">Corporate Email Domain</field>
+        <field name="sequence">60</field>
+        <field name="category">firmographic</field>
+        <field name="score">5</field>
+        <field name="apply_on">email_domain</field>
+        <field name="operator">like</field>
+        <field name="value">.co.za</field>
+        <field name="description">Lead uses a corporate South African email domain.</field>
+    </record>
+
+    <record id="scoring_rule_email_free" model="crm.scoring.rule">
+        <field name="name">Free Email Domain</field>
+        <field name="sequence">70</field>
+        <field name="category">firmographic</field>
+        <field name="score">-5</field>
+        <field name="apply_on">email_domain</field>
+        <field name="operator">like</field>
+        <field name="value">gmail.com</field>
+        <field name="description">Lead uses personal/free email - may be less qualified.</field>
+    </record>
+</odoo>

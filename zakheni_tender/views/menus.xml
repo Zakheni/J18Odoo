@@ -9,8 +9,32 @@
     <menuitem id="menu_tender_analysis" parent="menu_tender_root" name="Analysis" sequence="15"
               action="tender_analysis_action"/>
 
+    <menuitem id="menu_tender_bid_no_bid" parent="menu_tender_root" name="Bid/No-Bid Analysis" sequence="12"
+              action="tender_bid_no_bid_action"/>
+
+    <menuitem id="menu_tender_compliance" parent="menu_tender_root" name="Compliance" sequence="20"/>
+    <menuitem id="menu_tender_compliance_checklists" parent="menu_tender_compliance" name="Checklists" sequence="10"
+              action="tender_compliance_checklist_action"/>
+    <menuitem id="menu_tender_compliance_results" parent="menu_tender_compliance" name="Results" sequence="20"
+              action="tender_compliance_result_action"/>
+
+    <menuitem id="menu_tender_feed" parent="menu_tender_root" name="Tender Feed" sequence="7"
+              action="tender_feed_action"/>
+
+    <menuitem id="menu_tender_matching" parent="menu_tender_root" name="Matching" sequence="30"/>
+    <menuitem id="menu_tender_matches" parent="menu_tender_matching" name="Matches" sequence="10"
+              action="tender_feed_match_action"/>
+    <menuitem id="menu_tender_company_profiles" parent="menu_tender_matching" name="Company Profiles" sequence="20"
+              action="tender_company_profile_action"/>
+
     <menuitem id="menu_tender_config" parent="menu_tender_root" name="Configuration" sequence="90"/>
     <menuitem id="menu_tender_stages" parent="menu_tender_config" name="Stages" sequence="10"
               action="tender_stage_action"/>
+    <menuitem id="menu_tender_categories" parent="menu_tender_config" name="Categories" sequence="20"
+              action="tender_category_action"/>
+    <menuitem id="menu_tender_service_categories" parent="menu_tender_config" name="Service Categories" sequence="30"
+              action="tender_service_category_action"/>
+    <menuitem id="menu_tender_keyword_configs" parent="menu_tender_config" name="Preconfigured Keywords" sequence="35"
+              action="tender_feed_keyword_config_action"/>
 
 </odoo>

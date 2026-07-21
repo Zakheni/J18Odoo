@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_asset_tree" model="ir.ui.view">
+        <field name="name">asset.asset.tree</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <list decoration-info="status == 'in_storage'" decoration-muted="status in ('not_in_use', 'disposed')" decoration-success="status == 'in_use'" decoration-warning="status == 'maintenance'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="status"/>
+                <field name="current_location_id"/>
+                <field name="assigned_employee_id"/>
+                <field name="purchase_date"/>
+                <field name="purchase_value" sum="Total"/>
+                <field name="book_value" sum="Total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="asset_asset_kanban" model="ir.ui.view">
+        <field name="name">asset.asset.kanban</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="status"/>
+                <field name="category_id"/>
+                <field name="purchase_value"/>
+                <field name="book_value"/>
+                <field name="assigned_employee_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <field name="image" widget="image" class="o_image_64_cover"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong><field name="display_name"/></strong>
+                                <div><field name="category_id"/></div>
+                                <div>Purchase: <field name="purchase_value"/> | Book: <field name="book_value"/></div>
+                                <div>Status: <field name="status"/></div>
+                                <div t-if="record.assigned_employee_id.raw_value">
+                                    Assigned to: <field name="assigned_employee_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="asset_asset_search" model="ir.ui.view">
+        <field name="name">asset.asset.search</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="serial_number"/>
+                <field name="barcode"/>
+                <field name="category_id"/>
+                <field name="current_location_id"/>
+                <field name="assigned_employee_id"/>
+                <field name="status"/>
+                <filter name="in_storage" string="In Storage" domain="[('status','=','in_storage')]"/>
+                <filter name="not_in_use" string="Not in Use" domain="[('status','=','not_in_use')]"/>
+                <filter name="in_use" string="In Use" domain="[('status','=','in_use')]"/>
+                <filter name="maintenance" string="Under Maintenance" domain="[('status','=','maintenance')]"/>
+                <filter name="disposed" string="Disposed" domain="[('status','=','disposed')]"/>
+                <separator/>
+                <filter name="group_category" string="Category" context="{'group_by':'category_id'}"/>
+                <filter name="group_status" string="Status" context="{'group_by':'status'}"/>
+                <filter name="group_location" string="Location" context="{'group_by':'current_location_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="asset_asset_form" model="ir.ui.view">
+        <field name="name">asset.asset.form</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="status" widget="statusbar"
+                        options="{'statusbar_visible': 'draft,in_storage,not_in_use,in_use,maintenance,disposed', 'clickable': '0'}"/>
+                    <button name="action_mark_in_storage" type="object"
+                            string="Move to Storage" class="btn-info"
+                            invisible="status not in ('draft', 'not_in_use')"/>
+                    <button name="action_mark_not_in_use" type="object"
+                            string="Mark Not in Use" class="btn-secondary"
+                            invisible="status not in ('draft', 'in_storage')"/>
+                    <button name="action_mark_in_use" type="object"
+                            string="Mark In Use" class="btn-primary"
+                            invisible="status not in ('draft', 'in_storage', 'not_in_use')"/>
+                    <button name="action_mark_maintenance" type="object"
+                            string="Send to Maintenance" class="btn-warning"
+                            invisible="status not in ('in_use', 'in_storage', 'not_in_use')"/>
+                    <button name="action_mark_disposed" type="object"
+                            string="Dispose" class="btn-danger"
+                            invisible="status not in ('in_use', 'maintenance', 'in_storage', 'not_in_use')"/>
+                    <button name="action_generate_depreciation" type="object"
+                            string="Generate Depreciation" class="oe_highlight"
+                            invisible="status != 'in_use'"/>
+                    <button name="action_print_qr_label" type="object"
+                            string="Print QR Label" class="btn-secondary"
+                            invisible="qr_code == False"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_assignments" type="object"
+                                class="oe_stat_button" icon="fa-user">
+                            <div class="o_stat_info">
+                                <field name="assigned_employee_id" widget="selection"/>
+                            </div>
+                        </button>
+                        <button name="action_view_maintenance" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <div class="o_stat_info">
+                                <field name="maintenance_ids" widget="selection"/>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="current_location_id"/>
+                            <field name="barcode" widget="barcode"/>
+                        </group>
+                        <group>
+                            <field name="purchase_date"/>
+                            <field name="supplier_id"/>
+                            <field name="manufacturer"/>
+                            <field name="model"/>
+                            <field name="serial_number"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="QR Code">
+                            <group>
+                                <field name="qr_code" widget="image" class="img-fluid"
+                                       style="max-width: 300px; max-height: 300px;"/>
+                            </group>
+                        </page>
+                        <page string="Financial">
+                            <group>
+                                <group>
+                                    <field name="purchase_value"/>
+                                    <field name="salvage_value" readonly="0"/>
+                                    <field name="salvage_value_percent"/>
+                                    <field name="book_value"/>
+                                    <field name="cumulative_depreciation"/>
+                                    <field name="currency_id"/>
+                                </group>
+                                <group>
+                                    <field name="depreciation_method"/>
+                                    <field name="depreciation_duration_months"/>
+                                    <field name="depreciation_start_date"/>
+                                    <field name="warranty_expiry_date"/>
+                                    <field name="license_plate"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Depreciation Schedule">
+                            <field name="depreciation_line_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="cumulative_amount"/>
+                                    <field name="remaining_value"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Assignment History">
+                            <field name="assignment_ids">
+                                <list>
+                                    <field name="employee_id"/>
+                                    <field name="department_id"/>
+                                    <field name="assigned_date"/>
+                                    <field name="returned_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Maintenance">
+                            <field name="maintenance_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="maintenance_type"/>
+                                    <field name="state"/>
+                                    <field name="planned_date"/>
+                                    <field name="completed_date"/>
+                                    <field name="cost"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="asset_asset_action" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">asset.asset</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p>Manage your physical and financial assets here.</p>
+        </field>
+    </record>
+</odoo>

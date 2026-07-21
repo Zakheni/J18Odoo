@@ -28,4 +28,10 @@
               parent="menu_zakheni_accounting_root"
               action="zakheni_account_consolidation_action"
               sequence="40"/>
+
+    <menuitem id="menu_zakheni_customer_statement"
+              name="Customer Statement"
+              parent="menu_zakheni_accounting_root"
+              action="action_statement_wizard"
+              sequence="35"/>
 </odoo>

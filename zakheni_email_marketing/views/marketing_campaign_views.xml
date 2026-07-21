@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Campaign Tree View -->
+    <record id="view_marketing_campaign_tree" model="ir.ui.view">
+        <field name="name">marketing.campaign.tree</field>
+        <field name="model">marketing.campaign</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="color"/>
+                <field name="name" string="Campaign"/>
+                <field name="campaign_type"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="total_recipients"/>
+                <field name="sent_count"/>
+                <field name="open_rate" widget="percentpie"/>
+                <field name="click_rate" widget="percentpie"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Campaign Search View (must be before action that references it) -->
+    <record id="view_marketing_campaign_search" model="ir.ui.view">
+        <field name="name">marketing.campaign.search</field>
+        <field name="model">marketing.campaign</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <filter string="Running" name="state_running"
+                    domain="[('state','=','running')]"/>
+                <filter string="Draft" name="state_draft"
+                    domain="[('state','=','draft')]"/>
+                <filter string="Completed" name="state_completed"
+                    domain="[('state','=','completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Campaign Type" name="group_type"
+                        context="{'group_by':'campaign_type'}"/>
+                    <filter string="Status" name="group_state"
+                        context="{'group_by':'state'}"/>
+                    <filter string="Manager" name="group_user"
+                        context="{'group_by':'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Campaign Action (must be before form view that references it) -->
+    <record id="action_marketing_campaign" model="ir.actions.act_window">
+        <field name="name">Campaigns</field>
+        <field name="res_model">marketing.campaign</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_marketing_campaign_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first marketing campaign</p>
+            <p>Design multi-step email marketing campaigns with automation, A/B testing, and detailed analytics.</p>
+        </field>
+    </record>
+
+    <record id="action_marketing_campaign_mailings" model="ir.actions.act_window">
+        <field name="name">Campaign Mailings</field>
+        <field name="res_model">mailing.mailing</field>
+        <field name="view_mode">tree,form,kanban,graph</field>
+        <field name="domain">[('zakheni_campaign_id', '=', active_id)]</field>
+        <field name="context">{'default_zakheni_campaign_id': active_id}</field>
+    </record>
+
+    <!-- Campaign Form View -->
+    <record id="view_marketing_campaign_form" model="ir.ui.view">
+        <field name="name">marketing.campaign.form</field>
+        <field name="model">marketing.campaign</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_start" string="Start Campaign" type="object"
+                        invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_pause" string="Pause" type="object"
+                        invisible="state != 'running'"/>
+                    <button name="action_resume" string="Resume" type="object"
+                        invisible="state != 'paused'"/>
+                    <button name="action_complete" string="Mark Completed" type="object"
+                        invisible="state not in ('running', 'paused')"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                        invisible="state not in ('draft', 'running', 'paused')"/>
+                    <button name="action_duplicate_campaign" string="Duplicate" type="object"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_marketing_campaign_mailings)d" type="action"
+                            class="oe_stat_button" icon="fa-envelope-o"
+                            help="View mailings in this campaign">
+                            <field name="mailing_count" widget="statinfo" string="Mailings"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="campaign_type"/>
+                            <field name="user_id"/>
+                            <field name="team_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="budget"/>
+                            <field name="expected_revenue"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Campaign description..."/>
+                    </group>
+                    <notebook>
+                        <page name="steps" string="Campaign Steps">
+                            <field name="step_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="trigger_type"/>
+                                    <field name="delay_days"/>
+                                    <field name="action_type"/>
+                                    <field name="mailing_template_id"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="segments" string="Target Segments">
+                            <group>
+                                <field name="segment_ids" widget="many2many_tags"/>
+                                <field name="target_list_ids" widget="many2many_tags"/>
+                                <field name="total_recipients"/>
+                            </group>
+                        </page>
+                        <page name="analytics" string="Analytics">
+                            <group>
+                                <group string="Delivery Stats">
+                                    <field name="sent_count"/>
+                                    <field name="opened_count"/>
+                                    <field name="clicked_count"/>
+                                    <field name="bounced_count"/>
+                                    <field name="replied_count"/>
+                                </group>
+                                <group string="Rates">
+                                    <field name="open_rate" widget="percentpie"/>
+                                    <field name="click_rate" widget="percentpie"/>
+                                    <field name="conversion_rate" widget="percentpie"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="roi" string="ROI">
+                            <field name="roi_analysis_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="total_investment"/>
+                                    <field name="attributed_revenue"/>
+                                    <field name="roi_amount"/>
+                                    <field name="roi_percentage"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="landing" string="Landing Pages">
+                            <field name="landing_page_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="page_type"/>
+                                    <field name="url"/>
+                                    <field name="total_views"/>
+                                    <field name="total_submissions"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Campaign Kanban View -->
+    <record id="view_marketing_campaign_kanban" model="ir.ui.view">
+        <field name="name">marketing.campaign.kanban</field>
+        <field name="model">marketing.campaign</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="color"/>
+                <field name="name"/>
+                <field name="campaign_type"/>
+                <field name="state"/>
+                <field name="open_rate"/>
+                <field name="sent_count"/>
+                <field name="mailing_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click" t-att-data-type="record.state.raw_value">
+                            <div class="o_kanban_card_header">
+                                <div class="o_row">
+                                    <field name="name"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="o_row">
+                                    <field name="campaign_type"/>
+                                    <field name="state" widget="badge"/>
+                                </div>
+                                <div class="o_row text-muted">
+                                    Sent: <field name="sent_count"/>
+                                    Open Rate: <field name="open_rate" widget="percentpie"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="segment_active_engaged" model="marketing.segment">
+            <field name="name">Active &amp; Engaged Contacts</field>
+            <field name="description">Contacts with high engagement scores</field>
+            <field name="condition_type">engagement</field>
+            <field name="min_engagement_score">25.0</field>
+            <field name="model_id" ref="mass_mailing.model_mailing_contact"/>
+            <field name="domain">[]</field>
+            <field name="category">active</field>
+        </record>
+
+        <record id="segment_at_risk" model="marketing.segment">
+            <field name="name">At Risk / Dormant Contacts</field>
+            <field name="description">Contacts with low engagement that may need re-engagement</field>
+            <field name="condition_type">engagement</field>
+            <field name="max_engagement_score">15.0</field>
+            <field name="model_id" ref="mass_mailing.model_mailing_contact"/>
+            <field name="domain">[]</field>
+            <field name="category">dormant</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_marketing_roi_tree" model="ir.ui.view">
+        <field name="name">marketing.roi.tree</field>
+        <field name="model">marketing.roi</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="campaign_id"/>
+                <field name="mailing_id"/>
+                <field name="total_sent"/>
+                <field name="open_rate" widget="percentpie"/>
+                <field name="click_rate" widget="percentpie"/>
+                <field name="total_investment"/>
+                <field name="attributed_revenue"/>
+                <field name="roi_percentage" widget="progressbar"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_marketing_roi_form" model="ir.ui.view">
+        <field name="name">marketing.roi.form</field>
+        <field name="model">marketing.roi</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_calculate" string="Calculate ROI" type="object"
+                        invisible="state != 'draft'" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="campaign_id"/>
+                            <field name="mailing_id"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="cost_per_email"/>
+                            <field name="campaign_cost"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="metrics" string="Metrics">
+                            <group>
+                                <group string="Delivery">
+                                    <field name="total_sent"/>
+                                    <field name="total_delivered"/>
+                                    <field name="total_opened"/>
+                                    <field name="total_clicked"/>
+                                    <field name="total_converted"/>
+                                    <field name="total_bounced"/>
+                                </group>
+                                <group string="Rates">
+                                    <field name="open_rate" widget="percentpie"/>
+                                    <field name="click_rate" widget="percentpie"/>
+                                    <field name="click_to_open_rate" widget="percentpie"/>
+                                    <field name="conversion_rate" widget="percentpie"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="financial" string="Financial">
+                            <group>
+                                <group string="Costs">
+                                    <field name="total_cost"/>
+                                    <field name="total_investment"/>
+                                </group>
+                                <group string="Revenue">
+                                    <field name="total_revenue"/>
+                                    <field name="attributed_revenue"/>
+                                </group>
+                                <group string="ROI">
+                                    <field name="roi_amount"/>
+                                    <field name="roi_percentage" widget="progressbar"/>
+                                    <field name="cost_per_lead"/>
+                                    <field name="cost_per_acquisition"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_marketing_roi" model="ir.actions.act_window">
+        <field name="name">ROI Analysis</field>
+        <field name="res_model">marketing.roi</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <!-- Tender User ACLs (write/create, no unlink) -->
+        <record id="access_tender_tender_tender_user" model="ir.model.access">
+            <field name="name">tender.tender.tender.user</field>
+            <field name="model_id" ref="model_tender_tender"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_dashboard_tender_user" model="ir.model.access">
+            <field name="name">tender.dashboard.tender.user</field>
+            <field name="model_id" ref="model_tender_dashboard"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- remaining ACLs for Tender User group -->
+        <record id="access_tender_analysis_tender_user" model="ir.model.access">
+            <field name="name">tender.analysis.tender.user</field>
+            <field name="model_id" ref="model_tender_analysis"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_document_tender_user" model="ir.model.access">
+            <field name="name">tender.document.tender.user</field>
+            <field name="model_id" ref="model_tender_document"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_document_resource_tender_user" model="ir.model.access">
+            <field name="name">tender.document.resource.tender.user</field>
+            <field name="model_id" ref="model_tender_document_resource"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_category_tender_user" model="ir.model.access">
+            <field name="name">tender.category.tender.user</field>
+            <field name="model_id" ref="model_tender_tender_category"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_bid_no_bid_tender_user" model="ir.model.access">
+            <field name="name">tender.bid.no.bid.tender.user</field>
+            <field name="model_id" ref="model_tender_bid_no_bid"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_bid_no_bid_line_tender_user" model="ir.model.access">
+            <field name="name">tender.bid.no.bid.line.tender.user</field>
+            <field name="model_id" ref="model_tender_bid_no_bid_line"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_compliance_checklist_tender_user" model="ir.model.access">
+            <field name="name">tender.compliance.checklist.tender.user</field>
+            <field name="model_id" ref="model_tender_compliance_checklist"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_compliance_checklist_line_tender_user" model="ir.model.access">
+            <field name="name">tender.compliance.checklist.line.tender.user</field>
+            <field name="model_id" ref="model_tender_compliance_checklist_line"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_compliance_result_tender_user" model="ir.model.access">
+            <field name="name">tender.compliance.result.tender.user</field>
+            <field name="model_id" ref="model_tender_compliance_result"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_compliance_result_line_tender_user" model="ir.model.access">
+            <field name="name">tender.compliance.result.line.tender.user</field>
+            <field name="model_id" ref="model_tender_compliance_result_line"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_ai_analysis_tender_user" model="ir.model.access">
+            <field name="name">tender.ai.analysis.tender.user</field>
+            <field name="model_id" ref="model_tender_ai_analysis"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_alert_tender_user" model="ir.model.access">
+            <field name="name">tender.alert.tender.user</field>
+            <field name="model_id" ref="model_tender_alert"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_service_category_tender_user" model="ir.model.access">
+            <field name="name">tender.service.category.tender.user</field>
+            <field name="model_id" ref="model_tender_service_category"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_company_profile_tender_user" model="ir.model.access">
+            <field name="name">tender.company.profile.tender.user</field>
+            <field name="model_id" ref="model_tender_company_profile"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_feed_tender_user" model="ir.model.access">
+            <field name="name">tender.feed.tender.user</field>
+            <field name="model_id" ref="model_tender_feed"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_feed_match_tender_user" model="ir.model.access">
+            <field name="name">tender.feed.match.tender.user</field>
+            <field name="model_id" ref="model_tender_feed_match"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_tender_feed_keyword_search_tender_user" model="ir.model.access">
+            <field name="name">tender.feed.keyword.search.tender.user</field>
+            <field name="model_id" ref="model_tender_feed_keyword_search"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_feed_keyword_config_tender_user" model="ir.model.access">
+            <field name="name">tender.feed.keyword.config.tender.user</field>
+            <field name="model_id" ref="model_tender_feed_keyword_config"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Tender Manager ACLs (full access) -->
+        <record id="access_tender_tender_tender_manager" model="ir.model.access">
+            <field name="name">tender.tender.tender.manager</field>
+            <field name="model_id" ref="model_tender_tender"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_dashboard_tender_manager" model="ir.model.access">
+            <field name="name">tender.dashboard.tender.manager</field>
+            <field name="model_id" ref="model_tender_dashboard"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_analysis_tender_manager" model="ir.model.access">
+            <field name="name">tender.analysis.tender.manager</field>
+            <field name="model_id" ref="model_tender_analysis"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_document_tender_manager" model="ir.model.access">
+            <field name="name">tender.document.tender.manager</field>
+            <field name="model_id" ref="model_tender_document"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_document_resource_tender_manager" model="ir.model.access">
+            <field name="name">tender.document.resource.tender.manager</field>
+            <field name="model_id" ref="model_tender_document_resource"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_category_tender_manager" model="ir.model.access">
+            <field name="name">tender.category.tender.manager</field>
+            <field name="model_id" ref="model_tender_tender_category"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_bid_no_bid_tender_manager" model="ir.model.access">
+            <field name="name">tender.bid.no.bid.tender.manager</field>
+            <field name="model_id" ref="model_tender_bid_no_bid"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_bid_no_bid_line_tender_manager" model="ir.model.access">
+            <field name="name">tender.bid.no.bid.line.tender.manager</field>
+            <field name="model_id" ref="model_tender_bid_no_bid_line"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_compliance_checklist_tender_manager" model="ir.model.access">
+            <field name="name">tender.compliance.checklist.tender.manager</field>
+            <field name="model_id" ref="model_tender_compliance_checklist"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_compliance_checklist_line_tender_manager" model="ir.model.access">
+            <field name="name">tender.compliance.checklist.line.tender.manager</field>
+            <field name="model_id" ref="model_tender_compliance_checklist_line"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_compliance_result_tender_manager" model="ir.model.access">
+            <field name="name">tender.compliance.result.tender.manager</field>
+            <field name="model_id" ref="model_tender_compliance_result"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_compliance_result_line_tender_manager" model="ir.model.access">
+            <field name="name">tender.compliance.result.line.tender.manager</field>
+            <field name="model_id" ref="model_tender_compliance_result_line"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_ai_analysis_tender_manager" model="ir.model.access">
+            <field name="name">tender.ai.analysis.tender.manager</field>
+            <field name="model_id" ref="model_tender_ai_analysis"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_alert_tender_manager" model="ir.model.access">
+            <field name="name">tender.alert.tender.manager</field>
+            <field name="model_id" ref="model_tender_alert"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_service_category_tender_manager" model="ir.model.access">
+            <field name="name">tender.service.category.tender.manager</field>
+            <field name="model_id" ref="model_tender_service_category"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_company_profile_tender_manager" model="ir.model.access">
+            <field name="name">tender.company.profile.tender.manager</field>
+            <field name="model_id" ref="model_tender_company_profile"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_feed_tender_manager" model="ir.model.access">
+            <field name="name">tender.feed.tender.manager</field>
+            <field name="model_id" ref="model_tender_feed"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_feed_match_tender_manager" model="ir.model.access">
+            <field name="name">tender.feed.match.tender.manager</field>
+            <field name="model_id" ref="model_tender_feed_match"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_feed_keyword_search_tender_manager" model="ir.model.access">
+            <field name="name">tender.feed.keyword.search.tender.manager</field>
+            <field name="model_id" ref="model_tender_feed_keyword_search"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_tender_feed_keyword_config_tender_manager" model="ir.model.access">
+            <field name="name">tender.feed.keyword.config.tender.manager</field>
+            <field name="model_id" ref="model_tender_feed_keyword_config"/>
+            <field name="group_id" ref="zakheni_tender.group_tender_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

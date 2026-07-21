@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_assignment_tree" model="ir.ui.view">
+        <field name="name">asset.assignment.tree</field>
+        <field name="model">asset.assignment</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'assigned'" decoration-muted="state == 'returned'">
+                <field name="asset_id"/>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="assigned_date"/>
+                <field name="returned_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="asset_assignment_form" model="ir.ui.view">
+        <field name="name">asset.assignment.form</field>
+        <field name="model">asset.assignment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" text="Returned" bg_color="gray" invisible="state != 'returned'"/>
+                    <group>
+                        <group>
+                            <field name="asset_id"/>
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="assigned_date"/>
+                            <field name="returned_date" invisible="state != 'returned'"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <field name="notes"/>
+                </sheet>
+                <footer>
+                    <button name="action_return" type="object" string="Return Asset"
+                            class="oe_highlight" invisible="state != 'assigned'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="asset_assignment_action" model="ir.actions.act_window">
+        <field name="name">Asset Assignments</field>
+        <field name="res_model">asset.assignment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

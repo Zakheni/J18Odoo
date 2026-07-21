@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Marketing Menu -->
+    <menuitem id="menu_zakheni_marketing_root" name="Email Marketing"
+        sequence="50"
+        groups="zakheni_email_marketing.group_marketing_manager"/>
+
+    <!-- Campaigns -->
+    <menuitem id="menu_zakheni_marketing_campaigns" name="Campaigns"
+        parent="menu_zakheni_marketing_root" sequence="10"
+        action="action_marketing_campaign"/>
+
+    <!-- Automation -->
+    <menuitem id="menu_zakheni_marketing_automation" name="Automation"
+        parent="menu_zakheni_marketing_root" sequence="20"
+        action="action_marketing_automation"/>
+
+    <!-- Segments -->
+    <menuitem id="menu_zakheni_marketing_segments" name="Segments"
+        parent="menu_zakheni_marketing_root" sequence="30"
+        action="action_marketing_segment"/>
+
+    <!-- Calendar -->
+    <menuitem id="menu_zakheni_marketing_calendar" name="Calendar"
+        parent="menu_zakheni_marketing_root" sequence="35"
+        action="action_marketing_calendar"/>
+
+    <!-- Landing Pages -->
+    <menuitem id="menu_zakheni_marketing_landing" name="Landing Pages"
+        parent="menu_zakheni_marketing_root" sequence="40"
+        action="action_marketing_landing_page"/>
+
+    <!-- Re-engagement -->
+    <menuitem id="menu_zakheni_marketing_reengagement" name="Re-engagement"
+        parent="menu_zakheni_marketing_root" sequence="50"
+        action="action_marketing_reengagement"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_zakheni_marketing_config" name="Configuration"
+        parent="menu_zakheni_marketing_root" sequence="90"
+        groups="base.group_system"/>
+
+    <menuitem id="menu_zakheni_marketing_lead_score" name="Lead Scoring Rules"
+        parent="menu_zakheni_marketing_config" sequence="10"
+        action="action_marketing_lead_score"/>
+
+    <menuitem id="menu_zakheni_marketing_roi" name="ROI Analysis"
+        parent="menu_zakheni_marketing_config" sequence="20"
+        action="action_marketing_roi"/>
+
+    <menuitem id="menu_zakheni_marketing_sub_preferences" name="Subscription Preferences"
+        parent="menu_zakheni_marketing_config" sequence="30"/>
+</odoo>

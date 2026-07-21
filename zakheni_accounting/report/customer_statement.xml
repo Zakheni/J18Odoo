@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_customer_statement" model="ir.actions.report">
+        <field name="name">Customer Statement</field>
+        <field name="model">zakheni.account.statement.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zakheni_accounting.customer_statement</field>
+        <field name="print_report_name">'Customer Statement - %s' % (object.partner_ids[:1].name if object.partner_ids else '')</field>
+        <field name="binding_model_id" ref="zakheni_accounting.model_zakheni_account_statement_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="customer_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="statements" t-as="s">
+                <t t-call="web.external_layout">
+                    <div class="page" style="padding: 20px;">
+                        <h2 style="text-align:center;">Customer Statement</h2>
+                        <p style="text-align:center;">
+                            <t t-esc="data.get('date_from','')"/> to <t t-esc="data.get('date_to','')"/>
+                        </p>
+                        <hr/>
+                        <table style="width:100%; margin-bottom:15px;">
+                            <tr>
+                                <td style="width:50%; vertical-align:top;">
+                                    <strong>Bill To:</strong><br/>
+                                    <t t-esc="s['partner'].name"/><br/>
+                                    <t t-if="s['partner'].street"><t t-esc="s['partner'].street"/><br/></t>
+                                    <t t-if="s['partner'].city"><t t-esc="s['partner'].city"/></t>
+                                    <t t-if="s['partner'].state_id"><t t-esc="s['partner'].state_id.name"/></t>
+                                    <t t-if="s['partner'].zip"><t t-esc="s['partner'].zip"/></t>
+                                </td>
+                                <td style="width:50%; vertical-align:top; text-align:right;">
+                                    <strong>Statement Date:</strong> <t t-esc="company.display_name"/><br/>
+                                    <t t-if="s['partner'].vat">
+                                        <strong>VAT:</strong> <t t-esc="s['partner'].vat"/><br/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm table-bordered" style="width:100%;">
+                            <thead>
+                                <tr style="background:#f0f0f0;">
+                                    <th>Date</th>
+                                    <th>Reference</th>
+                                    <th>Description</th>
+                                    <th>Due Date</th>
+                                    <th class="text-end">Days Overdue</th>
+                                    <th class="text-end">Amount</th>
+                                    <th class="text-end">Paid</th>
+                                    <th class="text-end">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="s['lines']" t-as="line">
+                                    <td><t t-esc="line['date']"/></td>
+                                    <td><t t-esc="line['reference']"/></td>
+                                    <td><t t-esc="line['description']"/></td>
+                                    <td><t t-esc="line['due_date']"/></td>
+                                    <td class="text-end">
+                                        <t t-if="line['days_overdue'] &gt; 0">
+                                            <span style="color:red;"><t t-esc="line['days_overdue']"/></span>
+                                        </t>
+                                        <t t-else="">-</t>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="line['currency'].round(line['amount'])"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="line['currency'].round(line['paid'])"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="line['currency'].round(line['balance'])"/>
+                                    </td>
+                                </tr>
+                                <t t-if="not s['lines']">
+                                    <tr>
+                                        <td colspan="8" style="text-align:center; color:#888;">No transactions found</td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <t t-if="s['lines']">
+                            <table style="width:100%; margin-top:15px;">
+                                <tr>
+                                    <td style="width:50%; vertical-align:top;">
+                                        <t t-if="s.get('include_aging')">
+                                        <strong>Aging Summary</strong>
+                                        <table class="table table-sm table-bordered" style="width:100%;">
+                                            <tr style="background:#f0f0f0;">
+                                                <th>Aging Bucket</th>
+                                                <th class="text-end">Balance</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Current (Not Due)</td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['aging']['current'])"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>1 - 30 Days Overdue</td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['aging']['1_30'])"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>31 - 60 Days Overdue</td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['aging']['31_60'])"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>61 - 90 Days Overdue</td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['aging']['61_90'])"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>90+ Days Overdue</td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['aging']['90_plus'])"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        </t>
+                                    </td>
+                                    <td style="width:50%; vertical-align:bottom;">
+                                        <table class="table table-sm" style="width:100%;">
+                                            <tr>
+                                                <td><strong>Total Due:</strong></td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['total_due'])"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Total Paid:</strong></td>
+                                                <td class="text-end">
+                                                    <t t-esc="s['lines'][0]['currency'].round(s['total_paid'])"/>
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top:2px solid #000;">
+                                                <td><strong>Outstanding Balance:</strong></td>
+                                                <td class="text-end">
+                                                    <strong><t t-esc="s['lines'][0]['currency'].round(s['total_due'] - s['total_paid'])"/></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+
+                        <p style="margin-top:20px; font-size:10px; color:#666; text-align:center;">
+                            This is a computer-generated statement. If you have any questions, please contact us.
+                        </p>
+                    </div>
+                </t>
+                <t t-if="s_index &lt; len(statements) - 1">
+                    <p style="page-break-before: always;"/>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

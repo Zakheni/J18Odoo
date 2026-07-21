@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pastel_sync_settings" model="ir.ui.view">
+        <field name="name">pastel.sync.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Pastel Connector" string="Pastel Connector" name="pastel_sync_connector">
+                    <div>
+                        <block title="Pastel Accounting ODBC Connection">
+                            <setting>
+                                <field name="pastel_sync_odbc_dsn"/>
+                                <div class="text-muted">
+                                    ODBC Data Source Name for Sage Pastel Partner.
+                                </div>
+                            </setting>
+                            <setting>
+                                <field name="pastel_sync_odbc_user"/>
+                                <div class="text-muted">
+                                    ODBC username (if required).
+                                </div>
+                            </setting>
+                            <setting>
+                                <field name="pastel_sync_odbc_password"/>
+                                <div class="text-muted">
+                                    ODBC password (if required).
+                                </div>
+                            </setting>
+                            <setting>
+                                <button name="action_test_pastel_connection"
+                                        type="object"
+                                        string="Test Connection"
+                                        class="btn-primary"/>
+                                <div class="text-muted">
+                                    Verify the ODBC connection to Pastel Partner.
+                                </div>
+                            </setting>
+                        </block>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

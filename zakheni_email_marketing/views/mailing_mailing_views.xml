@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mailing_mailing_form_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.form.inherit.zakheni</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form"/>
+        <field name="arch" type="xml">
+            <field name="campaign_id" position="after">
+                <field name="zakheni_campaign_id"
+                    groups="zakheni_email_marketing.group_marketing_manager"/>
+            </field>
+            <xpath expr="//page[@name='ab_testing']" position="after">
+                <page name="zakheni_analytics" string="Enterprise Analytics"
+                    groups="zakheni_email_marketing.group_marketing_manager">
+                    <group>
+                        <group string="Extended Metrics">
+                            <field name="conversion_count"/>
+                            <field name="conversion_ratio" widget="percentpie"/>
+                        </group>
+                        <group string="ROI">
+                            <field name="roi_value"/>
+                            <field name="roi_cost"/>
+                            <field name="roi_percentage" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <group>
+                        <button name="action_view_roi_analysis" string="View ROI Analysis" type="object"
+                            class="btn-secondary"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mailing_mailing_tree_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.tree.inherit.zakheni</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_tree"/>
+        <field name="arch" type="xml">
+            <field name="campaign_id" position="after">
+                <field name="zakheni_campaign_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

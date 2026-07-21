@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zakheni_digitize_document_search" model="ir.ui.view">
+        <field name="name">zakheni.digitize.document.search</field>
+        <field name="model">zakheni.digitize.document</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="document_type_id"/>
+                <filter name="state_draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="state_ready" string="Ready" domain="[('state','=','ready')]"/>
+                <filter name="state_posted" string="Posted" domain="[('state','=','posted')]"/>
+                <filter name="state_error" string="Error" domain="[('state','=','error')]"/>
+                <separator/>
+                <filter name="my_docs" string="My Documents" domain="[('user_id','=',uid)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zakheni_digitize_document" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">zakheni.digitize.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_zakheni_digitize_document_search"/>
+    </record>
+
+    <record id="action_zakheni_digitize_upload" model="ir.actions.act_window">
+        <field name="name">Upload for Digitization</field>
+        <field name="res_model">zakheni.digitize.upload.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_document_type_id': ref('zakheni_document_digitize.doc_type_invoice')}</field>
+    </record>
+
+    <record id="action_zakheni_document_type" model="ir.actions.act_window">
+        <field name="name">Document Types</field>
+        <field name="res_model">zakheni.document.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_zakheni_digitize_document_form" model="ir.ui.view">
+        <field name="name">zakheni.digitize.document.form</field>
+        <field name="model">zakheni.digitize.document</field>
+        <field name="arch" type="xml">
+            <form string="Digitized Document">
+                <header>
+                    <button name="action_process" type="object" string="Process OCR"
+                        class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_validate" type="object" string="Validate Fields"
+                        invisible="state != 'ready'" class="btn-primary"/>
+                    <button name="action_create_record" type="object" string="Create Record"
+                        invisible="state != 'reviewed'" class="btn-primary"/>
+                    <button name="action_retry" type="object" string="Retry"
+                        invisible="state != 'error'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,processing,ready,reviewed,posted"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="document_type_id"/>
+                            <field name="file_name"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                            <field name="create_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="extracted" string="Extracted Fields">
+                            <field name="extracted_line_ids" nolabel="1">
+                                <list editable="top">
+                                    <field name="field_id"/>
+                                    <field name="raw_value"/>
+                                    <field name="corrected_value"/>
+                                    <field name="is_valid" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="ocr_text" string="Raw OCR Text">
+                            <field name="ocr_text" nolabel="1"/>
+                        </page>
+                        <page name="source" string="Source Document">
+                            <field name="attachment_id" nolabel="1" widget="pdf_viewer"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zakheni_digitize_document_tree" model="ir.ui.view">
+        <field name="name">zakheni.digitize.document.tree</field>
+        <field name="model">zakheni.digitize.document</field>
+        <field name="arch" type="xml">
+            <list string="Digitized Documents" multi_edit="1">
+                <field name="name"/>
+                <field name="document_type_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'posted'"
+                    decoration-warning="state in ('draft','processing')"
+                    decoration-danger="state == 'error'"/>
+                <field name="create_date"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_zakheni_document_type_tree" model="ir.ui.view">
+        <field name="name">zakheni.document.type.tree</field>
+        <field name="model">zakheni.document.type</field>
+        <field name="arch" type="xml">
+            <list string="Document Types" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="target_model"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_zakheni_document_type_form" model="ir.ui.view">
+        <field name="name">zakheni.document.type.form</field>
+        <field name="model">zakheni.document.type</field>
+        <field name="arch" type="xml">
+            <form string="Document Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="target_model"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="extractable_fields" string="Extractable Fields">
+                            <field name="extractable_field_ids" nolabel="1">
+                                <list editable="bottom" create="1" delete="1">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="field_type"/>
+                                    <field name="regex_pattern"/>
+                                    <field name="required"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="field_mappings" string="Field Mappings">
+                            <field name="field_mapping_ids" nolabel="1">
+                                <list editable="bottom" create="1" delete="1">
+                                    <field name="source_field_id"/>
+                                    <field name="target_field"/>
+                                    <field name="transform"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

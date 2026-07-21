@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="asset_scan_assigned" name="Asset Assigned">
+        <html>
+            <head>
+                <title>Asset Assigned</title>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            </head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px 20px;">
+                <h1 style="color: #28a745;">&#10004; Asset Assigned</h1>
+                <p style="font-size: 18px;"><strong t-esc="asset.display_name"/></p>
+                <p>has been assigned to <strong t-esc="assignment.employee_id.name"/>.</p>
+                <p style="color: #666; margin-top: 30px;">You can close this page.</p>
+            </body>
+        </html>
+    </template>
+
+    <template id="asset_scan_returned" name="Asset Returned">
+        <html>
+            <head>
+                <title>Asset Returned</title>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            </head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px 20px;">
+                <h1 style="color: #17a2b8;">&#8634; Asset Returned</h1>
+                <p style="font-size: 18px;"><strong t-esc="asset.display_name"/></p>
+                <p>returned by <strong t-esc="assignment.employee_id.name"/> on <strong t-esc="assignment.returned_date"/>.</p>
+                <p style="color: #666; margin-top: 30px;">You can close this page.</p>
+            </body>
+        </html>
+    </template>
+
+    <template id="asset_scan_it_choice" name="Asset Action Choice">
+        <html>
+            <head>
+                <title>Asset Action</title>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <style>
+                    .btn { display: inline-block; padding: 14px 28px; margin: 10px; font-size: 18px;
+                           text-decoration: none; color: #fff; border-radius: 8px; }
+                    .btn-green { background: #28a745; }
+                    .btn-blue { background: #17a2b8; }
+                    .btn-orange { background: #fd7e14; }
+                    .current-status { font-size: 14px; color: #666; margin: 20px 0; }
+                    .msg { font-size: 16px; color: #856404; margin: 20px 0; }
+                </style>
+            </head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px 20px;">
+                <h1><t t-esc="asset.display_name"/></h1>
+                <p style="font-size: 16px; color: #666;">
+                    Status: <strong><t t-esc="asset.status"/></strong>
+                </p>
+
+                <div class="current-status" t-if="active_assignment">
+                    Currently assigned to <strong t-esc="active_assignment.employee_id.name"/>
+                    since <t t-esc="active_assignment.assigned_date"/>.
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <t t-if="not employee">
+                        <p class="msg">No employee record linked to your account.</p>
+                    </t>
+
+                    <t t-if="is_it_support">
+                        <!-- IT Support sees all actions -->
+                        <a t-attf-href="/asset/scan/{{ asset.barcode }}/assign"
+                           t-attf-class="btn btn-green" t-if="not active_assignment">
+                            &#10004; Assign to <t t-esc="employee and employee.name or 'Me'"/>
+                        </a>
+                        <br t-if="not active_assignment"/>
+                        <a t-attf-href="/asset/scan/{{ asset.barcode }}/return"
+                           t-attf-class="btn btn-blue">
+                            &#8634; Return to Storage
+                        </a>
+                        <br/>
+                        <a t-attf-href="/asset/scan/{{ asset.barcode }}/mark_not_in_use"
+                           t-attf-class="btn btn-orange">
+                            &#128204; Mark Not in Use
+                        </a>
+                    </t>
+                    <t t-else="">
+                        <!-- Learner sees simpler options -->
+                        <t t-if="active_assignment">
+                            <p class="msg">Already assigned to <t t-esc="active_assignment.employee_id.name"/>.</p>
+                        </t>
+                        <t t-if="not active_assignment">
+                            <a t-attf-href="/asset/scan/{{ asset.barcode }}/assign"
+                               t-attf-class="btn btn-green">
+                                &#10004; Assign to Me
+                            </a>
+                        </t>
+                    </t>
+                </div>
+
+                <p style="color: #999; margin-top: 40px; font-size: 14px;">You can close this page.</p>
+            </body>
+        </html>
+    </template>
+
+    <template id="asset_scan_message" name="Asset Scan Message">
+        <html>
+            <head>
+                <title><t t-esc="title"/></title>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            </head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px 20px;">
+                <h1 style="color: #856404;"><t t-esc="title"/></h1>
+                <p style="font-size: 16px; color: #666;"><t t-esc="message"/></p>
+                <p style="color: #999; margin-top: 30px;">You can close this page.</p>
+            </body>
+        </html>
+    </template>
+</odoo>

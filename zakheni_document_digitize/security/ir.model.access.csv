@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zakheni_digitize_doc,zakheni.digitize.document,model_zakheni_digitize_document,base.group_user,1,1,1,1
+access_zakheni_digitize_extracted,zakheni.digitize.extracted,model_zakheni_digitize_extracted,base.group_user,1,1,1,1
+access_zakheni_digitize_field,zakheni.digitize.field,model_zakheni_digitize_field,base.group_system,1,1,1,1
+access_zakheni_digitize_field_map,zakheni.digitize.field.map,model_zakheni_digitize_field_map,base.group_system,1,1,1,1
+access_zakheni_document_type,zakheni.document.type,model_zakheni_document_type,base.group_system,1,1,1,1
+access_zakheni_digitize_upload_wizard,zakheni.digitize.upload.wizard,model_zakheni_digitize_upload_wizard,base.group_user,1,1,1,1

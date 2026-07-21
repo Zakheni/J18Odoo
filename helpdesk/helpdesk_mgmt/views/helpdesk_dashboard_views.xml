@@ -28,6 +28,7 @@
                                     class="dropdown-item"
                                     name="%(action_helpdesk_ticket_kanban_from_dashboard)d"
                                     type="action"
+                                    context="{'default_team_id': record.id.raw_value, 'search_default_team_id': [record.id.raw_value]}"
                                 > All
                                 </a>
                                 <div role="separator" class="dropdown-divider" />
@@ -44,6 +45,7 @@
                                     <a
                                         name="%(action_helpdesk_ticket_kanban_from_dashboard)d"
                                         type="action"
+                                        context="{'default_team_id': record.id.raw_value, 'search_default_team_id': [record.id.raw_value]}"
                                     >
                                         <field name="name" />
                                     </a>
@@ -59,7 +61,7 @@
                                             class="btn btn-primary"
                                             name="%(action_helpdesk_ticket_kanban_from_dashboard)d"
                                             type="action"
-                                            context="{'search_default_open': 1}"
+                                            context="{'default_team_id': record.id.raw_value, 'search_default_team_id': [record.id.raw_value], 'search_default_open': 1}"
                                         >
                                             <t t-esc="record.todo_ticket_count.value" />
                                             To Do
@@ -71,7 +73,7 @@
                                                 <a
                                                     name="%(action_helpdesk_ticket_kanban_from_dashboard)d"
                                                     type="action"
-                                                    context="{'search_default_unassigned': 1}"
+                                                    context="{'default_team_id': record.id.raw_value, 'search_default_team_id': [record.id.raw_value], 'search_default_unassigned': 1}"
                                                 >
                                                     Unassigned
                                                 </a>
@@ -85,7 +87,7 @@
                                                 <a
                                                     name="%(action_helpdesk_ticket_kanban_from_dashboard)d"
                                                     type="action"
-                                                    context="{'search_default_unattended': 1}"
+                                                    context="{'default_team_id': record.id.raw_value, 'search_default_team_id': [record.id.raw_value], 'search_default_unattended': 1}"
                                                 >
                                                     Unattended
                                                 </a>
@@ -99,7 +101,7 @@
                                                 <a
                                                     name="%(action_helpdesk_ticket_kanban_from_dashboard)d"
                                                     type="action"
-                                                    context="{'search_default_high_priority': 1}"
+                                                    context="{'default_team_id': record.id.raw_value, 'search_default_team_id': [record.id.raw_value], 'search_default_high_priority': 1}"
                                                 >
                                                     High Priority
                                                 </a>

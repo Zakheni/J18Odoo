@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zakheni_digitize_res_config_settings" model="ir.ui.view">
+        <field name="name">zakheni.digitize.res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Document Digitization" string="Document Digitization" name="zakheni_digitize">
+                    <block title="OCR Engine">
+                        <setting help="Select the OCR engine for document processing">
+                            <field name="ocr_engine"/>
+                        </setting>
+                        <setting invisible="ocr_engine != 'tesseract'" title="Tesseract OCR Settings">
+                            <field name="tesseract_path"/>
+                            <field name="tesseract_lang"/>
+                        </setting>
+                        <setting invisible="ocr_engine != 'google_vision'" title="Google Vision API">
+                            <field name="google_vision_api_key"/>
+                        </setting>
+                        <setting invisible="ocr_engine != 'azure_doc_intel'" title="Azure AI Document Intelligence">
+                            <field name="azure_endpoint"/>
+                            <field name="azure_api_key"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

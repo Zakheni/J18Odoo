@@ -1,0 +1,200 @@
+<odoo>
+    <record id="tender_feed_tree" model="ir.ui.view">
+        <field name="name">tender.feed.tree</field>
+        <field name="model">tender.feed</field>
+        <field name="arch" type="xml">
+            <list string="Tender Feed" multi_edit="1">
+                <field name="name"/>
+                <field name="tender_number"/>
+                <field name="issuer_name"/>
+                <field name="source"/>
+                <field name="ocds_category" optional="show"/>
+                <field name="deadline_submission"/>
+                <field name="tender_value" optional="show"/>
+                <field name="status"/>
+                <field name="best_score" widget="percentage" optional="show"/>
+                <field name="match_count" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tender_feed_kanban" model="ir.ui.view">
+        <field name="name">tender.feed.kanban</field>
+        <field name="model">tender.feed</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="color"/>
+                <field name="name"/>
+                <field name="issuer_name"/>
+                <field name="deadline_submission"/>
+                <field name="tender_value"/>
+                <field name="best_score"/>
+                <field name="status"/>
+                <field name="source"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click o_kanban_card {{kanban_color(color)}}">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span class="text-muted">Issuer:</span>
+                                        <field name="issuer_name"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted">Deadline:</span>
+                                        <field name="deadline_submission" widget="remaining_days"/>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <span class="text-muted">Value:</span>
+                                        <field name="tender_value" widget="monetary"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted">Match:</span>
+                                        <field name="best_score" widget="percentage"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <field name="status"/>
+                                <field name="source"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="tender_feed_search" model="ir.ui.view">
+        <field name="name">tender.feed.search</field>
+        <field name="model">tender.feed</field>
+        <field name="arch" type="xml">
+            <search string="Search Tender Feed">
+                <field name="name"/>
+                <field name="tender_number"/>
+                <field name="issuer_name"/>
+                <field name="ocds_category"/>
+                <filter name="status" string="Status" context="{'group_by': 'status'}"/>
+                <filter name="source" string="Source" context="{'group_by': 'source'}"/>
+                <separator/>
+                <filter name="filter_new" string="New"
+                        domain="[('status', '=', 'new')]"/>
+                <filter name="filter_matched" string="Matched"
+                        domain="[('status', '=', 'matched')]"/>
+                <separator/>
+                <filter name="filter_imported" string="Imported"
+                        domain="[('imported_tender_id', '!=', False)]"/>
+                <filter name="filter_not_imported" string="Not Imported"
+                        domain="[('imported_tender_id', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="tender_feed_form" model="ir.ui.view">
+        <field name="name">tender.feed.form</field>
+        <field name="model">tender.feed</field>
+        <field name="arch" type="xml">
+            <form string="Tender Feed">
+                <header>
+                    <button name="action_run_matching" type="object" string="Run Matching"
+                            class="btn-primary"/>
+                    <button name="action_import_to_tender" type="object" string="Import to Tender"
+                            class="btn-success"
+                            invisible="imported_tender_id != False"/>
+                    <button name="%(tender_tender_action)d" type="action" string="View Imported Tender"
+                            class="btn-info"
+                            context="{'res_id': imported_tender_id}"
+                            invisible="imported_tender_id == False"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_run_matching" type="object"
+                                class="oe_stat_button" icon="fa-search">
+                            <div class="o_stat_info">
+                                <field name="match_count"/>
+                                <span class="o_stat_text">Matches</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="tender_number"/>
+                            <field name="external_id"/>
+                            <field name="source"/>
+                        </group>
+                        <group>
+                            <field name="issuer_name"/>
+                            <field name="issuer_id"/>
+                            <field name="category_id"/>
+                            <field name="ocds_category"/>
+                            <field name="url" widget="url"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Tender scope of work..."/>
+                        </page>
+                        <page string="Timeline">
+                            <group>
+                                <group>
+                                    <field name="date_published"/>
+                                    <field name="site_visit_date"/>
+                                    <field name="briefing_date"/>
+                                </group>
+                                <group>
+                                    <field name="deadline_submission"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Financial">
+                            <group>
+                                <group>
+                                    <field name="tender_value"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Matches">
+                            <field name="match_ids">
+                                <list string="Matches" editable="bottom">
+                                    <field name="company_profile_id"/>
+                                    <field name="similarity_score" widget="percentage"/>
+                                    <field name="score_display" invisible="1"/>
+                                    <field name="state"/>
+                                    <field name="match_date"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Raw Data">
+                            <field name="raw_data" readonly="1" class="oe_monospace"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_feed_action" model="ir.actions.act_window">
+        <field name="name">Tender Feed</field>
+        <field name="res_model">tender.feed</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="tender_feed_search"/>
+    </record>
+
+    <record id="tender_feed_match_action" model="ir.actions.act_window">
+        <field name="name">Tender Matches</field>
+        <field name="res_model">tender.feed.match</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

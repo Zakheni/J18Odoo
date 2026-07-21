@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_zakheni_crm_root" name="Zakheni CRM"
+        parent="crm.crm_menu_root" sequence="99"
+        groups="sales_team.group_sale_manager"/>
+
+    <menuitem id="menu_zakheni_crm_config" name="Configuration"
+        parent="menu_zakheni_crm_root" sequence="10"/>
+
+    <menuitem id="menu_crm_scoring_rules" name="Scoring Rules"
+        parent="menu_zakheni_crm_config" sequence="10"
+        action="action_crm_scoring_rule"/>
+
+    <menuitem id="menu_crm_lead_grades" name="Lead Grades"
+        parent="menu_zakheni_crm_config" sequence="20"
+        action="action_crm_lead_grade"/>
+
+    <menuitem id="menu_crm_pipeline_automation" name="Pipeline Automation"
+        parent="menu_zakheni_crm_config" sequence="30"
+        action="action_crm_pipeline_automation"/>
+
+    <menuitem id="menu_crm_sla" name="SLA Policies"
+        parent="menu_zakheni_crm_config" sequence="40"
+        action="action_crm_sla"/>
+
+    <menuitem id="menu_crm_email_sequences" name="Email Sequences"
+        parent="menu_zakheni_crm_config" sequence="50"
+        action="action_crm_email_sequence"/>
+
+    <menuitem id="menu_zakheni_crm_territory" name="Territories"
+        parent="menu_zakheni_crm_root" sequence="20"
+        action="action_crm_territory"/>
+
+    <menuitem id="menu_zakheni_crm_competitors" name="Competitors"
+        parent="menu_zakheni_crm_root" sequence="30"
+        action="action_crm_competitor"/>
+
+    <menuitem id="menu_zakheni_crm_targets" name="Targets"
+        parent="menu_zakheni_crm_root" sequence="25"/>
+
+    <menuitem id="menu_crm_sales_targets" name="Sales Targets"
+        parent="menu_zakheni_crm_targets" sequence="10"
+        action="action_crm_target"/>
+
+    <menuitem id="menu_crm_company_targets" name="Company Targets"
+        parent="menu_zakheni_crm_targets" sequence="20"
+        action="action_crm_company_target"/>
+
+    <menuitem id="menu_zakheni_crm_forecast" name="Forecasts"
+        parent="menu_zakheni_crm_root" sequence="40"
+        action="action_crm_forecast"/>
+</odoo>

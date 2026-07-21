@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_depreciation_line_tree" model="ir.ui.view">
+        <field name="name">asset.depreciation.line.tree</field>
+        <field name="model">asset.depreciation.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="asset_id"/>
+                <field name="date"/>
+                <field name="amount" sum="Total"/>
+                <field name="cumulative_amount"/>
+                <field name="remaining_value"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="asset_depreciation_wizard_form" model="ir.ui.view">
+        <field name="name">asset.depreciation.wizard.form</field>
+        <field name="model">asset.depreciation.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="asset_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="force_regenerate"/>
+                </group>
+                <footer>
+                    <button name="action_generate" type="object" string="Generate" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_maintenance_tree" model="ir.ui.view">
+        <field name="name">asset.maintenance.tree</field>
+        <field name="model">asset.maintenance</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state=='draft'" decoration-success="state=='completed'" decoration-warning="state=='in_progress'">
+                <field name="asset_id"/>
+                <field name="name"/>
+                <field name="maintenance_type"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="planned_date"/>
+                <field name="completed_date"/>
+                <field name="assigned_to_id"/>
+                <field name="cost"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="asset_maintenance_kanban" model="ir.ui.view">
+        <field name="name">asset.maintenance.kanban</field>
+        <field name="model">asset.maintenance</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="maintenance_type"/>
+                <field name="asset_id"/>
+                <field name="planned_date"/>
+                <field name="priority"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div>Asset: <field name="asset_id"/></div>
+                                <div>Type: <field name="maintenance_type"/> | Priority: <field name="priority"/></div>
+                                <div>Planned: <field name="planned_date"/></div>
+                                <div>State: <field name="state"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="asset_maintenance_form" model="ir.ui.view">
+        <field name="name">asset.maintenance.form</field>
+        <field name="model">asset.maintenance</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_plan" type="object" string="Plan" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_start" type="object" string="Start" class="oe_highlight" invisible="state != 'planned'"/>
+                    <button name="action_complete" type="object" string="Complete" class="oe_highlight" invisible="state != 'in_progress'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state not in ('draft', 'planned')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="asset_id"/>
+                            <field name="name"/>
+                            <field name="maintenance_type"/>
+                            <field name="priority"/>
+                        </group>
+                        <group>
+                            <field name="planned_date"/>
+                            <field name="completed_date"/>
+                            <field name="assigned_to_id"/>
+                            <field name="vendor_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="cost"/>
+                    </group>
+                    <field name="notes"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="asset_maintenance_search" model="ir.ui.view">
+        <field name="name">asset.maintenance.search</field>
+        <field name="model">asset.maintenance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="asset_id"/>
+                <field name="state"/>
+                <field name="maintenance_type"/>
+                <filter name="scheduled" string="Scheduled" domain="[('state','in',('draft','planned','in_progress'))]"/>
+                <filter name="completed" string="Completed" domain="[('state','=','completed')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="asset_maintenance_action" model="ir.actions.act_window">
+        <field name="name">Asset Maintenance</field>
+        <field name="res_model">asset.maintenance</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+</odoo>

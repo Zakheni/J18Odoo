@@ -1,0 +1,44 @@
+<odoo noupdate="1">
+    <record id="cron_tender_deadline_alerts" model="ir.cron">
+        <field name="name">Tender Deadline Alerts</field>
+        <field name="model_id" ref="model_tender_alert"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_deadlines()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="priority">5</field>
+    </record>
+
+    <record id="cron_tender_feed_match" model="ir.cron">
+        <field name="name">Tender Feed Matching</field>
+        <field name="model_id" ref="model_tender_feed_match"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_compute_matches()</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">hours</field>
+        <field name="priority">5</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+
+    <record id="cron_tender_fetch_tenders_sa" model="ir.cron">
+        <field name="name">Fetch Tenders from Tenders-SA API</field>
+        <field name="model_id" ref="model_tender_feed"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_fetch_tenders_sa()</field>
+        <field name="interval_number">24</field>
+        <field name="interval_type">hours</field>
+        <field name="priority">5</field>
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="cron_tender_fetch_etenders" model="ir.cron">
+        <field name="name">Fetch Tenders from eTenders OCDS API</field>
+        <field name="model_id" ref="model_tender_feed"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_fetch_etenders(7); model.cron_fetch_keyword_tenders()</field>
+        <field name="interval_number">24</field>
+        <field name="interval_type">hours</field>
+        <field name="priority">5</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+</odoo>

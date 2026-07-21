@@ -9,3 +9,10 @@ class IrAttachment(models.Model):
 
     # Add index to res_model because filtering on it is a common use case
     res_model = fields.Char(index=True)
+
+    folder_id = fields.Many2one(
+        "document.page",
+        string="Folder",
+        domain=[("type", "=", "category")],
+        help="Category folder to organize this document",
+    )

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zakheni_digitize_upload_wizard" model="ir.ui.view">
+        <field name="name">zakheni.digitize.upload.wizard.form</field>
+        <field name="model">zakheni.digitize.upload.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Upload Document for Digitization">
+                <group>
+                    <field name="document_type_id"/>
+                    <field name="file_name" placeholder="Invoice_123.pdf"/>
+                    <field name="file_data" filename="file_name" required="1"/>
+                </group>
+                <footer>
+                    <button name="action_upload_and_process" type="object" string="Upload &amp; Process"
+                        class="btn-primary"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

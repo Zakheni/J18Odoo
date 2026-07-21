@@ -1,0 +1,26 @@
+.o_marketing_dashboard {
+    .o_dashboard_header {
+        background: linear-gradient(135deg, #875A7B 0%, #7C606B 100%);
+        color: white;
+        padding: 24px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+    }
+    .o_kpi_card {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: center;
+        .o_kpi_value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #7C606B;
+        }
+        .o_kpi_label {
+            font-size: 12px;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+    }
+}

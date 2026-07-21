@@ -1,0 +1,109 @@
+<odoo>
+    <record id="tender_company_profile_tree" model="ir.ui.view">
+        <field name="name">tender.company.profile.tree</field>
+        <field name="model">tender.company.profile</field>
+        <field name="arch" type="xml">
+            <list string="Company Profiles" multi_edit="1">
+                <field name="partner_id"/>
+                <field name="sector"/>
+                <field name="bee_level"/>
+                <field name="service_category_ids" widget="many2many_tags"/>
+                <field name="match_count"/>
+                <field name="embedding_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tender_company_profile_form" model="ir.ui.view">
+        <field name="name">tender.company.profile.form</field>
+        <field name="model">tender.company.profile</field>
+        <field name="arch" type="xml">
+            <form string="Company Profile">
+                <header>
+                    <button name="action_compute_embedding" type="object" string="Compute Embedding"
+                            class="btn-primary"/>
+                    <button name="action_find_matching_tenders" type="object" string="Find Matching Tenders"
+                            class="btn-success"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create_edit': True}"/>
+                            <field name="sector"/>
+                            <field name="bee_level"/>
+                        </group>
+                        <group>
+                            <field name="service_category_ids" widget="many2many_tags"/>
+                            <field name="region_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Capabilities">
+                            <group>
+                                <group>
+                                    <field name="min_project_value"/>
+                                    <field name="max_project_value"/>
+                                    <field name="employee_count"/>
+                                </group>
+                                <group>
+                                    <field name="years_in_business"/>
+                                    <field name="annual_turnover"/>
+                                </group>
+                            </group>
+                            <field name="description" nolabel="1" placeholder="Describe your company capabilities, expertise, and key differentiators..."/>
+                            <group string="Tender Search Preferences">
+                                <field name="min_days_to_deadline" help="Only match tenders with at least this many days until the submission deadline, giving you time to evaluate and prepare bids."/>
+                            </group>
+                        </page>
+                        <page string="Preconfigured Keywords">
+                            <field name="keyword_config_ids">
+                                <list string="Keywords" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="keywords"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Tender Matches">
+                            <field name="match_ids">
+                                <list string="Matched Tenders">
+                                    <field name="feed_id"/>
+                                    <field name="similarity_score" widget="percentage"/>
+                                    <field name="state"/>
+                                    <field name="match_date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Embedding">
+                            <group>
+                                <group>
+                                    <field name="embedding_date"/>
+                                    <field name="embedding" readonly="1" class="oe_monospace"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_company_profile_search" model="ir.ui.view">
+        <field name="name">tender.company.profile.search</field>
+        <field name="model">tender.company.profile</field>
+        <field name="arch" type="xml">
+            <search string="Search Company Profiles">
+                <field name="partner_id"/>
+                <field name="sector"/>
+                <filter name="sector" string="Sector" context="{'group_by': 'sector'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="tender_company_profile_action" model="ir.actions.act_window">
+        <field name="name">Company Profiles</field>
+        <field name="res_model">tender.company.profile</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="tender_company_profile_search"/>
+    </record>
+</odoo>

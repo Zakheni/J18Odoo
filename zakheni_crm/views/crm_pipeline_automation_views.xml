@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_pipeline_automation_tree" model="ir.ui.view">
+        <field name="name">crm.pipeline.automation.tree</field>
+        <field name="model">crm.pipeline.automation</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active"/>
+                <field name="trigger"/>
+                <field name="action_type"/>
+                <field name="trigger_stage_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crm_pipeline_automation_form" model="ir.ui.view">
+        <field name="name">crm.pipeline.automation.form</field>
+        <field name="model">crm.pipeline.automation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Trigger Conditions">
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                            <field name="model"/>
+                        </group>
+                        <group>
+                            <field name="trigger"/>
+                            <field name="trigger_stage_id"
+                                required="trigger in ('stage_entered', 'stage_exited')"
+                                invisible="trigger not in ('stage_entered', 'stage_exited')"/>
+                            <field name="score_threshold"
+                                required="trigger == 'score_threshold'"
+                                invisible="trigger != 'score_threshold'"/>
+                        </group>
+                    </group>
+                    <group string="Action">
+                        <group>
+                            <field name="action_type"/>
+                        </group>
+                        <group>
+                            <field name="target_stage_id"
+                                invisible="action_type != 'move_stage'"/>
+                            <field name="email_template_id"
+                                invisible="action_type != 'email'"/>
+                            <field name="activity_type_id"
+                                invisible="action_type != 'activity'"/>
+                            <field name="activity_summary"
+                                invisible="action_type != 'activity'"/>
+                            <field name="activity_date_deadline"
+                                invisible="action_type != 'activity'"/>
+                            <field name="user_id"
+                                invisible="action_type != 'assign_user'"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                invisible="action_type != 'add_tag'"/>
+                            <field name="webhook_url"
+                                invisible="action_type != 'webhook'"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_pipeline_automation" model="ir.actions.act_window">
+        <field name="name">Pipeline Automation</field>
+        <field name="res_model">crm.pipeline.automation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

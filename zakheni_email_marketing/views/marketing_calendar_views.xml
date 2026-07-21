@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_marketing_calendar_tree" model="ir.ui.view">
+        <field name="name">marketing.calendar.tree</field>
+        <field name="model">marketing.calendar</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="color"/>
+                <field name="name"/>
+                <field name="event_type"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="completed"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_marketing_calendar_form" model="ir.ui.view">
+        <field name="name">marketing.calendar.form</field>
+        <field name="model">marketing.calendar</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_completed" string="Mark Completed" type="object"
+                        invisible="completed"/>
+                    <button name="action_reopen" string="Reopen" type="object"
+                        invisible="not completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="event_type"/>
+                            <field name="user_id"/>
+                            <field name="team_id"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="all_day"/>
+                            <field name="completed"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="campaign_id"/>
+                        <field name="mailing_id"/>
+                        <field name="automation_id"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_marketing_calendar_calendar" model="ir.ui.view">
+        <field name="name">marketing.calendar.calendar</field>
+        <field name="model">marketing.calendar</field>
+        <field name="arch" type="xml">
+            <calendar date_start="start_date" date_stop="end_date"
+                color="color" mode="month">
+                <field name="name"/>
+                <field name="event_type"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_marketing_calendar" model="ir.actions.act_window">
+        <field name="name">Marketing Calendar</field>
+        <field name="res_model">marketing.calendar</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Plan your marketing activities</p>
+            <p>Use the calendar to schedule and track campaign events, mailings, reviews, and blackout periods.</p>
+        </field>
+    </record>
+</odoo>

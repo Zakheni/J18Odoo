@@ -41,9 +41,23 @@ class Tender(models.Model):
     bid_bond_bank = fields.Char(string='Bid Bond Bank')
     estimated_bid_cost = fields.Monetary(string='Estimated Bid Cost', currency_field='currency_id', help='Internal cost to prepare and submit this bid.')
 
+    # Category
+    category_id = fields.Many2one('tender.tender.category', string='Category', tracking=True)
+
     # Evaluation
     probability = fields.Float(string='Win Probability (%)', aggregator='avg')
     competitive_bidding = fields.Boolean(string='Competitive Bidding')
+
+    # Bid/No-Bid
+    bid_no_bid_id = fields.Many2one('tender.bid.no.bid', string='Bid/No-Bid Analysis', readonly=True)
+    bid_no_bid_recommendation = fields.Selection(related='bid_no_bid_id.recommendation', string='Recommendation', readonly=True)
+    bid_no_bid_score = fields.Float(related='bid_no_bid_id.score_percent', string='Bid/No-Bid Score', readonly=True)
+
+    # Compliance
+    compliance_result_ids = fields.One2many('tender.compliance.result', 'tender_id', string='Compliance Results')
+
+    # AI Analysis
+    ai_analysis_ids = fields.One2many('tender.ai.analysis', 'tender_id', string='AI Analyses')
 
     # Result
     result = fields.Selection([
@@ -95,7 +109,7 @@ class Tender(models.Model):
         return self.env['tender.stage'].search([], order='sequence', limit=1).id
 
     @api.model
-    def _read_group_stage_ids(self, stages, domain, order):
+    def _read_group_stage_ids(self, stages, domain, order=None):
         return self.env['tender.stage'].search([])
 
     # --- Actions ---
@@ -131,3 +145,58 @@ class Tender(models.Model):
         for t in self:
             t.result = 'withdrawn'
             t.result_date = fields.Date.today()
+
+    def action_create_bid_no_bid(self):
+        self.ensure_one()
+        existing = self.env['tender.bid.no.bid'].search([('tender_id', '=', self.id)], limit=1)
+        if existing:
+            return existing.open_analysis()
+        analysis = self.env['tender.bid.no.bid'].create({'tender_id': self.id})
+        self._setup_default_bid_no_bid_criteria(analysis)
+        return analysis.open_analysis()
+
+    def _setup_default_bid_no_bid_criteria(self, analysis):
+        defaults = [
+            (0, 0, {'category': 'strategic', 'name': 'Alignment with business strategy', 'weight': 3.0}),
+            (0, 0, {'category': 'strategic', 'name': 'Market presence & growth potential', 'weight': 2.0}),
+            (0, 0, {'category': 'financial', 'name': 'Estimated profitability', 'weight': 4.0}),
+            (0, 0, {'category': 'financial', 'name': 'Bid cost vs potential return', 'weight': 3.0}),
+            (0, 0, {'category': 'capacity', 'name': 'Available team capacity', 'weight': 3.0}),
+            (0, 0, {'category': 'capacity', 'name': 'Required skills & expertise available', 'weight': 3.0}),
+            (0, 0, {'category': 'competitive', 'name': 'Competitive position & differentiators', 'weight': 2.0}),
+            (0, 0, {'category': 'competitive', 'name': 'Past performance with this issuer', 'weight': 2.0}),
+            (0, 0, {'category': 'risk', 'name': 'Contractual risk assessment', 'weight': 3.0}),
+            (0, 0, {'category': 'risk', 'name': 'Project delivery risk', 'weight': 2.0}),
+            (0, 0, {'category': 'compliance', 'name': 'Eligibility & mandatory requirements', 'weight': 4.0}),
+            (0, 0, {'category': 'compliance', 'name': 'BEE/BBBEE scoring level', 'weight': 3.0}),
+        ]
+        analysis.write({'line_ids': defaults})
+
+    def action_apply_compliance(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Apply Compliance Checklist'),
+            'res_model': 'tender.compliance.checklist',
+            'view_mode': 'list,form',
+            'target': 'new',
+            'domain': [],
+            'context': {'default_tender_id': self.id},
+        }
+
+    def action_ai_analyze(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('AI Document Analysis'),
+            'res_model': 'tender.ai.analysis',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_tender_id': self.id},
+        }
+
+    def action_open_bid_no_bid(self):
+        self.ensure_one()
+        if self.bid_no_bid_id:
+            return self.bid_no_bid_id.open_analysis()
+        return self.action_create_bid_no_bid()

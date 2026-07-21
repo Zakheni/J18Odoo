@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_dashboard_form" model="ir.ui.view">
+        <field name="name">asset.dashboard.form</field>
+        <field name="model">asset.dashboard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="o_grey_container o_company_environment">
+                        <div class="row" style="margin: 16px;">
+                            <button name="action_compute" type="object" string="Refresh Dashboard" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Overview">
+                            <field name="total_assets" class="oe_inline"/>
+                            <field name="total_purchase_value"/>
+                            <field name="total_book_value"/>
+                            <field name="total_depreciation"/>
+                        </group>
+                        <group string="By Status">
+                            <field name="in_use_count"/>
+                            <field name="maintenance_count"/>
+                            <field name="disposed_count"/>
+                            <field name="draft_count"/>
+                        </group>
+                    </group>
+                    <group string="By Category">
+                        <field name="it_count"/>
+                        <field name="furniture_count"/>
+                        <field name="vehicle_count"/>
+                        <field name="building_count"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="asset_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Asset Dashboard</field>
+        <field name="res_model">asset.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+</odoo>

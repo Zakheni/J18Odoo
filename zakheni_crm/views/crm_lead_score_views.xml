@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_lead_score_tree" model="ir.ui.view">
+        <field name="name">crm.lead.score.tree</field>
+        <field name="model">crm.lead.score</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="lead_id"/>
+                <field name="rule_name"/>
+                <field name="rule_category"/>
+                <field name="score" sum="Total"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_score_search" model="ir.ui.view">
+        <field name="name">crm.lead.score.search</field>
+        <field name="model">crm.lead.score</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="lead_id"/>
+                <field name="rule_id"/>
+                <field name="rule_category"/>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="sla_premium" model="crm.sla">
+        <field name="name">Premium - 4hr Response</field>
+        <field name="hours">4.0</field>
+        <field name="priority">3</field>
+
+    </record>
+
+    <record id="sla_standard" model="crm.sla">
+        <field name="name">Standard - 24hr Response</field>
+        <field name="hours">24.0</field>
+        <field name="priority">1</field>
+    </record>
+
+    <record id="sla_extended" model="crm.sla">
+        <field name="name">Extended - 48hr Response</field>
+        <field name="hours">48.0</field>
+        <field name="priority">0</field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_zakheni_digitize_root" name="Document Digitization" sequence="110" web_icon="zakheni_document_digitize,static/description/icon.png">
+        <menuitem id="menu_zakheni_digitize_documents" name="Documents" action="action_zakheni_digitize_document" sequence="10"/>
+        <menuitem id="menu_zakheni_digitize_upload" name="Upload &amp; Digitize" action="action_zakheni_digitize_upload" sequence="20"/>
+        <menuitem id="menu_zakheni_digitize_config" name="Configuration" sequence="100">
+            <menuitem id="menu_zakheni_document_type" name="Document Types" action="action_zakheni_document_type" sequence="10"/>
+        </menuitem>
+    </menuitem>
+</odoo>

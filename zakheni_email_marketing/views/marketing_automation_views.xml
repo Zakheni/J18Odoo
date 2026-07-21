@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_marketing_automation_tree" model="ir.ui.view">
+        <field name="name">marketing.automation.tree</field>
+        <field name="model">marketing.automation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="trigger_event"/>
+                <field name="active"/>
+                <field name="execution_count"/>
+                <field name="success_count"/>
+                <field name="last_execution"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_marketing_automation_form" model="ir.ui.view">
+        <field name="name">marketing.automation.form</field>
+        <field name="model">marketing.automation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" string="Activate" type="object"
+                        invisible="active" class="btn-primary"/>
+                    <button name="action_deactivate" string="Deactivate" type="object"
+                        invisible="not active"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="model_id"/>
+                        </group>
+                        <group>
+                            <field name="trigger_event"/>
+                            <field name="trigger_field_id"
+                                required="trigger_event == 'write'" invisible="trigger_event not in ('write', 'stage_change')"/>
+                            <field name="trigger_stage_id"
+                                invisible="trigger_event != 'stage_change'"/>
+                            <field name="trigger_date_field_id"
+                                invisible="trigger_event != 'date_reached'"/>
+                            <field name="trigger_delay_days"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="domain" placeholder="Optional: []"/>
+                    </group>
+                    <notebook>
+                        <page name="actions" string="Actions">
+                            <field name="action_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="action_type"/>
+                                    <field name="mailing_id"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="stats" string="Statistics">
+                            <group>
+                                <field name="execution_count"/>
+                                <field name="success_count"/>
+                                <field name="failed_count"/>
+                                <field name="last_execution"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_marketing_automation" model="ir.actions.act_window">
+        <field name="name">Automation Rules</field>
+        <field name="res_model">marketing.automation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first automation rule</p>
+            <p>Automate marketing actions based on triggers like lead creation, stage changes, email opens, and more.</p>
+        </field>
+    </record>
+</odoo>

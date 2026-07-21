@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="doc_type_invoice" model="zakheni.document.type">
+        <field name="name">Vendor Invoice</field>
+        <field name="code">vendor_invoice</field>
+        <field name="sequence">10</field>
+        <field name="target_model">account.move</field>
+        <field name="extractable_field_ids">
+            [(0, 0, {'name': 'Invoice Number', 'field_type': 'char', 'sequence': 10,
+                      'regex_pattern': r'(?:Invoice|Inv|Document)\s*(?:No|#|Number)?[:\s]*([A-Z0-9-/]+)',
+                      'odoo_field': 'ref', 'ai_hint': 'Invoice or document number'}),
+             (0, 0, {'name': 'Invoice Date', 'field_type': 'date', 'sequence': 20,
+                      'regex_pattern': r'(?:Date|Invoice Date|Issued)[:\s]*([\d]{1,4}[-/][\d]{1,2}[-/][\d]{1,4})',
+                      'odoo_field': 'invoice_date', 'ai_hint': 'Invoice date'}),
+             (0, 0, {'name': 'Total Amount', 'field_type': 'monetary', 'sequence': 30,
+                      'regex_pattern': r'(?:Total|Amount Due|Grand Total)[:\s]*([\d,]+\.?\d*)',
+                      'odoo_field': 'amount_total', 'ai_hint': 'Total invoice amount'}),
+             (0, 0, {'name': 'Vendor Name', 'field_type': 'char', 'sequence': 40,
+                      'regex_pattern': r'^([A-Za-z\s&amp;.]+(?:Ltd|Pty|Inc|LLC|CC))',
+                      'odoo_field': 'partner_id', 'ai_hint': 'Vendor/supplier company name'}),
+             (0, 0, {'name': 'VAT Number', 'field_type': 'char', 'sequence': 50,
+                      'regex_pattern': r'(?:VAT|TAX|Tax ID|VAT No)[:\s]*([A-Z0-9]+)',
+                      'odoo_field': 'partner_id', 'ai_hint': 'VAT or tax registration number'})]}
+        </field>
+    </record>
+
+    <record id="doc_type_receipt" model="zakheni.document.type">
+        <field name="name">Receipt</field>
+        <field name="code">receipt</field>
+        <field name="sequence">20</field>
+        <field name="target_model">account.move</field>
+    </record>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_marketing_report_tree" model="ir.ui.view">
+        <field name="name">marketing.report.tree</field>
+        <field name="model">marketing.report</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="campaign_id"/>
+                <field name="date"/>
+                <field name="sent_count"/>
+                <field name="opened_count"/>
+                <field name="clicked_count"/>
+                <field name="conversion_count"/>
+                <field name="bounced_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_marketing_report_graph" model="ir.ui.view">
+        <field name="name">marketing.report.graph</field>
+        <field name="model">marketing.report</field>
+        <field name="arch" type="xml">
+            <graph type="bar" sample="1">
+                <field name="date" type="row"/>
+                <field name="sent_count" type="measure"/>
+                <field name="opened_count" type="measure"/>
+                <field name="clicked_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_marketing_report_pivot" model="ir.ui.view">
+        <field name="name">marketing.report.pivot</field>
+        <field name="model">marketing.report</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="campaign_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="sent_count" type="measure"/>
+                <field name="opened_count" type="measure"/>
+                <field name="clicked_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_marketing_report" model="ir.actions.act_window">
+        <field name="name">Campaign Reports</field>
+        <field name="res_model">marketing.report</field>
+        <field name="view_mode">graph,pivot,tree</field>
+    </record>
+</odoo>

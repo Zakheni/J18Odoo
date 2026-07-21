@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_template_welcome" model="mail.template">
+        <field name="name">CRM: Welcome Lead</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="subject">Thank you for your interest, ${object.contact_name or ''}</field>
+        <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif;">
+    <p>Dear ${object.contact_name or 'Valued Customer'},</p>
+    <p>Thank you for reaching out to us. We have received your enquiry and one of our team members will be in touch shortly.</p>
+    <p>In the meantime, feel free to browse our solutions at <a href="https://www.zakhenict.co.za">zakhenict.co.za</a>.</p>
+    <br/>
+    <p>Best regards,<br/>The Zakheni ICT Team</p>
+</div>]]></field>
+    </record>
+
+    <record id="mail_template_followup" model="mail.template">
+        <field name="name">CRM: Follow Up</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="subject">Following up on your enquiry</field>
+        <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif;">
+    <p>Dear ${object.contact_name or 'Valued Customer'},</p>
+    <p>We wanted to follow up on your recent enquiry to see if you have any questions or if there is anything else we can help you with.</p>
+    <p>Please feel free to reply to this email or call us directly.</p>
+    <br/>
+    <p>Best regards,<br/>The Zakheni ICT Team</p>
+</div>]]></field>
+    </record>
+
+    <record id="mail_template_offer" model="mail.template">
+        <field name="name">CRM: Special Offer</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="subject">Special offer just for you</field>
+        <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif;">
+    <p>Dear ${object.contact_name or 'Valued Customer'},</p>
+    <p>As a valued prospect, we would like to offer you a <strong>free consultation</strong> to discuss how our solutions can help your business grow.</p>
+    <p>Click <a href="https://www.zakhenict.co.za/book-consultation">here</a> to schedule your free consultation.</p>
+    <br/>
+    <p>Best regards,<br/>The Zakheni ICT Team</p>
+</div>]]></field>
+    </record>
+
+    <record id="email_seq_new_lead" model="crm.email.sequence">
+        <field name="name">New Lead Nurture</field>
+        <field name="trigger">lead_created</field>
+        <field name="step_ids">
+            [(0, 0, {
+                'sequence': 10,
+                'delay_days': 0,
+                'email_template_id': ref('mail_template_welcome'),
+            }),
+             (0, 0, {
+                'sequence': 20,
+                'delay_days': 3,
+                'email_template_id': ref('mail_template_followup'),
+            }),
+             (0, 0, {
+                'sequence': 30,
+                'delay_days': 7,
+                'email_template_id': ref('mail_template_offer'),
+            })]
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_marketing_automation_action_tree" model="ir.ui.view">
+        <field name="name">marketing.automation.action.tree</field>
+        <field name="model">marketing.automation.action</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="action_type"/>
+                <field name="mailing_id"/>
+                <field name="active"/>
+                <field name="execution_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_marketing_automation_action_form" model="ir.ui.view">
+        <field name="name">marketing.automation.action.form</field>
+        <field name="model">marketing.automation.action</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="automation_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="action_type"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Action Details">
+                        <field name="mailing_id" invisible="action_type != 'send_email'"/>
+                        <field name="mailing_list_id" invisible="action_type not in ('add_to_list', 'remove_from_list')"/>
+                        <field name="update_field_id" invisible="action_type != 'update_contact'"/>
+                        <field name="update_value" invisible="action_type != 'update_contact'"/>
+                        <field name="lead_team_id" invisible="action_type != 'create_lead'"/>
+                        <field name="lead_user_id" invisible="action_type != 'create_lead'"/>
+                        <field name="stage_id" invisible="action_type != 'change_stage'"/>
+                        <field name="tag_ids" widget="many2many_tags" invisible="action_type != 'add_tag'"/>
+                        <field name="user_id" invisible="action_type not in ('assign_user', 'notify_user')"/>
+                        <field name="webhook_url" invisible="action_type != 'webhook'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

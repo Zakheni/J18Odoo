@@ -2,5 +2,16 @@ from . import tender_stage
 from . import tender
 from . import tender_document
 from . import tender_document_resource
+from . import tender_category
+from . import tender_bid_no_bid
+from . import tender_compliance
+from . import tender_ai_analysis
+from . import tender_alert
 from . import tender_dashboard
 from . import tender_analysis
+from . import tender_service_category
+from . import tender_company_profile
+from . import tender_feed
+from . import tender_feed_match
+from . import tender_feed_keyword_search
+from . import tender_feed_keyword_config

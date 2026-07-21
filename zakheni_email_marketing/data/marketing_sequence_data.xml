@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_marketing_campaign" model="ir.sequence">
+            <field name="name">Marketing Campaign</field>
+            <field name="code">marketing.campaign</field>
+            <field name="prefix">CAMP-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_marketing_subscription_preference_tree" model="ir.ui.view">
+        <field name="name">marketing.subscription.preference.tree</field>
+        <field name="model">marketing.subscription.preference</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="contact_id"/>
+                <field name="list_id"/>
+                <field name="subscription_status"/>
+                <field name="communication_channel"/>
+                <field name="email_frequency"/>
+                <field name="subscribed_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_marketing_subscription_preference_form" model="ir.ui.view">
+        <field name="name">marketing.subscription.preference.form</field>
+        <field name="model">marketing.subscription.preference</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="contact_id"/>
+                            <field name="partner_id"/>
+                            <field name="list_id"/>
+                        </group>
+                        <group>
+                            <field name="subscription_status"/>
+                            <field name="communication_channel"/>
+                            <field name="email_frequency"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="tags"/>
+                    </group>
+                    <group string="Dates &amp; Consent">
+                        <field name="subscribed_date"/>
+                        <field name="unsubscribed_date"/>
+                        <field name="unsubscribed_reason"/>
+                        <field name="consent_given"/>
+                        <field name="consent_date"/>
+                        <field name="consent_source"/>
+                    </group>
+                    <footer>
+                        <button name="action_subscribe" string="Subscribe" type="object"
+                            class="btn-primary"/>
+                        <button name="action_unsubscribe" string="Unsubscribe" type="object"
+                            class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

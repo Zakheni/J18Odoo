@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mailing_contact_form_inherit" model="ir.ui.view">
+        <field name="name">mailing.contact.form.inherit.zakheni</field>
+        <field name="model">mailing.contact</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_contact_view_form"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <div>
+                    <group name="zakheni_scoring" string="Lead Scoring &amp; Engagement">
+                        <field name="lead_score"/>
+                        <field name="engagement_score" widget="progressbar"/>
+                        <field name="is_engaged"/>
+                    </group>
+                    <group string="Activity History">
+                        <group string="Email Activity">
+                            <field name="total_opens"/>
+                            <field name="total_clicks"/>
+                            <field name="total_conversions"/>
+                        </group>
+                        <group string="Last Activity">
+                            <field name="last_open_date"/>
+                            <field name="last_click_date"/>
+                            <field name="last_conversion_date"/>
+                        </group>
+                        <button name="action_view_subscription_preferences" string="Subscription Preferences"
+                            type="object" class="btn-secondary"/>
+                    </group>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>

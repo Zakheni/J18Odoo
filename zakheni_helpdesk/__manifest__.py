@@ -14,6 +14,7 @@
         'views/res_partner_views.xml',
         'views/helpdesk_ticket_team_views.xml',
         'views/helpdesk_ticket_views.xml',
+        'views/portal_templates.xml',
     ],
     'installable': True,
     'application': False,

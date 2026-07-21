@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_qr_label" model="ir.actions.report">
+        <field name="name">Asset Label</field>
+        <field name="model">asset.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zakheni_asset_management.report_qr_label</field>
+        <field name="report_file">zakheni_asset_management.report_qr_label</field>
+        <field name="print_report_name">'Label_%s_%s' % (object.code or '', object.name or '')</field>
+        <field name="binding_model_id" ref="model_asset_asset"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_qr_label">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="padding: 20px; text-align: center;">
+                        <p><strong t-field="doc.code"/> - <strong t-field="doc.name"/></p>
+                        <p t-if="doc.barcode">
+                            <img t-att-src="'/report/barcode/Code128/%s' % doc.barcode"
+                                 style="width: 300px; height: 60px;"/>
+                        </p>
+                        <p t-field="doc.barcode"/>
+                        <hr style="width: 60%;"/>
+                        <p t-if="doc.qr_code">
+                            <img t-att-src="doc.qr_code_uri"
+                                 style="width: 100px; height: 100px;"/>
+                        </p>
+                        <p>Category: <span t-field="doc.category_id"/> | Location: <span t-field="doc.current_location_id"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sales Targets -->
+    <record id="view_crm_target_tree" model="ir.ui.view">
+        <field name="name">crm.target.tree</field>
+        <field name="model">crm.target</field>
+        <field name="arch" type="xml">
+            <list string="Sales Targets" editable="bottom">
+                <field name="user_id"/>
+                <field name="team_id" optional="show"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="revenue_target" widget="monetary" sum="Total"/>
+                <field name="revenue_achieved" widget="monetary" sum="Total"/>
+                <field name="revenue_progress" widget="progressbar"/>
+                <field name="deals_target" sum="Total"/>
+                <field name="deals_achieved" sum="Total"/>
+                <field name="deals_progress" widget="progressbar"/>
+                <field name="leads_target" sum="Total" optional="show"/>
+                <field name="leads_generated" sum="Total" optional="show"/>
+                <field name="leads_progress" widget="progressbar" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crm_target_form" model="ir.ui.view">
+        <field name="name">crm.target.form</field>
+        <field name="model">crm.target</field>
+        <field name="arch" type="xml">
+            <form string="Sales Target">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="team_id"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <group string="Revenue Targets">
+                        <group>
+                            <field name="revenue_target" widget="monetary"/>
+                            <field name="revenue_achieved" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="revenue_progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <group string="Deals Targets">
+                        <group>
+                            <field name="deals_target"/>
+                            <field name="deals_achieved"/>
+                        </group>
+                        <group>
+                            <field name="deals_progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <group string="Leads Targets">
+                        <group>
+                            <field name="leads_target"/>
+                            <field name="leads_generated"/>
+                        </group>
+                        <group>
+                            <field name="leads_progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_target_search" model="ir.ui.view">
+        <field name="name">crm.target.search</field>
+        <field name="model">crm.target</field>
+        <field name="arch" type="xml">
+            <search string="Search Sales Targets">
+                <field name="user_id"/>
+                <field name="team_id"/>
+                <filter name="current" string="Current" date="date_from"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_user" string="Salesperson" context="{'group_by':'user_id'}"/>
+                    <filter name="group_team" string="Sales Team" context="{'group_by':'team_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_crm_target" model="ir.actions.act_window">
+        <field name="name">Sales Targets</field>
+        <field name="res_model">crm.target</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_crm_target_search"/>
+    </record>
+
+    <!-- Company Targets -->
+    <record id="view_crm_company_target_tree" model="ir.ui.view">
+        <field name="name">crm.company.target.tree</field>
+        <field name="model">crm.company.target</field>
+        <field name="arch" type="xml">
+            <list string="Company Targets" editable="bottom">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="revenue_target" widget="monetary" sum="Total"/>
+                <field name="revenue_achieved" widget="monetary" sum="Total"/>
+                <field name="revenue_progress" widget="progressbar"/>
+                <field name="deals_target" sum="Total"/>
+                <field name="deals_achieved" sum="Total"/>
+                <field name="deals_progress" widget="progressbar"/>
+                <field name="leads_target" sum="Total" optional="show"/>
+                <field name="leads_generated" sum="Total" optional="show"/>
+                <field name="leads_progress" widget="progressbar" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crm_company_target_form" model="ir.ui.view">
+        <field name="name">crm.company.target.form</field>
+        <field name="model">crm.company.target</field>
+        <field name="arch" type="xml">
+            <form string="Company Target">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <group string="Revenue Targets">
+                        <group>
+                            <field name="revenue_target" widget="monetary"/>
+                            <field name="revenue_achieved" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="revenue_progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <group string="Deals Targets">
+                        <group>
+                            <field name="deals_target"/>
+                            <field name="deals_achieved"/>
+                        </group>
+                        <group>
+                            <field name="deals_progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <group string="Leads Targets">
+                        <group>
+                            <field name="leads_target"/>
+                            <field name="leads_generated"/>
+                        </group>
+                        <group>
+                            <field name="leads_progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_company_target" model="ir.actions.act_window">
+        <field name="name">Company Targets</field>
+        <field name="res_model">crm.company.target</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

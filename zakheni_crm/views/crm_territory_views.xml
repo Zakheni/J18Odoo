@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_territory_tree" model="ir.ui.view">
+        <field name="name">crm.territory.tree</field>
+        <field name="model">crm.territory</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <field name="team_id"/>
+                <field name="active"/>
+                <field name="lead_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crm_territory_form" model="ir.ui.view">
+        <field name="name">crm.territory.form</field>
+        <field name="model">crm.territory</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="team_id"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="countries" string="Coverage">
+                            <group>
+                                <group string="Countries">
+                                    <field name="country_ids" nolabel="1"/>
+                                </group>
+                                <group string="States/Provinces">
+                                    <field name="state_ids" nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="leads" string="Leads/Opportunities">
+                            <field name="lead_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="expected_revenue"/>
+                                    <field name="probability"/>
+                                    <field name="stage_id"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="sub_territories" string="Sub-Territories">
+                            <field name="child_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="user_ids" widget="many2many_tags"/>
+                                    <field name="lead_count"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_territory" model="ir.actions.act_window">
+        <field name="name">Territories</field>
+        <field name="res_model">crm.territory</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
