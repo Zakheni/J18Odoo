@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="zakheni_work_location_action" model="ir.actions.act_window">
+        <field name="name">Work Locations</field>
+        <field name="res_model">zakheni.work.location</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'group_by': 'location_type'}</field>
+    </record>
+
+    <record id="zakheni_work_location_tree" model="ir.ui.view">
+        <field name="name">zakheni.work.location.tree</field>
+        <field name="model">zakheni.work.location</field>
+        <field name="arch" type="xml">
+            <list string="Work Locations">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="location_type"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
+                <field name="radius_km"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="zakheni_work_location_form" model="ir.ui.view">
+        <field name="name">zakheni.work.location.form</field>
+        <field name="model">zakheni.work.location</field>
+        <field name="arch" type="xml">
+            <form string="Work Location">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="location_type"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="radius_km"/>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

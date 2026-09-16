@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="zakheni_attendance_day_search" model="ir.ui.view">
+        <field name="name">zakheni.attendance.day.search</field>
+        <field name="model">zakheni.attendance.day</field>
+        <field name="arch" type="xml">
+            <search string="Daily Work Records">
+                <field name="employee_id"/>
+                <field name="date"/>
+                <filter string="Exceptions" name="exceptions" domain="[('is_exception', '=', True)]"/>
+                <filter string="Location Mismatch" name="mismatch" domain="[('location_mismatch', '=', True)]"/>
+                <filter string="Late" name="late" domain="[('is_late', '=', True)]"/>
+                <filter string="Missing Check-Out" name="missing" domain="[('missing_checkout', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Day" name="group_day" context="{'group_by': 'date'}"/>
+                    <filter string="Employee" name="group_emp" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="zakheni_attendance_day_action" model="ir.actions.act_window">
+        <field name="name">Daily Work Records</field>
+        <field name="res_model">zakheni.attendance.day</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="zakheni_attendance_day_search"/>
+        <field name="context">{'search_default_group_day': 1}</field>
+    </record>
+
+    <record id="zakheni_attendance_day_tree" model="ir.ui.view">
+        <field name="name">zakheni.attendance.day.list</field>
+        <field name="model">zakheni.attendance.day</field>
+        <field name="arch" type="xml">
+            <list string="Daily Work Records" create="0" multi_edit="0" import="0">
+                <header>
+                    <button string="Approve" name="action_approve" type="object" icon="fa-check"/>
+                    <button string="Refuse" name="action_refuse" type="object" icon="fa-times"/>
+                </header>
+                <field name="date"/>
+                <field name="employee_id"/>
+                <field name="day_type" widget="badge" decoration-success="day_type == 'present'" decoration-danger="day_type == 'absent'" decoration-info="day_type == 'leave'" decoration-muted="day_type == 'day_off'"/>
+                <field name="planned_location_id" options="{'no_create': True}"/>
+                <field name="actual_location_id" options="{'no_create': True}"/>
+                <field name="location_mismatch" widget="boolean_favorite"/>
+                <field name="is_late" widget="boolean_favorite"/>
+                <field name="missing_checkout" widget="boolean_favorite"/>
+                <field name="is_exception" widget="boolean_favorite"/>
+                <field name="exception_text"/>
+                <field name="planned_check_in_utc" optional="hide"/>
+                <field name="first_check_in_utc" optional="hide"/>
+                <field name="planned_check_out_utc" optional="hide"/>
+                <field name="last_check_out_utc" optional="hide"/>
+                <field name="worked_hours" widget="float_time" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="zakheni_attendance_day_form" model="ir.ui.view">
+        <field name="name">zakheni.attendance.day.form</field>
+        <field name="model">zakheni.attendance.day</field>
+        <field name="arch" type="xml">
+            <form string="Daily Work Record" create="0">
+                <header>
+                    <button string="Approve" name="action_approve" type="object" invisible="state != 'draft'"/>
+                    <button string="Refuse" name="action_refuse" type="object" invisible="state != 'draft'"/>
+                    <button string="Recompute" name="action_recompute" type="object"/>
+                    <field name="state" widget="statusbar" readonly="1" statusbar_visible="draft,approved,refused"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="date"/>
+                            <field name="day_type"/>
+                            <field name="is_working_day"/>
+                        </group>
+                        <group>
+                            <field name="planned_location_id" options="{'no_create': True}"/>
+                            <field name="actual_location_id" options="{'no_create': True}"/>
+                            <field name="location_mismatch"/>
+                            <field name="leave_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Attendances"/>
+                    <group>
+                        <group>
+                            <field name="planned_check_in_utc"/>
+                            <field name="planned_check_out_utc"/>
+                            <field name="first_check_in_utc" readonly="1"/>
+                            <field name="last_check_out_utc" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="worked_hours"/>
+                            <field name="is_late"/>
+                            <field name="late_minutes"/>
+                            <field name="missing_checkout"/>
+                            <field name="is_exception"/>
+                            <field name="exception_text" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Note">
+                        <field name="note"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="zakheni_attendance_day_view_tree_today" model="ir.ui.view">
+        <field name="name">zakheni.attendance.day today list</field>
+        <field name="model">zakheni.attendance.day</field>
+        <field name="arch" type="xml">
+            <list string="Today's Work Records" create="0">
+                <field name="employee_id"/>
+                <field name="day_type" widget="badge" decoration-success="day_type == 'present'" decoration-danger="day_type == 'absent'" decoration-info="day_type == 'leave'"/>
+                <field name="planned_location_id" options="{'no_create': True}"/>
+                <field name="actual_location_id" options="{'no_create': True}"/>
+                <field name="location_mismatch" widget="boolean_favorite"/>
+                <field name="is_late" widget="boolean_favorite"/>
+                <field name="missing_checkout" widget="boolean_favorite"/>
+                <field name="worked_hours" widget="float_time"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

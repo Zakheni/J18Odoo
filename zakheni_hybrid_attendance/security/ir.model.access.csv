@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zakheni_work_location_all,zakheni.work.location ALL,zakheni_hybrid_attendance.model_zakheni_work_location,base.group_user,1,0,0,0
+access_zakheni_work_location_manager,zakheni.work.location Manager,zakheni_hybrid_attendance.model_zakheni_work_location,zakheni_hybrid_attendance.group_zakheni_attendance_manager,1,1,1,1
+access_zakheni_attendance_day_all,zakheni.attendance.day ALL,zakheni_hybrid_attendance.model_zakheni_attendance_day,base.group_user,1,0,0,0
+access_zakheni_attendance_day_manager,zakheni.attendance.day Manager,zakheni_hybrid_attendance.model_zakheni_attendance_day,zakheni_hybrid_attendance.group_zakheni_attendance_manager,1,1,1,1

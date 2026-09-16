@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_zakheni_attendance_dashboard" model="ir.actions.client">
+        <field name="name">Attendance Dashboard</field>
+        <field name="tag">zakheni_attendance_dashboard</field>
+    </record>
+
+    <menuitem id="zakheni_attendance_root_menu"
+        name="Hybrid Attendance"
+        sequence="100"
+        groups="zakheni_hybrid_attendance.group_zakheni_attendance_manager"/>
+
+    <menuitem id="zakheni_attendance_dashboard_menu"
+        name="Dashboard"
+        parent="zakheni_attendance_root_menu"
+        sequence="10"
+        action="action_zakheni_attendance_dashboard"/>
+
+    <menuitem id="zakheni_attendance_day_menu"
+        name="Daily Work Records"
+        parent="zakheni_attendance_root_menu"
+        sequence="20"
+        action="zakheni_attendance_day_action"/>
+
+    <menuitem id="zakheni_work_location_menu"
+        name="Work Locations"
+        parent="zakheni_attendance_root_menu"
+        sequence="30"
+        action="zakheni_work_location_action"/>
+
+</odoo>

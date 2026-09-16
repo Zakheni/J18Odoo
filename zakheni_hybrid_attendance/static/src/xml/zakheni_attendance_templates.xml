@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="dashboard_template" name="Zakheni Attendance Dashboard" xml:space="preserve">
+    <t t-name="zakheni_attendance.Dashboard" owl="1">
+        <div class="o_zakheni_dashboard h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Attendance Dashboard</h4>
+                <div class="d-flex align-items-center gap-2">
+                    <select class="form-select form-select-sm" t-model="state.selected_location">
+                        <t t-foreach="locationChoices" t-as="loc" t-key="loc.id">
+                            <option t-att-value="loc.id"><t t-esc="loc.name"/></option>
+                        </t>
+                    </select>
+                    <button class="btn btn-primary btn-sm" t-on-click="onCheckInOut"
+                            t-att-disabled="state.loading">
+                        <i class="fa fa-location-arrow me-1"/>
+                        Check In / Out
+                    </button>
+                    <button class="btn btn-light btn-sm border" t-on-click="refresh">
+                        <i class="fa fa-refresh me-1" t-att-class="state.refreshing ? 'fa-spin' : ''"/>
+                        Refresh
+                    </button>
+                    <button class="btn btn-secondary btn-sm" t-on-click="downloadRegister">
+                        <i class="fa fa-file-excel-o me-1"/>
+                        Register (xlsx)
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading && !state.data" class="d-flex justify-content-center py-5">
+                <div class="spinner-border text-primary"/>
+            </div>
+
+            <t t-if="state.data">
+                <div class="row g-3 mb-3">
+                    <div class="col-3">
+                        <div class="card o_zakheni_kpi shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="fs-2 fw-bold text-primary" t-esc="state.data.present"/>
+                                <div class="text-muted small">Present Now</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card o_zakheni_kpi shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="fs-2 fw-bold text-success" t-esc="state.data.absent"/>
+                                <div class="text-muted small">Absent (scheduled)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card o_zakheni_kpi shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="fs-2 fw-bold text-info" t-esc="state.data.on_leave"/>
+                                <div class="text-muted small">On Leave</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card o_zakheni_kpi shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="fs-2 fw-bold text-warning" t-esc="state.data.late_count"/>
+                                <div class="text-muted small">Late Today</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header bg-white fw-bold small">Live Locations</div>
+                            <div class="card-body">
+                                <t t-foreach="Object.keys(typeLabels)" t-as="key" t-key="key">
+                                    <div class="d-flex justify-content-between py-1">
+                                        <span class="small">
+                                            <i class="fa fa-circle me-2" t-att-class="typeColors[key]"/>
+                                            <t t-esc="typeLabels[key]"/>
+                                        </span>
+                                        <span class="badge bg-light text-dark fw-bold"
+                                              t-esc="state.data.locations[key] || 0"/>
+                                    </div>
+                                </t>
+                                <t t-if="Object.keys(state.data.locations || {}).length === 0">
+                                    <div class="text-muted small py-2">No one is currently checked in.</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header bg-white fw-bold small">Exceptions & Status</div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-3">
+                                        <div class="fs-4 fw-bold text-danger" t-esc="state.data.mismatch_count"/>
+                                        <div class="text-muted small">Location Mismatch</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fs-4 fw-bold text-danger" t-esc="state.data.missing_checkout_count"/>
+                                        <div class="text-muted small">Missing Check-Out</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fs-4 fw-bold text-warning" t-esc="state.data.pending_exception_count"/>
+                                        <div class="text-muted small">Pending Approval</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fs-4 fw-bold text-secondary" t-esc="state.data.day_off"/>
+                                        <div class="text-muted small">Not Scheduled</div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="row text-center">
+                                    <div class="col-4">
+                                        <div class="text-muted small">Scheduled Today</div>
+                                        <div class="fs-5 fw-bold" t-esc="state.data.scheduled"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-muted small">Total Active Employees</div>
+                                        <div class="fs-5 fw-bold" t-esc="state.data.total_employees"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-muted small">Working Outside Schedule</div>
+                                        <div class="fs-5 fw-bold" t-esc="state.data.not_scheduled_present"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <t t-if="state.data.present &gt;= 0">
+                    <div class="text-end small text-muted">
+                        Last updated: <t t-esc="state.data.today"/>
+                    </div>
+                </t>
+            </t>
+        </div>
+    </t>
+</template>
+
+</odoo>

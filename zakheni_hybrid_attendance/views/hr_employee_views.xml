@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="zakheni_hr_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.form (hybrid attendance)</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='resource_calendar_id']" position="after">
+                <field name="work_arrangement"/>
+                <field name="default_work_location_id" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

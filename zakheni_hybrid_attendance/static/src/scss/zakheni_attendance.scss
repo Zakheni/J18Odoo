@@ -1,0 +1,12 @@
+.o_zakheni_dashboard {
+    padding: 16px;
+
+    .o_zakheni_kpi {
+        transition: transform 0.1s ease-in-out;
+        cursor: default;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+    }
+}

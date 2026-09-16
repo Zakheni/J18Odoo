@@ -7,7 +7,9 @@ _logger = logging.getLogger(__name__)
 try:
     from sentence_transformers import SentenceTransformer
     SENTENCE_TRANSFORMERS_AVAILABLE = True
-except ImportError:
+except (ImportError, OSError):
+    # OSError covers torch DLL load failures on Windows (c10.dll), which do
+    # not subclass ImportError. Degrade gracefully in that case too.
     SENTENCE_TRANSFORMERS_AVAILABLE = False
     _logger.warning("sentence-transformers not available. Install with: pip install sentence-transformers")
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Build yesterday's daily records for all employees, nightly -->
+    <record id="cron_build_daily_records" model="ir.cron">
+        <field name="name">Hybrid Attendance: Build Daily Records</field>
+        <field name="model_id" ref="model_zakheni_attendance_day"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_build_daily_records()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Ensure today's records exist, every 30 minutes during office hours -->
+    <record id="cron_today_snapshot" model="ir.cron">
+        <field name="name">Hybrid Attendance: Today Snapshot</field>
+        <field name="model_id" ref="model_zakheni_attendance_day"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_today_snapshot()</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">True</field>
+    </record>
+
+</odoo>

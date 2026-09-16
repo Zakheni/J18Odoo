@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="work_location_office" model="zakheni.work.location">
+        <field name="name">Zakheni ICT Head Office</field>
+        <field name="code">OFF-01</field>
+        <field name="location_type">office</field>
+    </record>
+
+    <record id="work_location_home" model="zakheni.work.location">
+        <field name="name">Home / Work From Home</field>
+        <field name="code">WFH</field>
+        <field name="location_type">home</field>
+    </record>
+
+    <record id="work_location_client" model="zakheni.work.location">
+        <field name="name">Client Site</field>
+        <field name="code">CLIENT</field>
+        <field name="location_type">client</field>
+    </record>
+
+    <record id="work_location_other" model="zakheni.work.location">
+        <field name="name">Other / Off-site</field>
+        <field name="code">OTHER</field>
+        <field name="location_type">other</field>
+    </record>
+
+</odoo>

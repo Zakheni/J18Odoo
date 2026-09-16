@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="zakheni_view_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance list (hybrid)</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="work_location_id" options="{'no_create': True}"/>
+                <field name="planned_location_id" optional="hide" options="{'no_create': True}"/>
+                <field name="capture_method" optional="hide"/>
+                <field name="is_exception" optional="show" widget="boolean_favorite"/>
+                <field name="exception_text" optional="show"/>
+                <field name="state" optional="show" widget="badge"/>
+                <field name="is_late" optional="hide" widget="boolean_favorite"/>
+                <field name="late_minutes" optional="hide"/>
+                <field name="location_mismatch" optional="hide" widget="boolean_favorite"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button class="btn-secondary" string="Approve" name="action_approve" type="object" groups="zakheni_hybrid_attendance.group_zakheni_attendance_manager"/>
+                <button class="btn-secondary" string="Refuse" name="action_refuse" type="object" groups="zakheni_hybrid_attendance.group_zakheni_attendance_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="zakheni_view_attendance_form" model="ir.ui.view">
+        <field name="name">hr.attendance form (hybrid)</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <group name="hybrid_location">
+                    <field name="work_location_id" options="{'no_create': True}"/>
+                    <field name="planned_location_id" readonly="1" options="{'no_create': True}"/>
+                    <field name="capture_method"/>
+                    <field name="glat"/>
+                    <field name="glon"/>
+                    <field name="gacc"/>
+                    <field name="is_late"/>
+                    <field name="late_minutes"/>
+                    <field name="location_mismatch"/>
+                    <field name="exception_text"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,refused"/>
+                    <button name="action_approve" type="object" string="Approve" icon="fa-check" invisible="state != 'draft'"/>
+                    <button name="action_refuse" type="object" string="Refuse" icon="fa-times" invisible="state in ['refused']"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="zakheni_view_attendance_filter" model="ir.ui.view">
+        <field name="name">hr.attendance search (hybrid)</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='nocheckout']" position="after">
+                <filter string="Exceptions" name="zakheni_exceptions" domain="[('is_exception', '=', True)]"/>
+                <filter string="Late" name="zakheni_late" domain="[('is_late', '=', True)]"/>
+                <filter string="Location Mismatch" name="zakheni_mismatch" domain="[('location_mismatch', '=', True)]"/>
+                <filter string="Approved" name="zakheni_approved" domain="[('state', '=', 'approved')]"/>
+            </xpath>
+            <xpath expr="//filter[@name='groupby_name']" position="after">
+                <filter string="Work Location" name="zakheni_group_loc" context="{'group_by': 'work_location_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
