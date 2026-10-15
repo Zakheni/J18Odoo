@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_virtual_guest_pass_tree" model="ir.ui.view">
+        <field name="name">virtual.guest.pass.tree</field>
+        <field name="model">virtual.guest.pass</field>
+        <field name="arch" type="xml">
+            <list string="Guest Passes">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="office_id"/>
+                <field name="room_id"/>
+                <field name="valid_to"/>
+                <field name="use_count"/>
+                <field name="max_uses"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-danger="state == 'revoked'"
+                       decoration-muted="state in ('expired','draft')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_virtual_guest_pass_form" model="ir.ui.view">
+        <field name="name">virtual.guest.pass.form</field>
+        <field name="model">virtual.guest.pass</field>
+        <field name="arch" type="xml">
+            <form string="Guest Pass">
+                <header>
+                    <button name="action_activate" type="object" string="Activate"
+                            invisible="state == 'active'"/>
+                    <button name="action_revoke" type="object" string="Revoke"
+                            invisible="state == 'revoked'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,expired,revoked"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Guest name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="email" widget="email"/>
+                            <field name="office_id"/>
+                            <field name="room_id" domain="[('office_id','=',office_id)]"/>
+                            <field name="created_by"/>
+                        </group>
+                        <group string="Validity">
+                            <field name="valid_from"/>
+                            <field name="valid_to"/>
+                            <field name="max_duration_minutes"/>
+                            <field name="max_uses"/>
+                            <field name="use_count"/>
+                        </group>
+                    </group>
+                    <group string="Guest link">
+                        <field name="guest_url" widget="CopyClipboardChar" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_virtual_guest_pass_search" model="ir.ui.view">
+        <field name="name">virtual.guest.pass.search</field>
+        <field name="model">virtual.guest.pass</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="office_id"/>
+                <filter name="active" string="Active" domain="[('state','=','active')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_office" string="Office" context="{'group_by': 'office_id'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
