@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="office_page" name="Virtual Office">
+        &lt;!DOCTYPE html&gt;
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+                <meta name="robots" content="noindex"/>
+                <title>Virtual Office</title>
+                <link rel="stylesheet" type="text/css"
+                      href="/virtual_office/static/src/css/virtual_office.css"/>
+            </head>
+            <body class="vo-body">
+                <div id="vo-app"></div>
+                <div id="vo-loading" class="vo-loading">
+                    <div class="vo-spinner"></div>
+                    <p>Joining the office&#8230;</p>
+                </div>
+
+                <script id="vo-bootstrap" type="application/json" t-out="bootstrap"></script>
+
+                <script src="/virtual_office/static/lib/three.min.js"></script>
+                <script src="/virtual_office/static/src/js/vo_api.js"></script>
+                <script src="/virtual_office/static/src/js/vo_audio.js"></script>
+                <script src="/virtual_office/static/src/js/vo_rtc.js"></script>
+                <script src="/virtual_office/static/src/js/vo_scene.js"></script>
+                <script src="/virtual_office/static/src/js/vo_ui.js"></script>
+                <script src="/virtual_office/static/src/js/vo_main.js"></script>
+            </body>
+        </html>
+    </template>
+
+    <template id="guest_invalid_page" name="Virtual Office: invalid guest pass">
+        &lt;!DOCTYPE html&gt;
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <title>Guest pass unavailable</title>
+                <link rel="stylesheet" type="text/css"
+                      href="/virtual_office/static/src/css/virtual_office.css"/>
+            </head>
+            <body class="vo-body vo-center">
+                <div class="vo-card">
+                    <h1>This guest pass is no longer valid</h1>
+                    <p class="text-muted">
+                        It may have expired, been revoked, or already been used the
+                        maximum number of times. Please ask your host for a new link.
+                    </p>
+                </div>
+            </body>
+        </html>
+    </template>
+
+</odoo>

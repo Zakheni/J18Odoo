@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_virtual_office_root"
+              name="Virtual Office"
+              web_icon="virtual_office,static/description/icon.png"
+              sequence="85"/>
+
+    <menuitem id="menu_virtual_office_home"
+              name="Enter Office"
+              parent="menu_virtual_office_root"
+              action="action_virtual_office"
+              sequence="1"/>
+
+    <menuitem id="menu_virtual_office_rooms"
+              name="Rooms"
+              parent="menu_virtual_office_root"
+              action="action_virtual_room"
+              sequence="10"/>
+
+    <menuitem id="menu_virtual_office_attendees"
+              name="Attendees"
+              parent="menu_virtual_office_root"
+              action="action_virtual_attendee"
+              sequence="20"/>
+
+    <menuitem id="menu_virtual_office_guests"
+              name="Guest Passes"
+              parent="menu_virtual_office_root"
+              action="action_virtual_guest_pass"
+              sequence="30"/>
+
+    <menuitem id="menu_virtual_office_chat"
+              name="Chat History"
+              parent="menu_virtual_office_root"
+              action="action_virtual_chat_message"
+              sequence="40"/>
+
+</odoo>

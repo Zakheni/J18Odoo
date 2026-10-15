@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_virtual_room_tree" model="ir.ui.view">
+        <field name="name">virtual.room.tree</field>
+        <field name="model">virtual.room</field>
+        <field name="arch" type="xml">
+            <list string="Rooms">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="office_id"/>
+                <field name="room_type"/>
+                <field name="capacity"/>
+                <field name="occupancy"/>
+                <field name="is_private"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_virtual_room_form" model="ir.ui.view">
+        <field name="name">virtual.room.form</field>
+        <field name="model">virtual.room</field>
+        <field name="arch" type="xml">
+            <form string="Room">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Open Space"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="office_id"/>
+                            <field name="room_type"/>
+                            <field name="capacity"/>
+                            <field name="sequence"/>
+                            <field name="description"/>
+                        </group>
+                        <group string="3D layout (metres)">
+                            <field name="pos_x"/>
+                            <field name="pos_y"/>
+                            <field name="width"/>
+                            <field name="depth"/>
+                            <field name="height"/>
+                            <field name="rotation_y"/>
+                            <field name="color" widget="color"/>
+                        </group>
+                    </group>
+                    <group string="Access">
+                        <field name="is_private"/>
+                        <field name="allowed_user_ids" widget="many2many_tags"
+                               invisible="not is_private"/>
+                        <field name="occupancy"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_virtual_room_search" model="ir.ui.view">
+        <field name="name">virtual.room.search</field>
+        <field name="model">virtual.room</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="office_id"/>
+                <field name="room_type"/>
+                <filter name="filter_public" string="Public" domain="[('is_private','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_office" string="Office" context="{'group_by': 'office_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'room_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

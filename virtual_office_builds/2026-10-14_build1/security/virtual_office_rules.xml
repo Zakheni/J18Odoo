@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Multi-company: only see offices belonging to allowed companies. -->
+        <record id="virtual_office_comp_rule" model="ir.rule">
+            <field name="name">Virtual Office: multi-company</field>
+            <field name="model_id" ref="model_virtual_office"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="virtual_room_comp_rule" model="ir.rule">
+            <field name="name">Virtual Room: multi-company</field>
+            <field name="model_id" ref="model_virtual_room"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="virtual_attendee_comp_rule" model="ir.rule">
+            <field name="name">Virtual Attendee: multi-company</field>
+            <field name="model_id" ref="model_virtual_attendee"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="virtual_guest_pass_comp_rule" model="ir.rule">
+            <field name="name">Virtual Guest Pass: multi-company</field>
+            <field name="model_id" ref="model_virtual_guest_pass"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="virtual_chat_message_comp_rule" model="ir.rule">
+            <field name="name">Virtual Chat Message: multi-company</field>
+            <field name="model_id" ref="model_virtual_chat_message"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

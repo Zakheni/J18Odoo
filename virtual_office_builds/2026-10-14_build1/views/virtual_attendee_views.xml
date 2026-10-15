@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_virtual_attendee_tree" model="ir.ui.view">
+        <field name="name">virtual.attendee.tree</field>
+        <field name="model">virtual.attendee</field>
+        <field name="arch" type="xml">
+            <list string="Attendees" create="false" edit="false">
+                <field name="name"/>
+                <field name="office_id"/>
+                <field name="room_id"/>
+                <field name="device_status" widget="badge"
+                       decoration-success="device_status == 'present'"
+                       decoration-warning="device_status in ('idle', 'away')"
+                       decoration-danger="device_status == 'gone'"/>
+                <field name="away_minutes"/>
+                <field name="clocked_in"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'online'"
+                       decoration-warning="state == 'idle'"
+                       decoration-muted="state == 'offline'"/>
+                <field name="is_guest"/>
+                <field name="camera_on"/>
+                <field name="mic_on"/>
+                <field name="session_start"/>
+                <field name="last_seen"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_virtual_attendee_form" model="ir.ui.view">
+        <field name="name">virtual.attendee.form</field>
+        <field name="model">virtual.attendee</field>
+        <field name="arch" type="xml">
+            <form string="Attendee" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="office_id"/>
+                            <field name="room_id"/>
+                            <field name="user_id"/>
+                            <field name="guest_pass_id" invisible="not is_guest"/>
+                            <field name="state"/>
+                        </group>
+                        <group string="Live">
+                            <field name="camera_on"/>
+                            <field name="mic_on"/>
+                            <field name="screen_sharing"/>
+                            <field name="is_speaking"/>
+                            <field name="peer_id"/>
+                        </group>
+                        <group string="Session">
+                            <field name="session_start"/>
+                            <field name="last_seen"/>
+                            <field name="pos_x"/>
+                            <field name="pos_y"/>
+                            <field name="rotation_y"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_virtual_attendee_search" model="ir.ui.view">
+        <field name="name">virtual.attendee.search</field>
+        <field name="model">virtual.attendee</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="office_id"/>
+                <field name="room_id"/>
+                <field name="user_id"/>
+                <filter name="online" string="Online"
+                        domain="[('state','!=','offline')]" help="Currently present."/>
+                <filter name="away_device" string="Away from device"
+                        domain="[('device_status','in',['idle','away','gone'])]"
+                        help="Idle, away or no heartbeat."/>
+                <filter name="clocked_away" string="Clocked in but away"
+                        domain="[('clocked_in','=',True),('device_status','in',['idle','away','gone'])]"
+                        help="Clocked in via attendance but not at their device."/>
+                <filter name="guests" string="Guests" domain="[('is_guest','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_office" string="Office" context="{'group_by': 'office_id'}"/>
+                    <filter name="group_room" string="Room" context="{'group_by': 'room_id'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

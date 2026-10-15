@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_virtual_chat_tree" model="ir.ui.view">
+        <field name="name">virtual.chat.message.tree</field>
+        <field name="model">virtual.chat.message</field>
+        <field name="arch" type="xml">
+            <list string="Chat History" create="false" edit="false">
+                <field name="create_date"/>
+                <field name="office_id"/>
+                <field name="room_id"/>
+                <field name="author_name"/>
+                <field name="is_guest"/>
+                <field name="is_system"/>
+                <field name="body"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_virtual_chat_search" model="ir.ui.view">
+        <field name="name">virtual.chat.message.search</field>
+        <field name="model">virtual.chat.message</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="body"/>
+                <field name="author_name"/>
+                <field name="office_id"/>
+                <filter name="guests" string="Guests" domain="[('is_guest','=',True)]"/>
+                <filter name="system" string="System" domain="[('is_system','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_office" string="Office" context="{'group_by': 'office_id'}"/>
+                    <filter name="group_room" string="Room" context="{'group_by': 'room_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

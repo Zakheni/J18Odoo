@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_virtual_office_user,virtual.office.user,model_virtual_office,group_virtual_office_user,1,0,0,0
+access_virtual_office_manager,virtual.office.manager,model_virtual_office,group_virtual_office_manager,1,1,1,1
+access_virtual_room_user,virtual.room.user,model_virtual_room,group_virtual_office_user,1,0,0,0
+access_virtual_room_manager,virtual.room.manager,model_virtual_room,group_virtual_office_manager,1,1,1,1
+access_virtual_attendee_user,virtual.attendee.user,model_virtual_attendee,group_virtual_office_user,1,0,0,0
+access_virtual_attendee_manager,virtual.attendee.manager,model_virtual_attendee,group_virtual_office_manager,1,1,1,1
+access_virtual_guest_pass_user,virtual.guest.pass.user,model_virtual_guest_pass,group_virtual_office_user,1,0,0,0
+access_virtual_guest_pass_manager,virtual.guest.pass.manager,model_virtual_guest_pass,group_virtual_office_manager,1,1,1,1
+access_virtual_chat_message_user,virtual.chat.message.user,model_virtual_chat_message,group_virtual_office_user,1,1,1,0
+access_virtual_chat_message_manager,virtual.chat.message.manager,model_virtual_chat_message,group_virtual_office_manager,1,1,1,1
+access_virtual_signal_manager,virtual.signal.manager,model_virtual_signal,group_virtual_office_manager,1,1,1,1

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_guest_pass" model="virtual.guest.pass">
+            <field name="name">Alex Client</field>
+            <field name="email">alex@example.com</field>
+            <field name="office_id" ref="office_headquarters"/>
+            <field name="room_id" ref="room_conference"/>
+            <field name="max_uses">5</field>
+            <field name="max_duration_minutes">60</field>
+        </record>
+
+    </data>
+</odoo>
