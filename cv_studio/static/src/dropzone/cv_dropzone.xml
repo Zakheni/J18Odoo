@@ -9,9 +9,12 @@
              t-on-drop="onDrop">
             <input type="file" class="d-none" t-ref="fileInput" accept=".zip"
                    t-on-change="onChange"/>
-            <i class="fa fa-cloud-upload fa-2x text-muted"/>
+            <i class="fa fa-cloud-upload fa-2x text-muted" t-att-class="{ 'fa-spin': state.uploading }"/>
             <div class="cv_dropzone_text">
-                <t t-if="currentName">
+                <t t-if="state.uploading">
+                    <span>Uploading&#8230;</span>
+                </t>
+                <t t-elif="currentName">
                     <span class="fw-bold" t-esc="currentName"/>
                     <div class="text-muted small">Drop a new .zip to replace, or click to browse</div>
                 </t>

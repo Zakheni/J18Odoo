@@ -1,6 +1,6 @@
 {
     "name": "CV Studio",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "summary": "Standardise candidate CV packs into the Zakheni house format, with AI drafting",
     "description": """
 CV Studio

@@ -24,6 +24,9 @@ class CvPack(models.Model):
 
     input_file = fields.Binary("Pack (zip)")
     input_filename = fields.Char()
+    input_token = fields.Char(
+        "Upload Token", readonly=True, copy=False,
+        help="Reference to a pack zip streamed to the server by the dropzone.")
     source_path = fields.Char(
         "Server Folder", help="Alternatively, a folder path on the server to ingest.")
 
@@ -118,9 +121,27 @@ class CvPack(models.Model):
         self._log("Parsed %d candidates" % len(mf["candidates"]))
         return True
 
+    @api.model
+    def _uploads_dir(self):
+        return os.path.join(engine.cv_std.ROOT_TEMP, "_uploads")
+
     def _resolve_input(self):
+        if self.input_token:
+            updir = self._uploads_dir()
+            found = None
+            if os.path.isdir(updir):
+                prefix = self.input_token + "."
+                for name in sorted(os.listdir(updir)):
+                    if name.startswith(prefix):
+                        found = os.path.join(updir, name)
+                        break
+            if not found:
+                raise UserError(_(
+                    "The uploaded file is no longer available on the server. "
+                    "Please upload the pack again."))
+            return found
         if self.input_file:
-            updir = os.path.join(engine.cv_std.ROOT_TEMP, "_uploads")
+            updir = self._uploads_dir()
             os.makedirs(updir, exist_ok=True)
             zpath = os.path.join(updir, self.input_filename or ("%s.zip" % self.id))
             with open(zpath, "wb") as fh:
