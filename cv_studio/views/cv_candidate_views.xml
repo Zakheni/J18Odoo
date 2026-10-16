@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cv_candidate_form" model="ir.ui.view">
+        <field name="name">cv.candidate.form</field>
+        <field name="model">cv.candidate</field>
+        <field name="arch" type="xml">
+            <form string="Candidate">
+                <header>
+                    <button name="action_draft_fast" type="object" string="Fast Draft"
+                            class="btn-secondary"/>
+                    <button name="action_draft_ai" type="object" string="AI Draft"
+                            class="btn-primary"/>
+                    <button name="action_generate" type="object" string="Generate CV"
+                            class="btn-primary"/>
+                    <button name="action_download_pdf" type="object" string="Download PDF"
+                            invisible="not output_pdf"/>
+                    <button name="action_download_docx" type="object" string="Download DOCX"
+                            invisible="not output_docx"/>
+                    <field name="draft_state" widget="statusbar"
+                           statusbar_visible="todo,drafted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Candidate Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="pack_id"/>
+                            <field name="role"/>
+                            <field name="target_role"/>
+                        </group>
+                        <group>
+                            <field name="key" readonly="1"/>
+                            <field name="weak" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Profile">
+                            <field name="summary" placeholder="One paragraph per line; start a line with '- ' for a bullet."/>
+                            <group>
+                                <field name="refs" placeholder="One referee per line."/>
+                                <field name="docs" placeholder="One supporting document per line, each ending (see: filename)"/>
+                            </group>
+                        </page>
+                        <page string="Competencies">
+                            <field name="competency_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="label"/>
+                                    <field name="text"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Certifications">
+                            <field name="cert_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Education">
+                            <field name="education_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="institution"/>
+                                    <field name="qual"/>
+                                    <field name="dates"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Experience">
+                            <field name="career_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="company"/>
+                                    <field name="title"/>
+                                    <field name="dates"/>
+                                    <field name="bullets"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Source">
+                            <group>
+                                <field name="source_cvs" readonly="1"/>
+                                <field name="source_docs" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Output">
+                            <group>
+                                <field name="output_docx" filename="output_docx_name"/>
+                                <field name="output_pdf" filename="output_pdf_name"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cv_candidate_list" model="ir.ui.view">
+        <field name="name">cv.candidate.list</field>
+        <field name="model">cv.candidate</field>
+        <field name="arch" type="xml">
+            <list string="Candidates" decoration-muted="draft_state == 'todo'">
+                <field name="name"/>
+                <field name="role" optional="show"/>
+                <field name="target_role"/>
+                <field name="draft_state" widget="badge"/>
+                <field name="weak" optional="hide"/>
+                <field name="pack_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cv_candidate_search" model="ir.ui.view">
+        <field name="name">cv.candidate.search</field>
+        <field name="model">cv.candidate</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="role"/>
+                <field name="target_role"/>
+                <field name="pack_id"/>
+                <filter name="to_draft" string="To Draft" domain="[('draft_state','=','todo')]"/>
+                <filter name="weak" string="Weak" domain="[('weak','!=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_pack" string="Pack" context="{'group_by':'pack_id'}"/>
+                    <filter name="group_state" string="State" context="{'group_by':'draft_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cv_candidate" model="ir.actions.act_window">
+        <field name="name">Candidates</field>
+        <field name="res_model">cv.candidate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

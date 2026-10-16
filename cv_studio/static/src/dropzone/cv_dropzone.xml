@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cv_studio.CvDropzone">
+        <div class="cv_dropzone" t-att-class="{ 'cv_dropzone_active': state.dragging,
+                                                'cv_dropzone_disabled': disabled }"
+             t-on-click="onClick"
+             t-on-dragover="onDragOver"
+             t-on-dragleave="onDragLeave"
+             t-on-drop="onDrop">
+            <input type="file" class="d-none" t-ref="fileInput" accept=".zip"
+                   t-on-change="onChange"/>
+            <i class="fa fa-cloud-upload fa-2x text-muted"/>
+            <div class="cv_dropzone_text">
+                <t t-if="currentName">
+                    <span class="fw-bold" t-esc="currentName"/>
+                    <div class="text-muted small">Drop a new .zip to replace, or click to browse</div>
+                </t>
+                <t t-else="">
+                    <span>Drag &amp; drop the pack .zip here</span>
+                    <div class="text-muted small">or click to browse (a zip of the candidate folders)</div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

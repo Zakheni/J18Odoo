@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cv_studio_root" name="CV Studio" sequence="85"
+              web_icon="cv_studio,static/description/icon.png"/>
+
+    <menuitem id="menu_cv_studio_packs" name="CV Packs"
+              parent="menu_cv_studio_root" action="action_cv_pack" sequence="10"/>
+    <menuitem id="menu_cv_studio_candidates" name="Candidates"
+              parent="menu_cv_studio_root" action="action_cv_candidate" sequence="20"/>
+
+    <menuitem id="menu_cv_studio_config" name="Configuration"
+              parent="menu_cv_studio_root" sequence="90"
+              groups="base.group_system,cv_studio.group_cv_studio_manager"/>
+    <record id="action_cv_studio_config" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'cv_studio'}</field>
+    </record>
+    <menuitem id="menu_cv_studio_settings" name="Settings"
+              parent="menu_cv_studio_config" action="action_cv_studio_config" sequence="10"/>
+</odoo>

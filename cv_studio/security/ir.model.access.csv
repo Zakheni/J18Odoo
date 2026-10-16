@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cv_pack_user,cv.pack.user,model_cv_pack,base.group_user,1,1,1,1
+access_cv_candidate_user,cv.candidate.user,model_cv_candidate,base.group_user,1,1,1,1
+access_cv_competency_user,cv.competency.user,model_cv_competency,base.group_user,1,1,1,1
+access_cv_cert_user,cv.cert.user,model_cv_cert,base.group_user,1,1,1,1
+access_cv_education_user,cv.education.user,model_cv_education,base.group_user,1,1,1,1
+access_cv_career_user,cv.career.user,model_cv_career,base.group_user,1,1,1,1

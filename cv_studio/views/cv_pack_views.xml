@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cv_pack_form" model="ir.ui.view">
+        <field name="name">cv.pack.form</field>
+        <field name="model">cv.pack</field>
+        <field name="arch" type="xml">
+            <form string="CV Pack">
+                <header>
+                    <button name="action_parse" type="object" string="Parse Pack"
+                            class="btn-primary" invisible="state == 'built'"/>
+                    <button name="action_reextract" type="object" string="Re-extract Text"
+                            invisible="state == 'new'"/>
+                    <button name="action_draft_fast" type="object" string="Fast Draft"
+                            invisible="state == 'new'"/>
+                    <button name="action_draft_ai" type="object" string="AI Draft"
+                            class="btn-primary" invisible="state == 'new'"/>
+                    <button name="action_build" type="object" string="Generate CVs"
+                            class="btn-primary" invisible="state == 'new'"/>
+                    <button name="action_download_all" type="object"
+                            string="Download All (ZIP)" invisible="state != 'built'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,parsed,drafted,built"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Pack Name"/></h1>
+                    </div>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_candidates" type="object"
+                                class="oe_stat_button" icon="fa-users">
+                            <field name="candidate_count" widget="statinfo" string="Candidates"/>
+                        </button>
+                        <button name="action_view_candidates" type="object"
+                                class="oe_stat_button" icon="fa-check">
+                            <field name="drafted_count" widget="statinfo" string="Drafted"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="input_file" widget="cv_dropzone"
+                                   options="{'filename_field': 'input_filename'}"/>
+                            <field name="input_filename" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="deploy_to_dest"/>
+                            <field name="dest_path" invisible="not deploy_to_dest"/>
+                            <field name="engine_id" readonly="1"/>
+                            <field name="draft_failed" invisible="not draft_failed"/>
+                        </group>
+                    </group>
+                    <group string="Advanced" invisible="state != 'new'">
+                        <field name="source_path"
+                               help="Optional: ingest directly from a folder already on the server, instead of uploading a zip."/>
+                    </group>
+                    <notebook>
+                        <page string="Candidates">
+                            <field name="candidate_ids" context="{'default_pack_id': id}">
+                                <list editable="bottom" decoration-muted="draft_state == 'todo'">
+                                    <field name="name"/>
+                                    <field name="role"/>
+                                    <field name="target_role"/>
+                                    <field name="draft_state" widget="badge"/>
+                                    <field name="weak"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Log">
+                            <field name="log" readonly="1" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cv_pack_list" model="ir.ui.view">
+        <field name="name">cv.pack.list</field>
+        <field name="model">cv.pack</field>
+        <field name="arch" type="xml">
+            <list string="CV Packs">
+                <field name="name"/>
+                <field name="state" widget="badge"/>
+                <field name="candidate_count"/>
+                <field name="drafted_count"/>
+                <field name="dest_path" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cv_pack_search" model="ir.ui.view">
+        <field name="name">cv.pack.search</field>
+        <field name="model">cv.pack</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="state_new" string="New" domain="[('state','=','new')]"/>
+                <filter name="state_parsed" string="Parsed" domain="[('state','=','parsed')]"/>
+                <filter name="state_drafted" string="Drafted" domain="[('state','=','drafted')]"/>
+                <filter name="state_built" string="Built" domain="[('state','=','built')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cv_pack" model="ir.actions.act_window">
+        <field name="name">CV Packs</field>
+        <field name="res_model">cv.pack</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

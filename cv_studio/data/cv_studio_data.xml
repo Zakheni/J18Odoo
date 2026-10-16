@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CV Studio ships no seed data. Default engine paths and the AI model are
+         set in code (see services/engine.py DEFAULTS) and editable in
+         CV Studio > Configuration > Settings. -->
+</odoo>
